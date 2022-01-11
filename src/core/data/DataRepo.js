@@ -90,6 +90,8 @@ class DataRepo {
         Your ID is ${phoneNumber};
         Kindly note that this ID can be used to fund your Account directly from all Nigerian Banks`;
         page = `END ${statusMessage}`;
+      } else if (text.length === 1) {
+        page = await RegisterPage.page();
       } else {
         switch (lastValueInTheBox) {
           case PageCode.REGISTRATION_MENU_REGISTER.ACTIVATE:
