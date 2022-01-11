@@ -31,19 +31,7 @@ class DataRepo {
       const pagemenuToShow = text.split('*');
       const lastValueInTheBox = pagemenuToShow[pagemenuToShow.length - 1];
       const valuebeforeLastValueInTheBox = pagemenuToShow[pagemenuToShow.length - 2];
-      if (pagemenuToShow.length === 1) {
-        switch (pagemenuToShow[0]) {
-          case '1':
-            page = await this.registerMenu(pagemenuToShow, phoneNumber);
-            break;
-          case '6':
-            page = 'END';
-            break;
-          default:
-            page = 'END Invalid Input';
-            break;
-        }
-      } else if (lastValueInTheBox === '98') {
+      if (lastValueInTheBox === '98') {
         page = await Ussd1.page();
       } else if (lastValueInTheBox === '99') {
         page = 'END Thank you for using our service';
@@ -60,16 +48,19 @@ class DataRepo {
             break;
         }
       }
-      // else {
-      //   switch (pagemenuToShow[1]) {
-      //     case '1':
-      //       page = await this.registerMenu(pagemenuToShow, phoneNumber);
-      //       break;
-      //     default:
-      //       page = 'END Invalid Input';
-      //       break;
-      //   }
-      // }
+      else {
+        switch (pagemenuToShow[0]) {
+          case '1':
+            page = await this.registerMenu(pagemenuToShow, phoneNumber);
+            break;
+          case '6':
+            page = 'END';
+            break;
+          default:
+            page = 'END Invalid Input';
+            break;
+        }
+      }
       return page;
     } catch (error) {
       return 'END An error Just occurred';
