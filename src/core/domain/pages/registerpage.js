@@ -1,17 +1,15 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable require-jsdoc */
-class Ussd1 {
+class RegisterPage {
   /**
    * @method
    * @returns String
    */
   static async page() {
-    return `CON 1.Register
-    2.Deposit
-    3.Withdraw
-    4.Play Games
-    5.Play Booking Code
+    return `CON 11.Accept Registration
+    12.Decline Registration
+    98.Main Menu
     99.Exit`;
   }
 }
-export default Ussd1;
+export default RegisterPage;
