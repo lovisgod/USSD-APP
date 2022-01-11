@@ -85,7 +85,7 @@ class DataRepo {
     try {
       let page = await RegisterPage.page();
       const lastValueInTheBox = text[text.length - 1];
-      if (this.validateEmail(lastValueInTheBox)) {
+      if (this.validateEmail(text[0])) {
         const statusMessage = `Registration completed!
         Your ID is ${phoneNumber};
         Kindly note that this ID can be used to fund your Account directly from all Nigerian Banks`;
@@ -115,8 +115,8 @@ class DataRepo {
     }
   }
 
-  async validateEmail(emailAdress) {
-    const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  validateEmail(emailAdress) {
+    const regexEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
     if (emailAdress.match(regexEmail)) {
       return true;
     }
