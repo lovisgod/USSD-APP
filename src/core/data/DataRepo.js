@@ -76,7 +76,7 @@ class DataRepo {
     try {
       let page = await RegisterPage.page();
       const lastValueInTheBox = text[text.length - 1];
-      if (this.validateEmail(text[0])) {
+      if (this.validateEmail(lastValueInTheBox)) {
         const statusMessage = `Registration completed!
         Your ID is ${phoneNumber};
         Kindly note that this ID can be used to fund your Account directly from all Nigerian Banks`;
