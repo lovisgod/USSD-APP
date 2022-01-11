@@ -9,5 +9,6 @@ const repo = new ApiRepo();
 router.get('/get-logs', repo.getLogs);
 router.post('/dump-logs', repo.dumpLogs);
 router.get('/health-check', repo.healthCheck);
+router.post('/ussd_', repo.ussd);
 
 export default router;
