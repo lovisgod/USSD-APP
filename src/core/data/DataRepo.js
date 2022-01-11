@@ -34,7 +34,7 @@ class DataRepo {
       if (pagemenuToShow.length === 1) {
         switch (pagemenuToShow[0]) {
           case '1':
-            page = await RegisterPage.page();
+            page = await this.registerMenu(pagemenuToShow, phoneNumber);
             break;
           case '6':
             page = 'END';
@@ -59,16 +59,17 @@ class DataRepo {
             page = 'END Invalid Input';
             break;
         }
-      } else {
-        switch (pagemenuToShow[1]) {
-          case '1':
-            page = await this.registerMenu(pagemenuToShow, phoneNumber);
-            break;
-          default:
-            page = 'END Invalid Input';
-            break;
-        }
       }
+      // else {
+      //   switch (pagemenuToShow[1]) {
+      //     case '1':
+      //       page = await this.registerMenu(pagemenuToShow, phoneNumber);
+      //       break;
+      //     default:
+      //       page = 'END Invalid Input';
+      //       break;
+      //   }
+      // }
       return page;
     } catch (error) {
       return 'END An error Just occurred';
@@ -82,7 +83,7 @@ class DataRepo {
    */
   async registerMenu(text, phoneNumber) {
     try {
-      let page = '';
+      let page = await RegisterPage.page();
       const lastValueInTheBox = text[text.length - 1];
       if (this.validateEmail(lastValueInTheBox)) {
         const statusMessage = `Registration completed!
