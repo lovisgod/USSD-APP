@@ -26,6 +26,7 @@ class DataRepo {
       let page = '';
       if (text === '') {
         page = await Ussd1.page();
+        return page;
       }
       const pagemenuToShow = text.split('*');
       const lastValueInTheBox = pagemenuToShow[pagemenuToShow.length - 1];
