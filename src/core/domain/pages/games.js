@@ -4,7 +4,7 @@ class GamePages {
    * @method
    * @returns String
    */
-  static async firstPage() {
+  static firstPage() {
     return `1.Play Games.
     2.Play Booking Code.
     98.Main Menu.
@@ -15,7 +15,7 @@ class GamePages {
    * @method
    * @returns String
    */
-  static async playGameMenu() {
+  static playGameMenu() {
     return `1.Lottery Game.
     2.Jackpot Game.
     98.Main Menu.
