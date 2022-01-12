@@ -119,12 +119,18 @@ class ApiRepo {
       const {
         sessionId, serviceCode, phoneNumber, text
       } = req.body;
+      const args = {
+        phoneNumber: req.body.phoneNumber,
+        sessionId: req.body.sessionId,
+        serviceCode: req.body.serviceCode,
+        text: req.body.text
+      };
       console.info(`sessionId: ${sessionId}`);
       console.info(`serviceCode: ${serviceCode}`);
       console.info(`phoneNumber: ${phoneNumber}`);
       console.info(`text: ${text}`);
       const repo = new ApiRepo();
-      const response = await repo.dataSource.page(text, phoneNumber);
+      const response = await repo.dataSource.page(text, phoneNumber, args);
       console.log(response);
       res.send(response);
     } catch (error) {

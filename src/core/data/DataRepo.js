@@ -9,6 +9,9 @@ import axios from 'axios';
 
 import HelperUtils from '../../utils/HelperUtils';
 import PageCode from '../domain/pagecode';
+import GamePages from '../domain/pages/games';
+import MenuBuilderHelper from '../domain/pages/menus/menuBuilderHelper';
+import PlayGameMenu from '../domain/pages/menus/playgamefirstmenu';
 import RegisterPage from '../domain/pages/registerpage';
 import Ussd1 from '../domain/pages/ussd1';
 
@@ -21,7 +24,7 @@ class DataRepo {
    * @param {string} text - text sent by the ussd service
    * @param {string} phoneNumber - phone number of the user
    */
-  async page(text, phoneNumber) {
+  async page(text, phoneNumber, args) {
     try {
       let page = '';
       if (text === '') {
@@ -40,6 +43,9 @@ class DataRepo {
           case '1':
             page = await RegisterPage.page();
             break;
+          case '4':
+            page = await MenuBuilderHelper.gameMenus(args);
+            break;
           case '6':
             page = 'END';
             break;
@@ -52,6 +58,9 @@ class DataRepo {
         switch (pagemenuToShow[0]) {
           case '1':
             page = await this.registerMenu(pagemenuToShow, phoneNumber);
+            break;
+          case '4':
+            page = await MenuBuilderHelper.gameMenus(args);
             break;
           case '6':
             page = 'END';

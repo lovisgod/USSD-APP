@@ -23,9 +23,9 @@ class DataSource {
    * @method
    * @returns String
    */
-  async page(text, phoneNumber) {
+  async page(text, phoneNumber, args) {
     return this.datarepo.page(
-      text, phoneNumber
+      text, phoneNumber, args
     );
   }
 }

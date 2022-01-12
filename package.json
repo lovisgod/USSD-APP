@@ -1,5 +1,5 @@
 {
-  "name": "jaraanalytics",
+  "name": "ussdapp",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -41,6 +41,7 @@
     "qrcode": "^1.4.4",
     "sequelize": "^5.22.3",
     "swagger-ui-express": "^4.1.5",
+    "ussd-menu-builder": "^1.2.0",
     "winston": "^3.3.3"
   },
   "devDependencies": {
