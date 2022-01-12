@@ -38,7 +38,7 @@ class DataRepo {
         page = await Ussd1.page();
       } else if (lastValueInTheBox === '99') {
         page = 'END Thank you for using our service';
-      } else if (lastValueInTheBox.length === 1) {
+      } else if (pagemenuToShow.length === 1) {
         switch (lastValueInTheBox) {
           case '1':
             page = await RegisterPage.page();
