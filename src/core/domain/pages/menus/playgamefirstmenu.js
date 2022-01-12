@@ -16,10 +16,6 @@ class PlayGameMenu {
       page = GamePages.firstPage();
       if (text.length === 1) {
         page = GamePages.firstPage();
-      } else {
-          if (text.length === 2) {
-            page = 
-          }
       }
       return page;
     } catch (error) {
