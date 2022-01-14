@@ -5,7 +5,37 @@ import GamePages from '../games';
 
 class MenuBuilderHelper {
   static async gameMenus(args) {
+    const gameType = '';
+    const lotteryGameSelected = '';
     const menu = new UssdMenu();
+
+    const sessions = {};
+
+    menu.sessionConfig({
+      start(sessionId, callback) {
+        // initialize current session if it doesn't exist
+        // this is called by menu.run()
+        if (!(sessionId in sessions)) sessions[sessionId] = {};
+        callback();
+      },
+      end(sessionId, callback) {
+        // clear current session
+        // this is called by menu.end()
+        delete sessions[sessionId];
+        callback();
+      },
+      set: (sessionId, key, value, callback) => {
+        // store key-value pair in current session
+        sessions[sessionId][key] = value;
+        callback();
+      },
+      get(sessionId, key) {
+        return new Promise((resolve, reject) => {
+          const value = sessions[sessionId][key] ? sessions[sessionId][key] : '';
+          resolve(value);
+        });
+      }
+    });
 
     // Define menu states
     menu.startState({
@@ -23,6 +53,10 @@ class MenuBuilderHelper {
     menu.state('PlayGames', {
       run: () => {
         menu.con(GamePages.playGameMenu());
+      },
+      next: {
+        1: 'LotteryGames',
+        2: 'JackpotGames'
       }
     });
 
@@ -42,6 +76,190 @@ class MenuBuilderHelper {
         // use menu.val to access user input value
         const code = menu.val;
         menu.end('Booking completed.');
+      }
+    });
+
+    // lottery games state
+    menu.state('LotteryGames', {
+      run: () => {
+        menu.session.set('gameType', 'lottery');
+        menu.con(GamePages.lotteryGameMenu());
+      },
+      next: {
+        1: 'lottoIndoor',
+        2: 'lottoGhana',
+        3: 'salary4Life',
+        4: 'raffleDraw',
+        5: 'legendaryLotto',
+        6: 'PlayGames'
+      }
+    });
+
+    // lottery games state
+    menu.state('lottoIndoor', {
+      run: () => {
+        menu.session.set('LotteryGamesType', 'lottoIndoor');
+        menu.con(GamePages.gameschedules());
+      },
+      // select day of week and go to next state
+      next: {
+        '*\\d+': 'loadedGamesforDailyGames',
+      }
+    });
+
+    // lottery games state
+    menu.state('lottoGhana', {
+      run: () => {
+        menu.session.set('LotteryGamesType', 'lottoGhana');
+        menu.con(GamePages.gameschedules());
+      },
+      // select day of week and go to next state
+      next: {
+        '*\\d+': 'loadedGamesforDailyGames',
+      }
+    });
+
+    // lottery games state
+    menu.state('legendaryLotto', {
+      run: () => {
+        menu.session.set('LotteryGamesType', 'legendaryLotto');
+        menu.con(GamePages.gameschedules());
+      },
+      // select day of week and go to next state
+      next: {
+        '*\\d+': 'loadedGamesforDailyGames',
+      }
+    });
+
+    // loadedGamesforDailyGames state
+    menu.state('loadedGamesforDailyGames', {
+      run: () => {
+        // get the day of the week choosen
+        const code = menu.val;
+        menu.con(GamePages.loadedGamesforDailyGames());
+      },
+      next: {
+        '*\\d+': 'lottoGameType',
+      }
+    });
+
+    // lottoGameTypes state
+    menu.state('lottoGameType', {
+      run: () => {
+        menu.con(GamePages.lottoGameTypes());
+      },
+      next: {
+        1: 'instructionForLotto',
+        2: 'instructionForLotto',
+        3: 'instructionForLotto',
+        4: 'instructionForLotto',
+        5: 'instructionForLotto',
+        6: 'instructionForLotto',
+        7: 'instructionForLotto',
+        8: 'instructionForLotto',
+        9: 'instructionForLotto',
+        10: 'lottoGameType2',
+        11: 'LotteryGames',
+      }
+    });
+
+    // lottoGameTypes state
+    menu.state('lottoGameType2', {
+      run: () => {
+        menu.con(GamePages.lottoGameTypes2());
+      },
+      next: {
+        12: 'instructionForLotto',
+        13: 'instructionForLotto',
+        14: 'instructionForLotto',
+        15: 'instructionForLotto',
+        14: 'lottoGameType',
+      }
+    });
+
+    // instruction for lotto state
+    menu.state('instructionForLotto', {
+      run: () => {
+        const input = menu.val;
+        const name = GamePages.getGameNameForInput(input);
+        menu.session.set('lottoGameName', name);
+        const instruction = GamePages.getGameInstructionForInput(input);
+        menu.con(instruction);
+      },
+      next: {
+        '*\\d+': 'amountmenu',
+      }
+    });
+
+    // instruction for lotto state
+    menu.state('amountmenu', {
+      run: () => {
+        const input = menu.val;
+        menu.session.set('numbersSelected', input);
+        const instruction = `Your Selections are ${input}
+    Kindly insert Bet Amount and Submit Your Bet.`;
+        menu.con(instruction);
+      },
+      next: {
+        '*\\d+': 'feedbackMenu'
+      }
+    });
+
+    // instruction for lotto state
+    menu.state('feedbackMenu', {
+      run: () => {
+        const input = menu.val;
+        // send request to server to play game and get response
+        // display response to user and display menu
+        const gameType = menu.session.get('gameType');
+        let lottoGameName = '';
+        const LotteryGamesType = menu.session.get('LotteryGamesType');
+        if (LotteryGamesType === 'lottoIndoor'
+     || LotteryGamesType === 'lottoGhana' || LotteryGamesType === 'legendaryLotto') {
+          lottoGameName = menu.session.get('lottoGameName');
+        }
+        const numbersSelected = menu.session.get('numbersSelected');
+        const instruction = `Bet Submitted Successfully!
+    Ticket Details are: Ticket-ID, Pot. Winning, 
+    Bet Amount, Game Name, Bet-Type, Result Time, selections.
+    
+    1. Play Another Game.
+    98. Main Menu.
+    99. Exit.`;
+        menu.con(instruction);
+      },
+      next: {
+        1: 'PlayGames'
+      }
+    });
+
+    // lottery games state
+    menu.state('raffleDraw', {
+      run: () => {
+        menu.session.set('LotteryGamesType', 'raffleDraw');
+        menu.con(GamePages.raffleDrawMenu());
+      },
+      next: {
+        '*\\d+': 'raffleDraw.code',
+        6: 'LotteryGames'
+      }
+    });
+
+    // nesting states
+    menu.state('raffleDraw.code', {
+      run: () => {
+        // use menu.val to access user input value
+        const code = menu.val;
+        // call the server to get the raffle draw
+        // use menu.end to terminate session
+        const raffleDraw = '20, 30, 77,78';
+        menu.session.set('raffleDrawCode', code);
+        const instruction = `Your Selections are ${raffleDraw}
+        Kindly insert Bet Amount and Submit Your Bet.`;
+        menu.con(instruction);
+      },
+      next: {
+        '*\\d+': 'amountmenu',
       }
     });
 

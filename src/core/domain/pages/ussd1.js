@@ -10,7 +10,7 @@ class Ussd1 {
     2.Deposit
     3.Withdraw
     4.Play Games
-    5.Play Booking Code
+    5. Check Result
     99.Exit`;
   }
 }
