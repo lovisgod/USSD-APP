@@ -122,12 +122,13 @@ class GamePages {
    * @returns String
    */
   static getGameNameForInput(Input) {
+    console.log(Input);
     let name = '';
     switch (Input) {
-      case 1:
+      case '1':
         name = 'Perm1';
         break;
-      case 2:
+      case '2':
         name = 'Perm2';
         break;
       case 3:
