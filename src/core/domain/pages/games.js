@@ -176,9 +176,11 @@ class GamePages {
    * @returns String
    */
   static getGameInstructionForInput(Input) {
+    console.log('got here');
+    console.log(Input);
     let inst = '';
     switch (Input) {
-      case 1:
+      case '1':
         inst = 'Perm1';
         break;
       case 2:
