@@ -208,7 +208,7 @@ class MenuBuilderHelper {
     // instruction for lotto state
     menu.state('feedbackMenu', {
       run: () => {
-        const input = menu.val;
+        const amount = menu.val;
         // send request to server to play game and get response
         // display response to user and display menu
         const gameType = menu.session.get('gameType');
@@ -221,7 +221,7 @@ class MenuBuilderHelper {
         const numbersSelected = menu.session.get('numbersSelected');
         const instruction = `Bet Submitted Successfully!
     Ticket Details are: Ticket-ID, Pot. Winning, 
-    Bet Amount, Game Name, Bet-Type, Result Time, selections.
+    Bet Amount:${amount}, Game Name, Bet-Type, Result Time, selections.
     
     1. Play Another Game.
     98. Main Menu.
@@ -253,13 +253,13 @@ class MenuBuilderHelper {
         // call the server to get the raffle draw
         // use menu.end to terminate session
         const raffleDraw = '20, 30, 77,78';
-        menu.session.set('raffleDrawCode', code);
+        menu.session.set('numbersSelected', code);
         const instruction = `Your Selections are ${raffleDraw}
         Kindly insert Bet Amount and Submit Your Bet.`;
         menu.con(instruction);
       },
       next: {
-        '*\\d+': 'amountmenu',
+        '*\\d+': 'feedbackMenu',
       }
     });
 
