@@ -235,6 +235,7 @@ class MenuBuilderHelper {
     // validating user input
     menu.state('validateInput', {
       run: () => {
+        console.log('got here here');
         const input = menu.val;
         const gamePlayed = menu.session.get('gameType');
         console.log(gamePlayed);
