@@ -228,7 +228,7 @@ class MenuBuilderHelper {
         menu.con(instruction);
       },
       next: {
-        '*\\d+': 'validateInput',
+        '(\\d+)(,\\s*\\d+)*': 'validateInput',
       }
     });
 
@@ -249,6 +249,8 @@ class MenuBuilderHelper {
               menu.session.set('numbersSelected', input);
               menu.con(`Your Selections are ${input}
               Kindly insert Bet Amount and Submit Your Bet.`);
+            } else {
+              menu.end('You have entered invalid length of numbers');
             }
           }
         }
