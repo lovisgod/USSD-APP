@@ -31,9 +31,8 @@ class GamePages {
     return `1. Lotto Indoor Game.
     2. Lotto Ghana Game.
     3. Salary 4Life.
-    4. Raffle Draw. 
-    5. Legendary Lotto.
-    6. Back.
+    4. Legendary Lotto.
+    5. Back.
     98.Main Menu.
     99.Exit.`;
   }
