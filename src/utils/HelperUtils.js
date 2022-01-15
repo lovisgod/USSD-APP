@@ -16,6 +16,31 @@ class HelperUtils {
     if (todayDate < endDateMilli) return false;
     return true;
   }
+
+  /**
+   * @method
+   * @description this method helps to check user input for salary4life game
+   * @param {Array} input
+   * @param {String} salaryOptionselected
+   * @return boolean
+   */
+  static checksalary4LifeInput(input, salaryOptionselected) {
+    if (salaryOptionselected === '6m') {
+      if (input.length === 6) return true; return false;
+    }
+    if (salaryOptionselected === '5m') {
+      if (input.length === 5) return true; return false;
+    }
+    if (salaryOptionselected === '4m') {
+      if (input.length === 4) return true; return false;
+    }
+    if (salaryOptionselected === '3m') {
+      if (input.length === 3) return true; return false;
+    }
+    if (salaryOptionselected === '2m') {
+      if (input.length === 2) return true; return false;
+    }
+  }
 }
 
 export default HelperUtils;

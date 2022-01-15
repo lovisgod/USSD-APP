@@ -1,6 +1,7 @@
 /* eslint-disable require-jsdoc */
 /* eslint-disable no-undef */
 import UssdMenu from 'ussd-menu-builder';
+import HelperUtils from '../../../../utils/HelperUtils';
 import GamePages from '../games';
 
 class MenuBuilderHelper {
@@ -89,9 +90,8 @@ class MenuBuilderHelper {
         1: 'lottoIndoor',
         2: 'lottoGhana',
         3: 'salary4Life',
-        4: 'raffleDraw',
-        5: 'legendaryLotto',
-        6: 'PlayGames'
+        4: 'legendaryLotto',
+        5: 'PlayGames'
       }
     });
 
@@ -173,7 +173,7 @@ class MenuBuilderHelper {
         13: 'instructionForLotto',
         14: 'instructionForLotto',
         15: 'instructionForLotto',
-        14: 'lottoGameType',
+        16: 'lottoGameType',
       }
     });
 
@@ -205,6 +205,59 @@ class MenuBuilderHelper {
       }
     });
 
+    // lottery games state
+    menu.state('salary4Life', {
+      run: () => {
+        menu.session.set('LotteryGamesType', 'salary4Life');
+        menu.con(GamePages.raffleDrawMenu());
+      },
+      next: {
+        '*\\d+': 'salary4Life.code',
+        6: 'LotteryGames'
+      }
+    });
+
+    // nesting states
+    menu.state('salary4Life.code', {
+      run: () => {
+        // use menu.val to access user input value
+        const code = menu.val;
+        // call the server to get the raffle draw
+        menu.session.set('salaryOptionselected', code);
+        const instruction = 'Please your selections between 1 and 39';
+        menu.con(instruction);
+      },
+      next: {
+        '*\\d+': 'validateInput',
+      }
+    });
+
+    // validating user input
+    menu.state('validateInput', {
+      run: () => {
+        const input = menu.val;
+        const gamePlayed = menu.session.get('gameType');
+        console.log(gamePlayed);
+        if (gamePlayed === 'lottery') {
+          const lotteryGamePlayed = menu.session.get('LotteryGamesType');
+          if (lotteryGamePlayed === 'Sala4Life') {
+            const salarySelected = menu.session.get('salaryOptionselected');
+            console.log(salarySelected);
+            const inputArray = input.split(',');
+            const valid = HelperUtils.checksalary4LifeInput(inputArray, salarySelected);
+            if (valid) {
+              menu.session.set('numbersSelected', input);
+              menu.con(`Your Selections are ${input}
+              Kindly insert Bet Amount and Submit Your Bet.`);
+            }
+          }
+        }
+      },
+      next: {
+        '*\\d+': 'feedbackMenu'
+      }
+    });
+
     // instruction for lotto state
     menu.state('feedbackMenu', {
       run: () => {
@@ -219,6 +272,7 @@ class MenuBuilderHelper {
           lottoGameName = menu.session.get('lottoGameName');
         }
         const numbersSelected = menu.session.get('numbersSelected');
+        console.log(`${gameType} ${lottoGameName} ${numbersSelected} ${amount}`);
         const instruction = `Bet Submitted Successfully!
     Ticket Details are: Ticket-ID, Pot. Winning, 
     Bet Amount:${amount}, Game Name, Bet-Type, Result Time, selections.
@@ -230,36 +284,6 @@ class MenuBuilderHelper {
       },
       next: {
         1: 'PlayGames'
-      }
-    });
-
-    // lottery games state
-    menu.state('raffleDraw', {
-      run: () => {
-        menu.session.set('LotteryGamesType', 'raffleDraw');
-        menu.con(GamePages.raffleDrawMenu());
-      },
-      next: {
-        '*\\d+': 'raffleDraw.code',
-        6: 'LotteryGames'
-      }
-    });
-
-    // nesting states
-    menu.state('raffleDraw.code', {
-      run: () => {
-        // use menu.val to access user input value
-        const code = menu.val;
-        // call the server to get the raffle draw
-        // use menu.end to terminate session
-        const raffleDraw = '20, 30, 77,78';
-        menu.session.set('numbersSelected', code);
-        const instruction = `Your Selections are ${raffleDraw}
-        Kindly insert Bet Amount and Submit Your Bet.`;
-        menu.con(instruction);
-      },
-      next: {
-        '*\\d+': 'feedbackMenu',
       }
     });
 
