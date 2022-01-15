@@ -228,7 +228,7 @@ class MenuBuilderHelper {
         menu.con(instruction);
       },
       next: {
-        '*\\d+': 'validateInput',
+        input: 'validateInput',
       }
     });
 
