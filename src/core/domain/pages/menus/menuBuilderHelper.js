@@ -228,7 +228,7 @@ class MenuBuilderHelper {
         menu.con(instruction);
       },
       next: {
-        '([1-9][0-9]*,)*[1-9][0-9]*': 'validateInput',
+        '^([a-zA-Z0-9]+,?\\s*)+$': 'validateInput',
       }
     });
 
