@@ -267,14 +267,14 @@ class MenuBuilderHelper {
         const amount = menu.val;
         // send request to server to play game and get response
         // display response to user and display menu
-        const gameType = menu.session.get('gameType');
+        const gameType = await menu.session.get('gameType');
         let lottoGameName = '';
-        const LotteryGamesType = menu.session.get('LotteryGamesType');
+        const LotteryGamesType = await menu.session.get('LotteryGamesType');
         if (LotteryGamesType === 'lottoIndoor'
      || LotteryGamesType === 'lottoGhana' || LotteryGamesType === 'legendaryLotto') {
-          lottoGameName = menu.session.get('lottoGameName');
+          lottoGameName = await menu.session.get('lottoGameName');
         }
-        const numbersSelected = menu.session.get('numbersSelected');
+        const numbersSelected = await menu.session.get('numbersSelected');
         console.log(`${gameType} ${lottoGameName} ${numbersSelected} ${amount}`);
         const instruction = `Bet Submitted Successfully!
     Ticket Details are: Ticket-ID, Pot. Winning, 
