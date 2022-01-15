@@ -250,7 +250,7 @@ class MenuBuilderHelper {
               menu.con(`Your Selections are ${input}
               Kindly insert Bet Amount and Submit Your Bet.`);
             } else {
-              menu.end('You have entered invalid length of numbers');
+              menu.end('You have entered invalid length of numbers!!');
             }
           }
         }
