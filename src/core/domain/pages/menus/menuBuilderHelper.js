@@ -235,12 +235,17 @@ class MenuBuilderHelper {
       run: () => {
         console.log('got here here');
         const input = menu.val;
+        console.log(input);
         const gamePlayed = menu.session.get('gameType');
         console.log(gamePlayed);
         if (gamePlayed === 'lottery') {
           const lotteryGamePlayed = menu.session.get('LotteryGamesType');
           if (lotteryGamePlayed === 'Sala4Life') {
-            const salarySelected = menu.session.get('salaryOptionselected');
+            const salarySelected = '';
+            menu.session.get('salaryOptionselected').then((salarySelectedX) => {
+              salarySelected = salarySelectedX;
+              console.log(salarySelected);
+            });
             console.log(salarySelected);
             const inputArray = input.split(',');
             const valid = HelperUtils.checksalary4LifeInput(inputArray, salarySelected);
