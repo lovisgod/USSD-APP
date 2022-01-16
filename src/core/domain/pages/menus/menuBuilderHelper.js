@@ -239,6 +239,8 @@ class MenuBuilderHelper {
         let gamePlayed = '';
         menu.session.get('gameType').then(gameType => {
           gamePlayed = gameType;
+          console.log(gameType);
+          console.log(gamePlayed);
         });
         console.log(gamePlayed);
         if (gamePlayed === 'lottery') {
