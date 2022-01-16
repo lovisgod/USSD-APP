@@ -236,7 +236,10 @@ class MenuBuilderHelper {
         console.log('got here here');
         const input = menu.val;
         console.log(input);
-        const gamePlayed = menu.session.get('gameType');
+        let gamePlayed = '';
+        menu.session.get('gameType').then(gameType => {
+          gamePlayed = gameType;
+        });
         console.log(gamePlayed);
         if (gamePlayed === 'lottery') {
           const lotteryGamePlayed = menu.session.get('LotteryGamesType');
