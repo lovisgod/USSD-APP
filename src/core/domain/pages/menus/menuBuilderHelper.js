@@ -5,14 +5,11 @@ import HelperUtils from '../../../../utils/HelperUtils';
 import GamePages from '../games';
 
 class MenuBuilderHelper {
-  static async gameMenus(args) {
-    const gameType = '';
-    const lotteryGameSelected = '';
-    const menu = new UssdMenu();
 
-    const sessions = {};
+  static menu = new UssdMenu();
 
-    menu.sessionConfig({
+  constructor() {
+    this.menu.sessionConfig({
       start(sessionId, callback) {
         // initialize current session if it doesn't exist
         // this is called by menu.run()
@@ -35,12 +32,21 @@ class MenuBuilderHelper {
         return value;
       }
     });
+  }
+
+
+  static async gameMenus(args) {
+    const gameType = '';
+    const lotteryGameSelected = '';
+
+    const sessions = {};
+    const menu = this.menu;
 
     // Define menu states
-    menu.startState({
+    this.menu.startState({
       run: () => {
         // use menu.con() to send response without terminating session
-        menu.con(GamePages.firstPage());
+        this.menu.con(GamePages.firstPage());
       },
       // next object links to next state based on user input
       next: {
@@ -49,9 +55,9 @@ class MenuBuilderHelper {
       }
     });
 
-    menu.state('PlayGames', {
+    this.menu.state('PlayGames', {
       run: () => {
-        menu.con(GamePages.playGameMenu());
+        this.menu.con(GamePages.playGameMenu());
       },
       next: {
         1: 'LotteryGames',
@@ -59,9 +65,9 @@ class MenuBuilderHelper {
       }
     });
 
-    menu.state('PlayBookingCode', {
+    this.menu.state('PlayBookingCode', {
       run: () => {
-        menu.con('Enter Booking code:');
+        this.menu.con('Enter Booking code:');
       },
       next: {
         // using regex to match user input to next state
@@ -70,11 +76,11 @@ class MenuBuilderHelper {
     });
 
     // nesting states
-    menu.state('PlayBookingCode.code', {
+    this.menu.state('PlayBookingCode.code', {
       run: () => {
         // use menu.val to access user input value
-        const code = menu.val;
-        menu.end('Booking completed.');
+        const code = this.menu.val;
+        this.menu.end('Booking completed.');
       }
     });
 
