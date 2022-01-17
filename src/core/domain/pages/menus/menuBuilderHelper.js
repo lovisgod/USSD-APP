@@ -253,9 +253,9 @@ class MenuBuilderHelper {
           let salarySelected = '';
           menu.session.get('salaryOptionselected').then((salarySelectedX) => {
             salarySelected = salarySelectedX;
-            console.log(salarySelected);
+            console.log('selectx', salarySelected);
           });
-          console.log(salarySelected);
+          console.log('selectedY', salarySelected);
           const inputArray = input.split(',');
           const valid = HelperUtils.checksalary4LifeInput(inputArray, salarySelected);
           if (valid) {
