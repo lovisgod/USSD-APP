@@ -248,7 +248,7 @@ class MenuBuilderHelper {
           lotteryGamePlayed = gameType;
           console.log(lotteryGamePlayed);
         });
-        consonle.log(lotteryGamePlayed);
+        console.log(lotteryGamePlayed);
         if (lotteryGamePlayed === 'Sala4Life') {
           const salarySelected = '';
           menu.session.get('salaryOptionselected').then((salarySelectedX) => {
