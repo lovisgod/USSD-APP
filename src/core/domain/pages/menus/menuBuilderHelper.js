@@ -247,25 +247,23 @@ class MenuBuilderHelper {
         menu.session.get('LotteryGamesType').then(gameType => {
           lotteryGamePlayed = gameType;
           console.log('lotteryPlayedX', lotteryGamePlayed);
-        });
-        console.log('lotteryPlayedY', lotteryGamePlayed);
-        if (lotteryGamePlayed === 'salary4Life') {
-          let salarySelected = '';
-          menu.session.get('salaryOptionselected').then((salarySelectedX) => {
-            salarySelected = salarySelectedX;
-            console.log('selectx', salarySelected);
-          });
-          console.log('selectedY', salarySelected);
-          const inputArray = input.split(',');
-          const valid = HelperUtils.checksalary4LifeInput(inputArray, salarySelected);
-          if (valid) {
-            menu.session.set('numbersSelected', input);
-            menu.con(`Your Selections are ${input}
-              Kindly insert Bet Amount and Submit Your Bet.`);
-          } else {
-            menu.end('You have entered invalid length of numbers!!');
+          if (lotteryGamePlayed === 'salary4Life') {
+            let salarySelected = '';
+            menu.session.get('salaryOptionselected').then((salarySelectedX) => {
+              salarySelected = salarySelectedX;
+              console.log('selectx', salarySelected);
+              const inputArray = input.split(',');
+              const valid = HelperUtils.checksalary4LifeInput(inputArray, salarySelected);
+              if (valid) {
+                menu.session.set('numbersSelected', input);
+                menu.con(`Your Selections are ${input}
+                  Kindly insert Bet Amount and Submit Your Bet.`);
+              } else {
+                menu.end('You have entered invalid length of numbers!!');
+              }
+            });
           }
-        }
+        });
       },
       next: {
         '*\\d+': 'feedbackMenu'
