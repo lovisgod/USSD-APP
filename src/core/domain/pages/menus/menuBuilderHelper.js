@@ -7,8 +7,10 @@ import GamePages from '../games';
 class MenuBuilderHelper {
 
   static menu = new UssdMenu();
+  // static sessions = {};
 
   constructor() {
+    let sessions = {};
     this.menu.sessionConfig({
       start(sessionId, callback) {
         // initialize current session if it doesn't exist
@@ -39,7 +41,6 @@ class MenuBuilderHelper {
     const gameType = '';
     const lotteryGameSelected = '';
 
-    const sessions = {};
     const menu = this.menu;
 
     // Define menu states
