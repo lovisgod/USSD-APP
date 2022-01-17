@@ -33,10 +33,14 @@ class MenuBuilderHelper {
         sessions[sessionId][key] = value;
         callback();
       },
+
       get(sessionId, key) {
-        const value = sessions[sessionId][key] ? sessions[sessionId][key] : '';
-        return value;
+        return new Promise((resolve, reject) => {
+          const value = sessions[sessionId][key];
+          resolve(value);
+        });
       }
+
     });
 
     // Define menu states
@@ -239,31 +243,22 @@ class MenuBuilderHelper {
         console.log('got here here');
         const input = menu.val;
         console.log(input);
-        let gamePlayed = '';
-        menu.session.get('gameType').then(gameType => {
-          gamePlayed = gameType;
-          console.log(gameType);
-          console.log(gamePlayed);
-        });
-        console.log(gamePlayed);
-        if (gamePlayed === 'lottery') {
-          const lotteryGamePlayed = menu.session.get('LotteryGamesType');
-          if (lotteryGamePlayed === 'Sala4Life') {
-            const salarySelected = '';
-            menu.session.get('salaryOptionselected').then((salarySelectedX) => {
-              salarySelected = salarySelectedX;
-              console.log(salarySelected);
-            });
+        const lotteryGamePlayed = menu.session.get('LotteryGamesType');
+        if (lotteryGamePlayed === 'Sala4Life') {
+          const salarySelected = '';
+          menu.session.get('salaryOptionselected').then((salarySelectedX) => {
+            salarySelected = salarySelectedX;
             console.log(salarySelected);
-            const inputArray = input.split(',');
-            const valid = HelperUtils.checksalary4LifeInput(inputArray, salarySelected);
-            if (valid) {
-              menu.session.set('numbersSelected', input);
-              menu.con(`Your Selections are ${input}
+          });
+          console.log(salarySelected);
+          const inputArray = input.split(',');
+          const valid = HelperUtils.checksalary4LifeInput(inputArray, salarySelected);
+          if (valid) {
+            menu.session.set('numbersSelected', input);
+            menu.con(`Your Selections are ${input}
               Kindly insert Bet Amount and Submit Your Bet.`);
-            } else {
-              menu.end('You have entered invalid length of numbers!!');
-            }
+          } else {
+            menu.end('You have entered invalid length of numbers!!');
           }
         }
       },
