@@ -4,13 +4,15 @@ import UssdMenu from 'ussd-menu-builder';
 import HelperUtils from '../../../../utils/HelperUtils';
 import GamePages from '../games';
 
+const sessions = {};
+
 class MenuBuilderHelper {
+// static sessions = {};
+
   static async gameMenus(args) {
     const gameType = '';
     const lotteryGameSelected = '';
     const menu = new UssdMenu();
-
-    const sessions = {};
 
     menu.sessionConfig({
       start(sessionId, callback) {
@@ -26,6 +28,7 @@ class MenuBuilderHelper {
         callback();
       },
       set: (sessionId, key, value, callback) => {
+        console.log(`set ${key} to ${value}`);
         // store key-value pair in current session
         sessions[sessionId][key] = value;
         callback();
