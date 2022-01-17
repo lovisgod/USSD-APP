@@ -25,19 +25,19 @@ class HelperUtils {
    * @return boolean
    */
   static checksalary4LifeInput(input, salaryOptionselected) {
-    if (salaryOptionselected === '6m') {
+    if (salaryOptionselected === '1') {
       if (input.length === 6) return true; return false;
     }
-    if (salaryOptionselected === '5m') {
+    if (salaryOptionselected === '2') {
       if (input.length === 5) return true; return false;
     }
-    if (salaryOptionselected === '4m') {
+    if (salaryOptionselected === '3') {
       if (input.length === 4) return true; return false;
     }
-    if (salaryOptionselected === '3m') {
+    if (salaryOptionselected === '4') {
       if (input.length === 3) return true; return false;
     }
-    if (salaryOptionselected === '2m') {
+    if (salaryOptionselected === '5') {
       if (input.length === 2) return true; return false;
     }
   }
