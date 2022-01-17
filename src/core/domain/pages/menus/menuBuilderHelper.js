@@ -243,7 +243,12 @@ class MenuBuilderHelper {
         console.log('got here here');
         const input = menu.val;
         console.log(input);
-        const lotteryGamePlayed = menu.session.get('LotteryGamesType');
+        let lotteryGamePlayed = '';
+        menu.session.get('LotteryGamesType').then(gameType => {
+          lotteryGamePlayed = gameType;
+          console.log(lotteryGamePlayed);
+        });
+        consonle.log(lotteryGamePlayed);
         if (lotteryGamePlayed === 'Sala4Life') {
           const salarySelected = '';
           menu.session.get('salaryOptionselected').then((salarySelectedX) => {
