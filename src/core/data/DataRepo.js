@@ -119,7 +119,7 @@ class DataRepo {
       return page;
     } catch (error) {
       console.log(error);
-      return 'END An error Just occurred';
+      return 'END Registration failed. Please try again';
     }
   }
 
