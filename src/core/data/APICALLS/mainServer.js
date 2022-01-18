@@ -4,7 +4,7 @@
 import axios from 'axios';
 
 const API_VERSION = 'v1';
-const BASE_URL = `http://localhost:8080/api/${API_VERSION}`;
+const BASE_URL = `https://lottery-api.zendost.co/api/${API_VERSION}`;
 const REGISTER_ENDPOINT = '/auth/signup-with-ussd';
 
 class MainServer {
