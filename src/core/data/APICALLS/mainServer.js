@@ -10,6 +10,7 @@ const REGISTER_ENDPOINT = '/auth/signup-with-ussd';
 class MainServer {
   static async register(args) {
     const { phoneNumber, email } = args;
+    console.log(`${phoneNumber} ${email}`);
     const response = await axios.post(`${BASE_URL}${REGISTER_ENDPOINT}`, {
       phone: phoneNumber,
       email
