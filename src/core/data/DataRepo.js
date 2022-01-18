@@ -90,7 +90,7 @@ class DataRepo {
       console.log(lastValueInTheBox);
       if (this.validateEmail(lastValueInTheBox)) {
         // make a post request to the server
-        const response = await MainServer.register(phoneNumber, lastValueInTheBox);
+        const response = await MainServer.register({ phoneNumber, email: lastValueInTheBox });
         // const statusMessage = `Registration completed!
         // Your ID is ${phoneNumber};
         // Kindly note that this ID can be used to fund your Account directly from all Nigerian Banks`;
