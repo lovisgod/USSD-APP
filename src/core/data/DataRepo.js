@@ -86,6 +86,8 @@ class DataRepo {
     try {
       let page = await RegisterPage.page();
       const lastValueInTheBox = text[text.length - 1];
+      console.log(phoneNumber);
+      console.log(lastValueInTheBox);
       if (this.validateEmail(lastValueInTheBox)) {
         // make a post request to the server
         const response = await MainServer.register(phoneNumber, lastValueInTheBox);
