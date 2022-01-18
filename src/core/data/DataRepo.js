@@ -14,6 +14,7 @@ import MenuBuilderHelper from '../domain/pages/menus/menuBuilderHelper';
 import PlayGameMenu from '../domain/pages/menus/playgamefirstmenu';
 import RegisterPage from '../domain/pages/registerpage';
 import Ussd1 from '../domain/pages/ussd1';
+import MainServer from './APICALLS/mainServer';
 
 /**
  * @class
@@ -86,10 +87,12 @@ class DataRepo {
       let page = await RegisterPage.page();
       const lastValueInTheBox = text[text.length - 1];
       if (this.validateEmail(lastValueInTheBox)) {
-        const statusMessage = `Registration completed!
-        Your ID is ${phoneNumber};
-        Kindly note that this ID can be used to fund your Account directly from all Nigerian Banks`;
-        page = `END ${statusMessage}`;
+        // make a post request to the server
+        const response = await MainServer.register(lastValueInTheBox, phoneNumber);
+        // const statusMessage = `Registration completed!
+        // Your ID is ${phoneNumber};
+        // Kindly note that this ID can be used to fund your Account directly from all Nigerian Banks`;
+        page = `${response}`;
       } else if (text.length === 1) {
         page = await RegisterPage.page();
       } else {
