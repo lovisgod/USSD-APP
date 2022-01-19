@@ -10,8 +10,9 @@ import axios from 'axios';
 import HelperUtils from '../../utils/HelperUtils';
 import PageCode from '../domain/pagecode';
 import GamePages from '../domain/pages/games';
-import MenuBuilderHelper from '../domain/pages/menus/menuBuilderHelper';
+import MenuBuilderHelper from '../domain/pages/menus/GamemenuBuilderHelper';
 import PlayGameMenu from '../domain/pages/menus/playgamefirstmenu';
+import WalletMenuBuilderHelper from '../domain/pages/menus/WalletmenuBuilderHelper';
 import RegisterPage from '../domain/pages/registerpage';
 import Ussd1 from '../domain/pages/ussd1';
 import MainServer from './APICALLS/mainServer';
@@ -59,6 +60,9 @@ class DataRepo {
         switch (pagemenuToShow[0]) {
           case '1':
             page = await this.registerMenu(pagemenuToShow, phoneNumber);
+            break;
+          case '3':
+            page = await WalletMenuBuilderHelper.walletMenus(args);
             break;
           case '4':
             page = await MenuBuilderHelper.gameMenus(args);
