@@ -45,6 +45,9 @@ class DataRepo {
           case '1':
             page = await RegisterPage.page();
             break;
+          case '3':
+            page = await WalletMenuBuilderHelper.walletMenus(args);
+            break;
           case '4':
             page = await MenuBuilderHelper.gameMenus(args);
             break;
