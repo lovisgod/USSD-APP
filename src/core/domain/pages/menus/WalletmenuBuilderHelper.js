@@ -57,8 +57,8 @@ class WalletMenuBuilderHelper {
       run: () => {
         // use menu.val to access user input value
         const code = menu.val;
-        menu.session.set('accountNumber', code);
-        menu.con(WalletPages.amountPage());
+        menu.session.set('amount', code);
+        menu.con(WalletPages.accountPage());
       },
       next: {
         '*\\d+': 'Withdrawal.details'
@@ -70,14 +70,14 @@ class WalletMenuBuilderHelper {
       run: () => {
         // use menu.val to access user input value
         const code = menu.val;
-        menu.session.set('amount', code);
+        menu.session.set('accountNumber', code);
         // check the details of the user's account
         menu.session.get('accountNumber').then((accountNumber) => {
           menu.session.get('amount').then((amount) => {
             menu.con(`Your account number is 
             ${accountNumber} and the amount is ${amount}\n
-            Do you want to proceed?\n
-            1. Yes\n
+            Do you want to proceed?
+            1. Yes
             2. No`);
           });
         });
