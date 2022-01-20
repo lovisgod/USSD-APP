@@ -50,7 +50,7 @@ class MenuBuilderHelper {
           menu.con(GamePages.checkGame());
         },
         next: {
-          '*\\d+': 'checkGame',
+          1: 'checkGame.code'
         }
       });
     } else {
@@ -78,7 +78,17 @@ class MenuBuilderHelper {
       }
     });
 
-    menu.state('checkGame', {
+    menu.state('checkGame.code', {
+      run: () => {
+        // use menu.con() to send response without terminating session
+        menu.con(GamePages.checkGame());
+      },
+      next: {
+        '*\\d+,': 'checkGame.result',
+      }
+    });
+
+    menu.state('checkGame.result', {
       run: () => {
         // check game from the server and display the result to user
         menu.con(`This will be your result
