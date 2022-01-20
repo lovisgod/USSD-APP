@@ -6,7 +6,8 @@ class WalletPages {
      * @returns String
      */
   static amountPage() {
-    return 'Please enter the amount you want to withdraw.';
+    return `WITHDRAWAL\n
+    Kindly Enter the Amount you want to Withdraw.`;
   }
 
   /**

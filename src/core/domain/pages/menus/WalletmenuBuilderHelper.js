@@ -46,14 +46,13 @@ class WalletMenuBuilderHelper {
         // use menu.con() to send response without terminating session
         menu.con(WalletPages.amountPage());
       },
-      // next object links to next state based on user input
-      // next: {
-      //   '*\\d+': 'WalletAccount',
-      // }
+      next: {
+        '*\\d+': 'wallet.account',
+      }
     });
 
     // // nesting states
-    menu.state('WalletAccount', {
+    menu.state('wallet.account', {
       run: () => {
         // use menu.val to access user input value
         const amountEntered = menu.val;
