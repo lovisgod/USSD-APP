@@ -16,6 +16,16 @@ class GamePages {
    * @method
    * @returns String
    */
+  static checkGame() {
+    return `Enter your booking code.
+    98.Main Menu.
+    99.Exit.`;
+  }
+
+  /**
+   * @method
+   * @returns String
+   */
   static playGameMenu() {
     return `1.Lottery Game.
     2.Jackpot Game.

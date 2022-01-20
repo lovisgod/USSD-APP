@@ -9,7 +9,7 @@ const sessions = {};
 class MenuBuilderHelper {
 // static sessions = {};
 
-  static async gameMenus(args) {
+  static async gameMenus(args, checkGame = false) {
     const gameType = '';
     const lotteryGameSelected = '';
     const menu = new UssdMenu();
@@ -47,10 +47,14 @@ class MenuBuilderHelper {
     menu.startState({
       run: () => {
         // use menu.con() to send response without terminating session
+        if (checkGame) {
+          menu.con(GamePages.checkGame());
+        }
         menu.con(GamePages.firstPage());
       },
       // next object links to next state based on user input
       next: {
+        '*\\d+,': 'checkGame',
         1: 'PlayGames',
         2: 'PlayBookingCode'
       }
@@ -63,6 +67,15 @@ class MenuBuilderHelper {
       next: {
         1: 'LotteryGames',
         2: 'JackpotGames'
+      }
+    });
+
+    menu.state('checkGame', {
+      run: () => {
+        // check game from the server and display the result to user
+        menu.con(`This will be your result
+        98:Main Menu
+        99:Exit`);
       }
     });
 
