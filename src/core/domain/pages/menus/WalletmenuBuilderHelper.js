@@ -44,7 +44,7 @@ class WalletMenuBuilderHelper {
     menu.startState({
       run: () => {
         // use menu.con() to send response without terminating session
-        menu.con(WalletPages.amountPage());
+        menu.con('Welcome to the Wallet Menu');
       },
       // next object links to next state based on user input
       next: {
