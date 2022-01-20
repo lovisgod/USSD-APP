@@ -52,65 +52,65 @@ class WalletMenuBuilderHelper {
       }
     });
 
-    // nesting states
-    menu.state('WalletAccount', {
-      run: () => {
-        // use menu.val to access user input value
-        const code = menu.val;
-        menu.session.set('amount', code);
-        menu.con(WalletPages.accountPage());
-      },
-      next: {
-        '*\\d+': 'Withdrawal.details'
-      }
-    });
+    // // nesting states
+    // menu.state('WalletAccount', {
+    //   run: () => {
+    //     // use menu.val to access user input value
+    //     const code = menu.val;
+    //     menu.session.set('amount', code);
+    //     menu.con(WalletPages.accountPage());
+    //   },
+    //   next: {
+    //     '*\\d+': 'Withdrawal.details'
+    //   }
+    // });
 
-    // nesting states
-    menu.state('Withdrawal.details', {
-      run: () => {
-        // use menu.val to access user input value
-        const code = menu.val;
-        menu.session.set('accountNumber', code);
-        // check the details of the user's account
-        menu.session.get('accountNumber').then((accountNumber) => {
-          menu.session.get('amount').then((amount) => {
-            menu.con(`Your account number is 
-            ${accountNumber} and the amount is ${amount}\n
-            Do you want to proceed?
-            1. Yes
-            2. No`);
-          });
-        });
-      },
-      next: {
-        1: 'Withdrawal.feedback',
-        2: 'Withdrawal.feedback'
-      }
-    });
+    // // nesting states
+    // menu.state('Withdrawal.details', {
+    //   run: () => {
+    //     // use menu.val to access user input value
+    //     const code = menu.val;
+    //     menu.session.set('accountNumber', code);
+    //     // check the details of the user's account
+    //     menu.session.get('accountNumber').then((accountNumber) => {
+    //       menu.session.get('amount').then((amount) => {
+    //         menu.con(`Your account number is 
+    //         ${accountNumber} and the amount is ${amount}\n
+    //         Do you want to proceed?
+    //         1. Yes
+    //         2. No`);
+    //       });
+    //     });
+    //   },
+    //   next: {
+    //     1: 'Withdrawal.feedback',
+    //     2: 'Withdrawal.feedback'
+    //   }
+    // });
 
-    // nesting states
-    menu.state('Withdrawal.feedback', {
-      run: () => {
-        // use menu.val to access user input value
-        const decision = menu.val;
-        // check the details of the user's account
-        const accountNo = menu.session.get('accountNumber').then((accountNumber) => accountNumber);
-        const amount = menu.session.get('amount').then((amountX) => amountX);
-        // send withdrawal request to the server
-        const body = {
-          accountNo, amount
-        };
-        if (decision === '1') {
-          menu.con(`Thank you for using our services\n
-          98. Main Menu
-          99. Exit`);
-        }
+    // // nesting states
+    // menu.state('Withdrawal.feedback', {
+    //   run: () => {
+    //     // use menu.val to access user input value
+    //     const decision = menu.val;
+    //     // check the details of the user's account
+    //     const accountNo = menu.session.get('accountNumber').then((accountNumber) => accountNumber);
+    //     const amount = menu.session.get('amount').then((amountX) => amountX);
+    //     // send withdrawal request to the server
+    //     const body = {
+    //       accountNo, amount
+    //     };
+    //     if (decision === '1') {
+    //       menu.con(`Thank you for using our services\n
+    //       98. Main Menu
+    //       99. Exit`);
+    //     }
 
-        if (decision === '2') {
-          menu.end('Thank you for using our services');
-        }
-      },
-    });
+    //     if (decision === '2') {
+    //       menu.end('Thank you for using our services');
+    //     }
+    //   },
+    // });
 
     const page = await menu.run(args);
     console.log('this is page ', page);
