@@ -84,7 +84,7 @@ class MenuBuilderHelper {
         menu.con('Please Enter your Game Code');
       },
       next: {
-        '*\\d+,': 'checkGame.result',
+        '*\\d+': 'checkGame.result',
       }
     });
 
