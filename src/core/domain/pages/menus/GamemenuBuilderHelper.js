@@ -49,8 +49,9 @@ class MenuBuilderHelper {
         // use menu.con() to send response without terminating session
         if (checkGame) {
           menu.con(GamePages.checkGame());
+        } else {
+          menu.con(GamePages.firstPage());
         }
-        menu.con(GamePages.firstPage());
       },
       // next object links to next state based on user input
       next: {
