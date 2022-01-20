@@ -43,23 +43,30 @@ class MenuBuilderHelper {
 
     });
 
-    // Define menu states
-    menu.startState({
-      run: () => {
-        // use menu.con() to send response without terminating session
-        if (checkGame) {
+    if (checkGame) {
+      menu.startState({
+        run: () => {
+          // use menu.con() to send response without terminating session
           menu.con(GamePages.checkGame());
-        } else {
-          menu.con(GamePages.firstPage());
+        },
+        next: {
+          '*\\d+': 'checkGame',
         }
-      },
-      // next object links to next state based on user input
-      next: {
-        '*\\d+': 'checkGame',
-        1: 'PlayGames',
-        2: 'PlayBookingCode'
-      }
-    });
+      });
+    } else {
+      // Define menu states
+      menu.startState({
+        run: () => {
+          // use menu.con() to send response without terminating session
+          menu.con(GamePages.firstPage());
+        },
+        // next object links to next state based on user input
+        next: {
+          1: 'PlayGames',
+          2: 'PlayBookingCode'
+        }
+      });
+    }
 
     menu.state('PlayGames', {
       run: () => {
@@ -258,7 +265,7 @@ class MenuBuilderHelper {
         const input = menu.val;
         console.log(input);
         let lotteryGamePlayed = '';
-        menu.session.get('LotteryGamesType').then(gameType => {
+        menu.session.get('LotteryGamesType').then((gameType) => {
           lotteryGamePlayed = gameType;
           console.log('lotteryPlayedX', lotteryGamePlayed);
           if (lotteryGamePlayed === 'salary4Life') {
