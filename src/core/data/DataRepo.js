@@ -70,7 +70,10 @@ class DataRepo {
             page = await WalletMenuBuilderHelper.walletMenus(args);
             break;
           case '4':
-            page = await MenuBuilderHelper.gameMenus(args);
+            page = await MenuBuilderHelper.gameMenus(args, false);
+            break;
+          case '5':
+            page = await MenuBuilderHelper.gameMenus(args, true);
             break;
           case '6':
             page = 'END';

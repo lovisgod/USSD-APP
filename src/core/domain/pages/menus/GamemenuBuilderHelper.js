@@ -81,7 +81,7 @@ class MenuBuilderHelper {
     menu.state('checkGame.code', {
       run: () => {
         // use menu.con() to send response without terminating session
-        menu.con(GamePages.checkGame());
+        menu.con('Please Enter your Game Code');
       },
       next: {
         '*\\d+,': 'checkGame.result',
