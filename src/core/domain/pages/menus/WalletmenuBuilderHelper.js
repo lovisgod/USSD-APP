@@ -47,9 +47,9 @@ class WalletMenuBuilderHelper {
         menu.con(WalletPages.amountPage());
       },
       // next object links to next state based on user input
-      next: {
-        '*\\d+': 'WalletAccount',
-      }
+      // next: {
+      //   '*\\d+': 'WalletAccount',
+      // }
     });
 
     // // nesting states
