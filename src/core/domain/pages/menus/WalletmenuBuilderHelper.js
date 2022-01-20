@@ -44,13 +44,22 @@ class WalletMenuBuilderHelper {
     menu.startState({
       run: () => {
         // use menu.con() to send response without terminating session
+        menu.con('Welcome, Please click submit to continue');
+      },
+      next: {
+        '*\\d+': 'wallet.amount',
+      }
+    });
+
+    menu.state('wallet.amount', {
+      run: () => {
+        // use menu.con() to send response without terminating session
         menu.con(WalletPages.amountPage());
       },
       next: {
         '*\\d+': 'wallet.account',
       }
     });
-
     // // nesting states
     menu.state('wallet.account', {
       run: () => {
