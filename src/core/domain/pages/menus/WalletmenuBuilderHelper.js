@@ -44,26 +44,26 @@ class WalletMenuBuilderHelper {
     menu.startState({
       run: () => {
         // use menu.con() to send response without terminating session
-        menu.con('Welcome to the Wallet Menu');
+        menu.con(WalletPages.amountPage());
       },
       // next object links to next state based on user input
-      // next: {
-      //   '*\\d+': 'WalletAccount'
-      // }
+      next: {
+        '*\\d+': 'WalletAccount',
+      }
     });
 
     // // nesting states
-    // menu.state('WalletAccount', {
-    //   run: () => {
-    //     // use menu.val to access user input value
-    //     const code = menu.val;
-    //     menu.session.set('amount', code);
-    //     menu.con(WalletPages.accountPage());
-    //   },
-    //   next: {
-    //     '*\\d+': 'Withdrawal.details'
-    //   }
-    // });
+    menu.state('WalletAccount', {
+      run: () => {
+        // use menu.val to access user input value
+        const amountEntered = menu.val;
+        menu.session.set('amount', amountEntered);
+        menu.con(WalletPages.accountPage());
+      },
+      // next: {
+      //   '*\\d+': 'Withdrawal.details'
+      // }
+    });
 
     // // nesting states
     // menu.state('Withdrawal.details', {
