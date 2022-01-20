@@ -44,6 +44,7 @@ class MenuBuilderHelper {
     });
 
     if (checkGame) {
+      console.log('got here here');
       menu.startState({
         run: () => {
           // use menu.con() to send response without terminating session
