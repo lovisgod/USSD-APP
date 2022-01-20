@@ -54,7 +54,7 @@ class MenuBuilderHelper {
       },
       // next object links to next state based on user input
       next: {
-        '*\\d+,': 'checkGame',
+        '*\\d+': 'checkGame',
         1: 'PlayGames',
         2: 'PlayBookingCode'
       }
