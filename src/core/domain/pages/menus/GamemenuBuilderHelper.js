@@ -92,9 +92,7 @@ class MenuBuilderHelper {
     menu.state('checkGame.result', {
       run: () => {
         // check game from the server and display the result to user
-        menu.con(`This will be your result
-        98:Main Menu
-        99:Exit`);
+        menu.end('This will be your result');
       }
     });
 
