@@ -140,37 +140,37 @@ class GamePages {
       case '2':
         name = 'Perm2';
         break;
-      case 3:
+      case '3':
         name = 'Perm3';
         break;
-      case 4:
+      case '4':
         name = 'Perm4';
         break;
-      case 5:
+      case '5':
         name = 'Perm5';
         break;
-      case 6:
+      case '6':
         name = 'FDN';
         break;
-      case 7:
+      case '7':
         name = '1-Against All';
         break;
-      case 8:
+      case '8':
         name = 'Banker';
         break;
-      case 9:
+      case '9':
         name = 'NAP1';
         break;
-      case 12:
+      case '12':
         name = 'NAP2';
         break;
-      case 13:
+      case '13':
         name = 'NAP3';
         break;
-      case 14:
+      case '14':
         name = 'NAP4';
         break;
-      case 15:
+      case '15':
         name = 'NAP5';
         break;
       default:
@@ -192,40 +192,40 @@ class GamePages {
       case '1':
         inst = 'Perm1';
         break;
-      case 2:
+      case '2':
         inst = 'Perm2';
         break;
-      case 3:
+      case '3':
         inst = 'Perm3';
         break;
-      case 4:
+      case '4':
         inst = 'Perm4';
         break;
-      case 5:
+      case '5':
         inst = 'Perm5';
         break;
-      case 6:
+      case '6':
         inst = 'FDN';
         break;
-      case 7:
+      case '7':
         inst = '1-Against All';
         break;
-      case 8:
+      case '8':
         inst = 'Banker';
         break;
-      case 9:
+      case '9':
         inst = 'NAP1';
         break;
-      case 12:
+      case '12':
         inst = 'NAP2';
         break;
-      case 13:
+      case '13':
         inst = 'NAP3';
         break;
-      case 14:
+      case '14':
         inst = 'NAP4';
         break;
-      case 15:
+      case '15':
         inst = 'NAP5';
         break;
       default:
