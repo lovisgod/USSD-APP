@@ -15,8 +15,9 @@ class MainServer {
       phone: phoneNumber,
       email
     });
+    console.log(response);
     if (response != null) {
-      if (response.status === 200) {
+      if (response.status === 201) {
         return 'END Registration completed!\n'
                      + `Your ID is ${phoneNumber};\n`
                      + 'Kindly note that this ID can be used to fund your Account directly from all Nigerian Banks';
