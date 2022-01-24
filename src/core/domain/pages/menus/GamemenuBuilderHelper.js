@@ -180,7 +180,8 @@ class MenuBuilderHelper {
           if (res.message === 'success') {
             let games = '';
             res.games.forEach((element) => {
-              games += `${res.games.indexOf(element) + 1}.${element.gameName}\n`;
+              games += `${res.games.indexOf(element) + 1}
+              .${element.name} - ${element.lotteryName}\n`;
             });
             console.log('games', games);
             menu.con(`${games}`);
