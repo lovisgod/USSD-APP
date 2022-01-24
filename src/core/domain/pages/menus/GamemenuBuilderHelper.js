@@ -178,7 +178,7 @@ class MenuBuilderHelper {
         ).then((res) => {
           console.log('res', res);
           if (res.message === 'success') {
-            const games = '';
+            let games = '';
             res.games.forEach((element) => {
               games += `${res.games.indexOf(element) + 1}.${element.gameName}\n`;
             });
