@@ -179,14 +179,22 @@ class MenuBuilderHelper {
         ).then((res) => {
           console.log('res', res);
           if (res.message === 'success') {
-            let games = '';
-            res.games.forEach((element) => {
-              games += `${res.games.indexOf(element) + 1}.${element.name} - ${element.lotteryName}\n`;
-            });
-            console.log('games', games);
-            menu.con(`${games}`);
+            if (res.games.length > 0) {
+              let games = '';
+              res.games.forEach((element) => {
+                games += `${res.games.indexOf(element) + 1}.${element.name} - ${element.lotteryName}\n`;
+              });
+              console.log('games', games);
+              menu.con(`${games}`);
+            } else {
+              menu.con(`No games for this day
+              98. Main Menu
+              99. Exit`);
+            }
           } else {
-            menu.con('No games for this day');
+            menu.con(`${res.message}
+              98. Main Menu
+              99. Exit`);
           }
         });
       },
