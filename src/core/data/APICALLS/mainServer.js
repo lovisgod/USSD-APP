@@ -42,17 +42,17 @@ class MainServer {
       if (response.status === 200 && response.data.status === 'success') {
         return {
           games: response.data.data.games,
-          message: 'Success'
+          message: 'success'
         };
       }
       return {
         games: [],
-        message: 'END Could not fecch games, Please try again'
+        message: 'END Could not fecch games, Please try again!!!'
       };
     }
     return {
       games: [],
-      message: 'END Could not fecch games, Please try again'
+      message: 'END Could not fecch games, Please try again!!!'
     };
   }
 }
