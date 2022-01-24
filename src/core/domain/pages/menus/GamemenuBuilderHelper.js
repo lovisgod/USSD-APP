@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable require-jsdoc */
 /* eslint-disable no-undef */
 import UssdMenu from 'ussd-menu-builder';
@@ -180,8 +181,7 @@ class MenuBuilderHelper {
           if (res.message === 'success') {
             let games = '';
             res.games.forEach((element) => {
-              games += `${res.games.indexOf(element) + 1}
-              .${element.name} - ${element.lotteryName}\n`;
+              games += `${res.games.indexOf(element) + 1}.${element.name} - ${element.lotteryName}\n`;
             });
             console.log('games', games);
             menu.con(`${games}`);
