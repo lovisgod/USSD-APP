@@ -37,7 +37,7 @@ class MainServer {
         'X-mobile-Authorization': '09059620514'
       }
     });
-    console.log(response.data);
+    console.log(response.status);
     if (response != null) {
       if (response.status === 200 && response.data.status === 'success') {
         return {
