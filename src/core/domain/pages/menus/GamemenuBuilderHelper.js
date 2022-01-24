@@ -173,7 +173,7 @@ class MenuBuilderHelper {
         // get the day of the week choosen
         const code = menu.val;
         // fetch the games for the day of the week
-        MainServer.register(
+        MainServer.getDailyGames(
           { page: 1, limit: 10, currentWeekDay: code }
         ).then((res) => {
           console.log(res);
