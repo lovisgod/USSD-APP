@@ -177,8 +177,17 @@ class MenuBuilderHelper {
           { page: 1, limit: 10, currentWeekDay: code }
         ).then((res) => {
           console.log('res', res);
+          if (res.message === 'success') {
+            const games = '';
+            res.games.forEach((element) => {
+              games += `${res.games.indexOf(element) + 1}.${element.gameName}\n`;
+            });
+            console.log('games', games);
+            menu.con(`${games}`);
+          } else {
+            menu.con('No games for this day');
+          }
         });
-        menu.con(GamePages.loadedGamesforDailyGames());
       },
       next: {
         '*\\d+': 'lottoGameType',
