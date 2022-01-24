@@ -176,7 +176,7 @@ class MenuBuilderHelper {
         MainServer.getDailyGames(
           { page: 1, limit: 10, currentWeekDay: code }
         ).then((res) => {
-          console.log(res);
+          console.log('res', res);
         });
         menu.con(GamePages.loadedGamesforDailyGames());
       },

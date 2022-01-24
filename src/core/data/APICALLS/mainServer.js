@@ -29,31 +29,36 @@ class MainServer {
   }
 
   static async getDailyGames(args) {
-    const { page, limit, currentWeekDay } = args;
-    console.log(`${page} ${limit} ${currentWeekDay}`);
-    const response = await axios.get(`${BASE_URL}${GET_DAILY_GAMES}
+    try {
+      const { page, limit, currentWeekDay } = args;
+      console.log(`${page} ${limit} ${currentWeekDay}`);
+      const response = await axios.get(`${BASE_URL}${GET_DAILY_GAMES}
     ?page=${page}&limit=${limit}&currentWeekDay=${currentWeekDay}`, {
-      headers: {
-        'X-mobile-Authorization': '09059620514'
-      }
-    });
-    console.log(response.status);
-    if (response != null) {
-      if (response.status === 200 && response.data.status === 'success') {
+        headers: {
+          'X-mobile-Authorization': '09059620514'
+        }
+      });
+      console.log(response.status);
+      if (response != null) {
+        if (response.status === 200 && response.data.status === 'success') {
+          return {
+            games: response.data.data.games,
+            message: 'success'
+          };
+        }
         return {
-          games: response.data.data.games,
-          message: 'success'
+          games: [],
+          message: 'END Could not fecch games, Please try again!!!'
         };
       }
       return {
         games: [],
         message: 'END Could not fecch games, Please try again!!!'
       };
+    } catch (error) {
+      console.log('error', error);
+      return 'END An error Just occurred';
     }
-    return {
-      games: [],
-      message: 'END Could not fecch games, Please try again!!!'
-    };
   }
 }
 
