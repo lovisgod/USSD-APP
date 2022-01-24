@@ -32,8 +32,13 @@ class MainServer {
     try {
       const { page, limit, currentWeekDay } = args;
       console.log(`${page} ${limit} ${currentWeekDay}`);
-      const response = await axios.get(`${BASE_URL}${GET_DAILY_GAMES}
-    ?page=${page}&limit=${limit}&currentWeekDay=${currentWeekDay}`, {
+      console.log(`${BASE_URL}${GET_DAILY_GAMES}`);
+      const response = await axios.get(`${BASE_URL}${GET_DAILY_GAMES}`, {
+        params: {
+          page,
+          limit,
+          currentWeekDay
+        },
         headers: {
           'X-mobile-Authorization': '09059620514'
         }
