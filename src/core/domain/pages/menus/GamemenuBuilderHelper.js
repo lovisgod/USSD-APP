@@ -398,9 +398,9 @@ class MenuBuilderHelper {
           // get potential winning
           const lines = numbersSelected.split(',').length;
           // const amount  = await menu.session.get('amount');
-          const bodyData = {
-            amount, betType, booster, resultType, selections
-          };
+          // const bodyData = {
+          //   amount, betType, booster, resultType, selections
+          // };
           const potentialWinning = {
             linesCount: lines,
             amount: 500,
