@@ -7,6 +7,8 @@ const API_VERSION = 'v1';
 const BASE_URL = `https://lottery-api.zendost.co/api/${API_VERSION}`;
 const REGISTER_ENDPOINT = '/auth/signup-with-ussd';
 const GET_DAILY_GAMES = '/game/fetch-games';
+const GET_BET_TYPE = '/game-config/fetch-bettypes';
+const GET_POTENTIAL_WIN = 'game/ticket/get-potential-winning';
 
 class MainServer {
   static async register(args) {
@@ -181,6 +183,81 @@ class MainServer {
       return {
         games: [],
         message: 'END Could not fecch games, Please try again!!!'
+      };
+    } catch (error) {
+      console.log('error', error);
+      return 'END An error Just occurred';
+    }
+  }
+
+  static async getGameTypes(args) {
+    try {
+      const { page, limit, currentWeekDay } = args;
+      console.log(`${page} ${limit} ${currentWeekDay}`);
+      console.log(`${BASE_URL}${GET_BET_TYPE}`);
+      const response = await axios.get(`${BASE_URL}${GET_BET_TYPE}`, {
+        headers: {
+          'X-mobile-Authorization': '09059620514'
+        }
+      });
+      console.log(response.status);
+      if (response != null) {
+        if (response.status === 200 && response.data.status === 'success') {
+          return {
+            games: response.data.data,
+            message: 'success'
+          };
+        }
+        return {
+          games: [],
+          message: 'END Could not fecth games, Please try again!!!'
+        };
+      }
+      return {
+        games: [],
+        message: 'END Could not fecth games, Please try again!!!'
+      };
+    } catch (error) {
+      console.log('error', error);
+      return 'END An error Just occurred';
+    }
+  }
+
+  static async getPotWining(args) {
+    try {
+      const {
+        amount, betType, booster, resultType, selections
+      } = args;
+      console.log(`${amount} ${betType} ${selections}`);
+      console.log(`${BASE_URL}${GET_POTENTIAL_WIN}`);
+      const response = await axios.get(`${BASE_URL}${GET_POTENTIAL_WIN}`, {
+        data: {
+          amount,
+          betType,
+          booster,
+          resultType,
+          selections
+        },
+        headers: {
+          'X-mobile-Authorization': '09059620514'
+        }
+      });
+      console.log(response.status);
+      if (response != null) {
+        if (response.status === 200 && response.data.status === 'success') {
+          return {
+            data: response.data.data,
+            message: 'success'
+          };
+        }
+        return {
+          data: {},
+          message: 'END Could not fecth games, Please try again!!!'
+        };
+      }
+      return {
+        data: {},
+        message: 'END Could not fecth games, Please try again!!!'
       };
     } catch (error) {
       console.log('error', error);

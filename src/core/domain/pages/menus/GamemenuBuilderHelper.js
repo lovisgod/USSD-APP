@@ -247,7 +247,7 @@ class MenuBuilderHelper {
         menu.con(instruction);
       },
       next: {
-        '*\\d+': 'amountmenu',
+        '*\\d+': 'gameBoosters',
       }
     });
 
@@ -351,6 +351,94 @@ class MenuBuilderHelper {
       },
       next: {
         1: 'PlayGames'
+      }
+    });
+
+    // get boosters
+    menu.state('gameBoosters', {
+      run: () => {
+        const input = menu.val;
+        // set the value selected for the game
+        menu.session.set('numbersSelected', input);
+        const instruction = `Select Game Booster.
+        ${GamePages.getBoosters()}`;
+        menu.con(instruction);
+      },
+      next: {
+        '*\\d+': 'resultTypes'
+      }
+    });
+
+    // result types
+    menu.state('resultTypes', {
+      run: () => {
+        const boosterNumber = menu.val;
+        // get value for the booster selected
+        const boosterValue = GamePages.getBoosterfromInput(boosterNumber);
+        // set the value selected for the game booster
+        menu.session.set('gameBooster', boosterValue);
+        const instruction = `Select Result type.
+        ${GamePages.getReultTypes()}`;
+        menu.con(instruction);
+      },
+      next: {
+        '*\\d+': 'firstAmount'
+      }
+    });
+
+    // result types
+    menu.state('firstAmount', {
+      run: async () => {
+        const resultTypesNumber = menu.val;
+        // get value for the booster selected
+        const resultTypeValue = GamePages.getResultTypefromInput(resultTypesNumber);
+        // set the value selected for the result type
+        menu.session.set('resultType', resultTypeValue);
+        menu.session.get('numbersSelected').then((numbersSelected) => {
+          // get potential winning
+          const lines = numbersSelected.split(',').length;
+          // const amount  = await menu.session.get('amount');
+          const bodyData = {
+            amount, betType, booster, resultType, selections
+          };
+          const potentialWinning = {
+            linesCount: lines,
+            amount: 500,
+            totalStakedAmount: 2000,
+            potentialWinning: '21600'
+          };
+          const instruction = `GAME SUMMARY
+        Line Count - ${potentialWinning.linesCount}
+        Amount - ${potentialWinning.amount}
+        Total Staked Amount - ${potentialWinning.totalStakedAmount}
+        Potential Winning - ${potentialWinning.potentialWinning}
+        
+        Kindly choose 1 to continue or 99 to Exit.
+        
+        1. Continue.
+        99. Exit.`;
+          menu.con(instruction);
+          // MainServer.getPotWining(resultTypeValue).then((potentialWinning) => {
+          //   if (potentialWinning.message === 'success') {
+          //     const instruction = `GAME SUMMARY
+          //     Line Count - ${potentialWinning.linesCount}
+          //     Amount - ${potentialWinning.amount}
+          //     Total Staked Amount - ${potentialWinning.totalStakedAmount}
+          //     Potential Winning - ${potentialWinning.potentialWinning}
+
+          //     Kindly choose 1 to continue or 99 to Exit.
+
+        //     1. Continue.
+        //     99. Exit.`;
+        //     menu.con(instruction);
+        //   } else {
+        //     menu.end('Error Occured');
+        //   }
+        // });
+        });
+      },
+      next: {
+        1: 'feedbackMenu',
       }
     });
 

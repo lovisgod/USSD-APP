@@ -82,11 +82,11 @@ class GamePages {
    * @returns String
    */
   static lottoGameTypes() {
-    return `1. Perm1.
-    2. Perm2.
-    3. Perm3.
-    4. Perm4.
-    5. Perm5.
+    return `1. PERM-1.
+    2. PERM-2.
+    3. PERM-3.
+    4. PERM-4.
+    5. PERM-5.
     6. FDN.
     7. 1-Against All.
     8. Banker.
@@ -130,24 +130,56 @@ class GamePages {
    * @method
    * @returns String
    */
+  static getBoosters() {
+    return `1.Default
+    2.Mega
+    3.Max
+    4.Straight
+    5.Turning
+    6.Over-under
+    7.back
+    98.Main Menu.
+    99.Exit.`;
+  }
+
+  /**
+   * @method
+   * @returns String
+   */
+  static getReultTypes() {
+    return `1.Winning
+    2.Machine
+    3.Double-chance
+    4.1-leg
+    5.Turning
+    6.Recovery
+    7.back
+    98.Main Menu.
+    99.Exit.`;
+  }
+
+  /**
+   * @method
+   * @returns String
+   */
   static getGameNameForInput(Input) {
     console.log(Input);
     let name = '';
     switch (Input) {
       case '1':
-        name = 'Perm1';
+        name = 'perm-1';
         break;
       case '2':
-        name = 'Perm2';
+        name = 'perm-2';
         break;
       case '3':
-        name = 'Perm3';
+        name = 'perm-3';
         break;
       case '4':
-        name = 'Perm4';
+        name = 'perm-4';
         break;
       case '5':
-        name = 'Perm5';
+        name = 'perm-5';
         break;
       case '6':
         name = 'FDN';
@@ -159,19 +191,19 @@ class GamePages {
         name = 'Banker';
         break;
       case '9':
-        name = 'NAP1';
+        name = 'nap-1';
         break;
       case '12':
-        name = 'NAP2';
+        name = 'nap-2';
         break;
       case '13':
-        name = 'NAP3';
+        name = 'nap-3';
         break;
       case '14':
-        name = 'NAP4';
+        name = 'nap-4';
         break;
       case '15':
-        name = 'NAP5';
+        name = 'nap-5';
         break;
       default:
         name = 'Invalid Input';
@@ -233,6 +265,72 @@ class GamePages {
         break;
     }
     return inst;
+  }
+
+  /**
+   * @method
+   * @returns String
+   */
+  static getBoosterfromInput(Input) {
+    console.log(Input);
+    let name = '';
+    switch (Input) {
+      case '1':
+        name = 'Default';
+        break;
+      case '2':
+        name = 'Mega';
+        break;
+      case '3':
+        name = 'Max';
+        break;
+      case '4':
+        name = 'Straight';
+        break;
+      case '5':
+        name = 'Turning';
+        break;
+      case '6':
+        name = 'Over-under';
+        break;
+      default:
+        name = 'Invalid Input';
+        break;
+    }
+    return name;
+  }
+
+  /**
+   * @method
+   * @returns String
+   */
+  static getResultTypefromInput(Input) {
+    console.log(Input);
+    let name = '';
+    switch (Input) {
+      case '1':
+        name = 'Winning';
+        break;
+      case '2':
+        name = 'Machine';
+        break;
+      case '3':
+        name = 'Double-chance';
+        break;
+      case '4':
+        name = '1-leg';
+        break;
+      case '5':
+        name = 'Turning';
+        break;
+      case '6':
+        name = 'Recovery';
+        break;
+      default:
+        name = 'Invalid Input';
+        break;
+    }
+    return name;
   }
 }
 
