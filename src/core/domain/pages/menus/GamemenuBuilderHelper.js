@@ -179,6 +179,7 @@ class MenuBuilderHelper {
         ).then((res) => {
           console.log('res', res);
           if (res.message === 'success') {
+            menu.session.set('gamesDaily', res.games);
             if (res.games.length > 0) {
               let games = '';
               res.games.forEach((element) => {
@@ -205,7 +206,11 @@ class MenuBuilderHelper {
 
     // lottoGameTypes state
     menu.state('lottoGameType', {
-      run: () => {
+      run: async () => {
+        const input = menu.val;
+        const gameszzz = await menu.session.get('gamesDaily');
+        console.log('gameszzz', gameszzz);
+        menu.session.set('gameType', input);
         menu.con(GamePages.lottoGameTypes());
       },
       next: {
