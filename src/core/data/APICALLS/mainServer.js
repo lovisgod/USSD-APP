@@ -356,34 +356,43 @@ class MainServer {
       } = args;
       console.log(`${amount} ${betType} ${selections}`);
       console.log(`${BASE_URL}${GET_POTENTIAL_WIN}`);
-      const response = await axios.get(`${BASE_URL}${GET_POTENTIAL_WIN}`, {
-        data: {
-          amount,
-          betType,
-          booster,
-          resultType,
-          selections
-        },
-        headers: {
-          'X-mobile-Authorization': '09059620514'
-        }
-      });
-      console.log(response.status);
-      if (response != null) {
-        if (response.status === 200 && response.data.status === 'success') {
-          return {
-            data: response.data.data,
-            message: 'success'
-          };
-        }
-        return {
-          data: {},
-          message: 'END Could not fecth games, Please try again!!!'
-        };
-      }
+      // const response = await axios.get(`${BASE_URL}${GET_POTENTIAL_WIN}`, {
+      //   data: {
+      //     amount,
+      //     betType,
+      //     booster,
+      //     resultType,
+      //     selections
+      //   },
+      //   headers: {
+      //     'X-mobile-Authorization': '09059620514'
+      //   }
+      // });
+      // console.log(response.status);
+      // if (response != null) {
+      //   if (response.status === 200 && response.data.status === 'success') {
+      //     return {
+      //       data: response.data.data,
+      //       message: 'success'
+      //     };
+      //   }
+      //   return {
+      //     data: {},
+      //     message: 'END Could not fecth games, Please try again!!!'
+      //   };
+      // }
+      // return {
+      //   data: {},
+      //   message: 'END Could not fecth games, Please try again!!!'
+      // };
       return {
-        data: {},
-        message: 'END Could not fecth games, Please try again!!!'
+        data: {
+          linesCount: 4,
+          amount: 500,
+          totalStakedAmount: 2000,
+          potentialWinning: '21600'
+        },
+        message: 'success'
       };
     } catch (error) {
       console.log('error', error);
