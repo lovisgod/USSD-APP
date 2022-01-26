@@ -327,7 +327,7 @@ class MenuBuilderHelper {
 
     // instruction for lotto state
     menu.state('feedbackMenu', {
-      run: () => {
+      run: async () => {
         const amount = menu.val;
         // send request to server to play game and get response
         // display response to user and display menu
@@ -336,9 +336,9 @@ class MenuBuilderHelper {
         const LotteryGamesType = menu.session.get('LotteryGamesType');
         if (LotteryGamesType === 'lottoIndoor'
      || LotteryGamesType === 'lottoGhana' || LotteryGamesType === 'legendaryLotto') {
-          lottoGameName = menu.session.get('lottoGameName');
+          lottoGameName = await menu.session.get('lottoGameName');
         }
-        const numbersSelected = menu.session.get('numbersSelected');
+        const numbersSelected = await menu.session.get('numbersSelected');
         console.log(`${gameType} ${lottoGameName} ${numbersSelected} ${amount}`);
         const instruction = `Bet Submitted Successfully!
     Ticket Details are: Ticket-ID, Pot. Winning, 
@@ -382,59 +382,58 @@ class MenuBuilderHelper {
         menu.con(instruction);
       },
       next: {
-        '*\\d+': 'firstAmount'
+        '*\\d+': 'enterAmount'
       }
     });
 
     // result types
-    menu.state('firstAmount', {
+    menu.state('enterAmount', {
       run: async () => {
         const resultTypesNumber = menu.val;
         // get value for the booster selected
         const resultTypeValue = GamePages.getResultTypefromInput(resultTypesNumber);
         // set the value selected for the result type
         menu.session.set('resultType', resultTypeValue);
-        menu.session.get('numbersSelected').then((numbersSelected) => {
-          // get potential winning
-          const lines = numbersSelected.split(',').length;
-          // const amount  = await menu.session.get('amount');
-          // const bodyData = {
-          //   amount, betType, booster, resultType, selections
-          // };
-          const potentialWinning = {
-            linesCount: lines,
-            amount: 500,
-            totalStakedAmount: 2000,
-            potentialWinning: '21600'
-          };
-          const instruction = `GAME SUMMARY
-        Line Count - ${potentialWinning.linesCount}
-        Amount - ${potentialWinning.amount}
-        Total Staked Amount - ${potentialWinning.totalStakedAmount}
-        Potential Winning - ${potentialWinning.potentialWinning}
-        
-        Kindly choose 1 to continue or 99 to Exit.
-        
-        1. Continue.
-        99. Exit.`;
-          menu.con(instruction);
-          // MainServer.getPotWining(resultTypeValue).then((potentialWinning) => {
-          //   if (potentialWinning.message === 'success') {
-          //     const instruction = `GAME SUMMARY
-          //     Line Count - ${potentialWinning.linesCount}
-          //     Amount - ${potentialWinning.amount}
-          //     Total Staked Amount - ${potentialWinning.totalStakedAmount}
-          //     Potential Winning - ${potentialWinning.potentialWinning}
+        menu.con(`Enter Bet Amount.
+        98. Main Menu.
+        99. Exit.`);
+      },
+      next: {
+        '*\\d+': 'winingPot',
+      }
+    });
 
-          //     Kindly choose 1 to continue or 99 to Exit.
+    // result types
+    menu.state('winingPot', {
+      run: async () => {
+        const amount = menu.val;
+        // get value for the booster selected
+        const resultType = await menu.session.get('resultType');
+        const selectionsValue = await menu.session.get('numbersSelected');
+        const booster = await menu.session.get('gameBooster');
+        const betType = await menu.session.get('lottoGameName');
+        const selections = selectionsValue.replace(/,/g, '-');
+        // get potential winning
+        const bodyData = {
+          amount, betType, booster, resultType, selections
+        };
+        MainServer.getPotWining(bodyData).then((potentialWinning) => {
+          if (potentialWinning.message === 'success') {
+            const instruction = `GAME SUMMARY
+            Line Count - ${potentialWinning.linesCount}
+            Amount - ${potentialWinning.amount}
+            Total Staked Amount - ${potentialWinning.totalStakedAmount}
+            Potential Winning - ${potentialWinning.potentialWinning}
 
-        //     1. Continue.
-        //     99. Exit.`;
-        //     menu.con(instruction);
-        //   } else {
-        //     menu.end('Error Occured');
-        //   }
-        // });
+            Kindly choose 1 to continue or 99 to Exit.
+
+            1. Continue.
+            99. Exit.`;
+            menu.session.set('potentialWinning', JSON.stringify(potentialWinning));
+            menu.con(instruction);
+          } else {
+            menu.end('Error Occured');
+          }
         });
       },
       next: {
