@@ -24,7 +24,7 @@ const options = {
 };
 const logger = createLogger({
   format: combine(
-    label({ label: 'Jara' }),
+    label({ label: 'ussdapp' }),
     timestamp(),
     prettyPrint(),
   ),

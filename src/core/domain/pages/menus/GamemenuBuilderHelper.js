@@ -208,8 +208,6 @@ class MenuBuilderHelper {
     menu.state('lottoGameType', {
       run: async () => {
         const input = menu.val;
-        const gameszzz = await menu.session.get('gamesDaily');
-        console.log('gameszzz', gameszzz);
         menu.session.set('gameType', input);
         menu.con(GamePages.lottoGameTypes());
       },
@@ -336,7 +334,9 @@ class MenuBuilderHelper {
         const amount = menu.val;
         // send request to server to play game and get response
         // display response to user and display menu
-        const gameType = menu.session.get('gameType');
+        const gameType = await menu.session.get('gameType');
+        const gamesDaily = await menu.session.get('gamesDaily');
+        const pottentialWin = await menu.session.get('potentialWinning');
         let lottoGameName = '';
         const LotteryGamesType = menu.session.get('LotteryGamesType');
         if (LotteryGamesType === 'lottoIndoor'
@@ -422,19 +422,19 @@ class MenuBuilderHelper {
         const bodyData = {
           amount, betType, booster, resultType, selections
         };
-        MainServer.getPotWining(bodyData).then((potentialWinning) => {
-          if (potentialWinning.message === 'success') {
+        MainServer.getPotWining(bodyData).then((response) => {
+          if (response.message === 'success') {
             const instruction = `GAME SUMMARY
-            Line Count - ${potentialWinning.linesCount}
-            Amount - ${potentialWinning.amount}
-            Total Staked Amount - ${potentialWinning.totalStakedAmount}
-            Potential Winning - ${potentialWinning.potentialWinning}
+            Line Count - ${response.data.linesCount}
+            Amount - ${response.data.amount}
+            Total Staked Amount - ${response.data.totalStakedAmount}
+            Potential Winning - ${response.data.potentialWinning}
 
             Kindly choose 1 to continue or 99 to Exit.
 
             1. Continue.
             99. Exit.`;
-            menu.session.set('potentialWinning', JSON.stringify(potentialWinning));
+            menu.session.set('potentialWinning', JSON.stringify(response));
             menu.con(instruction);
           } else {
             menu.end('Error Occured');
