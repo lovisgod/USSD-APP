@@ -370,9 +370,9 @@ class MenuBuilderHelper {
           const response = await MainServer.createTicket(bodyData);
           console.log('response', response);
           if (response.message === 'success') {
-            instruction = `Bet Submitted Successfully!
-            Ticket Details are: Ticket-ID, Pot. Winning, 
-            Bet Amount:, Game Name, Bet-Type, Result Time, selections.
+            instruction = `${response.data.message}!
+            Ticket Details are: 
+            Ticket-ID => ${response.data.data.ticketId}
             
             1. Play Another Game.
             98. Main Menu.

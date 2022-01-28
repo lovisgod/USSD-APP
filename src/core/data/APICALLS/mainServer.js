@@ -449,10 +449,10 @@ class MainServer {
       // };
       return {
         data: {
-          linesCount: 4,
-          amount: 500,
-          totalStakedAmount: 2000,
-          potentialWinning: '21600'
+          message: 'Ticket created successfully',
+          data: {
+            ticketId: 'LOTTERY-TICKET-1643373743668'
+          }
         },
         message: 'success'
       };
