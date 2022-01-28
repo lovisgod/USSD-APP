@@ -8,7 +8,8 @@ const BASE_URL = `https://lottery-api.zendost.co/api/${API_VERSION}`;
 const REGISTER_ENDPOINT = '/auth/signup-with-ussd';
 const GET_DAILY_GAMES = '/game/fetch-games';
 const GET_BET_TYPE = '/game-config/fetch-bettypes';
-const GET_POTENTIAL_WIN = 'game/ticket/get-potential-winning';
+const GET_POTENTIAL_WIN = '/game/ticket/get-potential-winning';
+const CREATE_TICKET = '/game/create-ticket';
 
 class MainServer {
   static async register(args) {
@@ -397,6 +398,70 @@ class MainServer {
     } catch (error) {
       console.log('error', error);
       return 'END An error Just occurred';
+    }
+  }
+
+  static async createTicket(args) {
+    try {
+      const {
+        gameId,
+        linesCount,
+        amount,
+        totalStakedAmount,
+        betType,
+        booster,
+        resultType,
+        selections,
+      } = args;
+      console.log(`${amount} ${betType} ${selections}`);
+      console.log(`${BASE_URL}${CREATE_TICKET}`);
+      // const response = await axios.get(`${BASE_URL}${CREATE_TICKET}`, {
+      //   data: {
+      //     gameId,
+      //     linesCount,
+      //     amount,
+      //     totalStakedAmount,
+      //     betType,
+      //     booster,
+      //     resultType,
+      //     selections
+      //   },
+      //   headers: {
+      //     'X-mobile-Authorization': '09059620514'
+      //   }
+      // });
+      // console.log(response.status);
+      // if (response != null) {
+      //   if (response.status === 200 && response.data.status === 'success') {
+      //     return {
+      //       data: response.data.data,
+      //       message: 'success'
+      //     };
+      //   }
+      //   return {
+      //     data: {},
+      //     message: 'END Could not create Ticket, Please try again!!!'
+      //   };
+      // }
+      // return {
+      //   data: {},
+      //   message: 'END Could not Create Ticket, Please try again!!!'
+      // };
+      return {
+        data: {
+          linesCount: 4,
+          amount: 500,
+          totalStakedAmount: 2000,
+          potentialWinning: '21600'
+        },
+        message: 'success'
+      };
+    } catch (error) {
+      console.log('error', error);
+      return {
+        data: {},
+        message: 'END An error Just occurred'
+      };
     }
   }
 }

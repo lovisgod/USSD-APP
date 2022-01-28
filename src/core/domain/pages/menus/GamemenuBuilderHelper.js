@@ -331,28 +331,65 @@ class MenuBuilderHelper {
     // instruction for lotto state
     menu.state('feedbackMenu', {
       run: async () => {
-        const amount = menu.val;
+        const input = menu.val;
+        let instruction = '';
         // send request to server to play game and get response
         // display response to user and display menu
         const gameType = await menu.session.get('gameType');
         const gamesDaily = await menu.session.get('gamesDaily');
-        const pottentialWin = await menu.session.get('potentialWinning');
+        const game = gamesDaily[input - 1];
+        console.log('game', game);
         let lottoGameName = '';
         const LotteryGamesType = menu.session.get('LotteryGamesType');
+        const resultType = await menu.session.get('resultType');
+        const selectionsValue = await menu.session.get('numbersSelected');
+        const booster = await menu.session.get('gameBooster');
+        const betType = await menu.session.get('lottoGameName');
+        const selections = selectionsValue.replace(/,/g, '-');
         if (LotteryGamesType === 'lottoIndoor'
-     || LotteryGamesType === 'lottoGhana' || LotteryGamesType === 'legendaryLotto') {
+         || LotteryGamesType === 'lottoGhana' || LotteryGamesType === 'legendaryLotto') {
           lottoGameName = await menu.session.get('lottoGameName');
+          let pottentialWin = await menu.session.get('potentialWinning');
+          pottentialWin = JSON.parse(pottentialWin);
+          console.log(`${game} ${pottentialWin} ${selections}, ${betType}, ${booster}`);
+          const bodyData = {
+            gameId: game.gameId,
+            linesCount: pottentialWin.linesCount,
+            amount: pottentialWin.amount,
+            totalStakedAmount: pottentialWin.totalStakedAmount,
+            betType,
+            booster,
+            resultType,
+            selections,
+          };
+          const response = await MainServer.createTicket(bodyData);
+          console.log('response', response);
+          if (response.message === 'success') {
+            instruction = `Bet Submitted Successfully!
+            Ticket Details are: Ticket-ID, Pot. Winning, 
+            Bet Amount:, Game Name, Bet-Type, Result Time, selections.
+            
+            1. Play Another Game.
+            98. Main Menu.
+            99. Exit.`;
+            menu.con(instruction);
+          } else {
+            instruction = `Ticket creation not successful!
+            1. Play Another Game.
+            98. Main Menu.
+            99. Exit.`;
+            menu.con(instruction);
+          }
+        } else {
+          instruction = `Bet Submitted Successfully!
+          Ticket Details are: Ticket-ID, Pot. Winning, 
+          Bet Amount:, Game Name, Bet-Type, Result Time, selections.
+          
+          1. Play Another Game.
+          98. Main Menu.
+          99. Exit.`;
+          menu.con(instruction);
         }
-        const numbersSelected = await menu.session.get('numbersSelected');
-        console.log(`${gameType} ${lottoGameName} ${numbersSelected} ${amount}`);
-        const instruction = `Bet Submitted Successfully!
-    Ticket Details are: Ticket-ID, Pot. Winning, 
-    Bet Amount:${amount}, Game Name, Bet-Type, Result Time, selections.
-    
-    1. Play Another Game.
-    98. Main Menu.
-    99. Exit.`;
-        menu.con(instruction);
       },
       next: {
         1: 'PlayGames'
@@ -434,7 +471,7 @@ class MenuBuilderHelper {
 
             1. Continue.
             99. Exit.`;
-            menu.session.set('potentialWinning', JSON.stringify(response));
+            menu.session.set('potentialWinning', JSON.stringify(response.data));
             menu.con(instruction);
           } else {
             menu.end('Error Occured');
