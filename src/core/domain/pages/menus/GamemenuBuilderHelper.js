@@ -351,7 +351,11 @@ class MenuBuilderHelper {
           lottoGameName = await menu.session.get('lottoGameName');
           let pottentialWin = await menu.session.get('potentialWinning');
           pottentialWin = JSON.parse(pottentialWin);
-          console.log(`${game} ${pottentialWin} ${selections}, ${betType}, ${booster}`);
+          console.log('game', game);
+          console.log('pottentialWin', pottentialWin);
+          console.log('selections', selections);
+          console.log('betType', betType);
+          console.log('booster', booster);
           const bodyData = {
             gameId: game.gameId,
             linesCount: pottentialWin.linesCount,
