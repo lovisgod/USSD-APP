@@ -340,7 +340,7 @@ class MenuBuilderHelper {
         const game = gamesDaily[input - 1];
         console.log('game', game);
         let lottoGameName = '';
-        const LotteryGamesType = menu.session.get('LotteryGamesType');
+        const LotteryGamesType = await menu.session.get('LotteryGamesType');
         const resultType = await menu.session.get('resultType');
         const selectionsValue = await menu.session.get('numbersSelected');
         const booster = await menu.session.get('gameBooster');
@@ -356,6 +356,7 @@ class MenuBuilderHelper {
           console.log('selections', selections);
           console.log('betType', betType);
           console.log('booster', booster);
+          console.log(`${game} ${pottentialWin} ${selections}, ${betType}, ${booster}`);
           const bodyData = {
             gameId: game.gameId,
             linesCount: pottentialWin.linesCount,
