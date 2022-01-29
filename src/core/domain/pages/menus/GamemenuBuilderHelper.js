@@ -498,7 +498,7 @@ class MenuBuilderHelper {
             menu.con(instruction);
           } else {
             console.log('response', response);
-            menu.end('Error Occured');
+            menu.end(`Error Occured \n ${response.message}`);
           }
         });
       },

@@ -144,16 +144,19 @@ class MainServer {
         }
         return {
           data: {},
-          message: 'END Could not fecth games, Please try again!!!'
+          message: `Could not fecth games, Please try again\n${response.data.responsemessage}`
         };
       }
       return {
         data: {},
-        message: 'END Could not fecth games, Please try again!!!'
+        message: 'Could not fecth games, Please try again!!!'
       };
     } catch (error) {
       console.log('error', error);
-      return 'END An error Just occurred';
+      return {
+        data: {},
+        message: 'Could not fecth games, Please try again!!!'
+      };
     }
   }
 
