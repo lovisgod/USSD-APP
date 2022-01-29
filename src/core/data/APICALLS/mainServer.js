@@ -252,6 +252,7 @@ class MainServer {
       console.log(response.status);
       if (response != null) {
         if (response.status === 200 && response.data.status === 'success') {
+          console.log(response.data.data);
           return {
             data: response.data.data.data,
             message: 'success'

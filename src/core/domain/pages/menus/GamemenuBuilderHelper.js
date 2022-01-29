@@ -465,6 +465,7 @@ class MenuBuilderHelper {
           amount, betType, booster, resultType, selections
         };
         MainServer.getPotWining(bodyData).then((response) => {
+          console.log('response', response);
           if (response.message === 'success') {
             const instruction = `GAME SUMMARY
             Line Count - ${response.data.linesCount}
