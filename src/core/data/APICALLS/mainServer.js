@@ -176,9 +176,9 @@ class MainServer {
       console.log(response.status);
       if (response != null) {
         if (response.status === 200 && response.data.status === 'success') {
-          console.log(response.data.data);
+          console.log(response.data.data.data);
           return {
-            games: response.data.data,
+            games: response.data.data.data,
             message: 'success'
           };
         }
