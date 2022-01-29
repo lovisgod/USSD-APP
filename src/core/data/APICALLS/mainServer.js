@@ -201,7 +201,7 @@ class MainServer {
         }
         return {
           data: {},
-          message: 'END Could not create Ticket, Please try again!!!'
+          message: `Could not create Ticket, Please try again!!! \n ${response.data.responsemessage}`
         };
       }
       return {
