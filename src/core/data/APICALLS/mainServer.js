@@ -237,20 +237,24 @@ class MainServer {
       } = args;
       console.log(`${amount} ${betType} ${selections}!!!`);
       console.log(`${BASE_URL}${GET_POTENTIAL_WIN}`);
-      const response = await axios({
-        method: 'post',
-        url: `${BASE_URL}${GET_POTENTIAL_WIN}`,
-        data: {
-          amount,
-          betType,
-          booster: 'default',
-          resultType: 'winning',
-          selections
-        },
-        headers: {
-          'X-mobile-Authorization': '09059620514'
-        }
+      const data = JSON.stringify({
+        amount: 500,
+        betType: 'perm-1',
+        booster: 'default',
+        resultType: 'winning',
+        selections: '78-32-21-35'
       });
+
+      const config = {
+        method: 'post',
+        url: 'https://lottery-api.zendost.co/api/v1/game/ticket/get-potential-winning',
+        headers: {
+          'X-mobile-Authorization': '09059620514',
+          'Content-Type': 'application/json'
+        },
+        data
+      };
+      const response = await axios(config);
       console.log(response.status);
       if (response != null) {
         if (response.status === 200 && response.data.status === 'success') {
