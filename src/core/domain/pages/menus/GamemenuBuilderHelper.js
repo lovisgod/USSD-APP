@@ -480,6 +480,7 @@ class MenuBuilderHelper {
             menu.session.set('potentialWinning', JSON.stringify(response.data));
             menu.con(instruction);
           } else {
+            console.log('response', response);
             menu.end('Error Occured');
           }
         });
