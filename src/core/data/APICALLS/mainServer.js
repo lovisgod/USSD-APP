@@ -237,7 +237,8 @@ class MainServer {
       } = args;
       console.log(`${amount} ${betType} ${selections}!!!`);
       console.log(`${BASE_URL}${GET_POTENTIAL_WIN}`);
-      const response = await axios.post({
+      const response = await axios({
+        method: 'post',
         url: `${BASE_URL}${GET_POTENTIAL_WIN}`,
         data: {
           amount,
