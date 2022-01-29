@@ -73,10 +73,14 @@ class MainServer {
 
   static async getGameTypes(args) {
     try {
-      const { page, limit, currentWeekDay } = args;
-      console.log(`${page} ${limit} ${currentWeekDay}`);
+      const { page, limit } = args;
+      console.log(`${page} ${limit}`);
       console.log(`${BASE_URL}${GET_BET_TYPE}`);
       const response = await axios.get(`${BASE_URL}${GET_BET_TYPE}`, {
+        params: {
+          page,
+          limit,
+        },
         headers: {
           'X-mobile-Authorization': '09059620514'
         }
@@ -85,7 +89,7 @@ class MainServer {
       if (response != null) {
         if (response.status === 200 && response.data.status === 'success') {
           return {
-            games: response.data.data,
+            games: response.data.data.data,
             message: 'success'
           };
         }

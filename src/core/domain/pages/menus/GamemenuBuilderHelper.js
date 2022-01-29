@@ -7,6 +7,7 @@ import GamePages from '../games';
 import MainServer from '../../../data/APICALLS/mainServer';
 
 const sessions = {};
+const betTypePageCount = 1;
 
 class MenuBuilderHelper {
 // static sessions = {};
@@ -209,20 +210,33 @@ class MenuBuilderHelper {
       run: async () => {
         const input = menu.val;
         menu.session.set('gameType', input);
-        menu.con(GamePages.lottoGameTypes());
+        // fetch bet types
+        const response = await MainServer.getGameTypes({ page: betTypePageCount, limit: 10 });
+        if (response.message === 'success') {
+          menu.session.set('betTypes', response.data);
+          if (response.games.length > 0) {
+            let games = '';
+            response.games.forEach((element) => {
+              games += `${response.games.indexOf(element) + 1}.${element.value}\n`;
+            });
+            console.log('games', games);
+            menu.con(`${games}
+            96. Back
+            97.Next Page
+            98. Main Menu
+            99. Exit`);
+          } else {
+            menu.con(`No bet type available
+            98. Main Menu
+            99. Exit`);
+          }
+        }
+        // menu.con(GamePages.lottoGameTypes());
       },
       next: {
-        1: 'instructionForLotto',
-        2: 'instructionForLotto',
-        3: 'instructionForLotto',
-        4: 'instructionForLotto',
-        5: 'instructionForLotto',
-        6: 'instructionForLotto',
-        7: 'instructionForLotto',
-        8: 'instructionForLotto',
-        9: 'instructionForLotto',
-        10: 'lottoGameType2',
-        11: 'LotteryGames',
+        '*\\d+': 'instructionForLotto',
+        96: 'LotteryGames',
+        97: 'lottoGameType'
       }
     });
 
@@ -242,11 +256,14 @@ class MenuBuilderHelper {
 
     // instruction for lotto state
     menu.state('instructionForLotto', {
-      run: () => {
+      run: async () => {
         const input = menu.val;
         const name = GamePages.getGameNameForInput(input);
-        menu.session.set('lottoGameName', name);
-        const instruction = GamePages.getGameInstructionForInput(input);
+        const betTypes = await menu.session.get('betTypes');
+        const betType = betTypes[input - 1];
+        menu.session.set('lottoGameName', betType.value);
+        // const instruction = GamePages.getGameInstructionForInput(input);
+        const instruction = `${betType.description}instruction will be here`;
         menu.con(instruction);
       },
       next: {

@@ -81,7 +81,7 @@ class GamePages {
    * @method
    * @returns String
    */
-  static lottoGameTypes() {
+  static  lottoGameTypes() {
     return `1. PERM-1.
     2. PERM-2.
     3. PERM-3.
