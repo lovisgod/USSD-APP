@@ -24,7 +24,8 @@ class MainServer {
       if (response.status === 201) {
         return 'END Registration completed!\n'
                      + `Your ID is ${phoneNumber};\n`
-                     + 'Kindly note that this ID can be used to fund your Account directly from all Nigerian Banks';
+                     + 'Kindly note that this ID can be used to fund your Account directly from all Nigerian Banks'
+                     + `Your Temporary Password is: ${response.data.data.tempPassword}`;
       }
       return 'END Registration failed. Please try again';
     }
