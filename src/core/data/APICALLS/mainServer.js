@@ -235,9 +235,9 @@ class MainServer {
       const {
         amount, betType, booster, resultType, selections
       } = args;
-      console.log(`${amount} ${betType} ${selections}`);
+      console.log(`${amount} ${betType} ${selections}!!!`);
       console.log(`${BASE_URL}${GET_POTENTIAL_WIN}`);
-      const response = await axios.get(`${BASE_URL}${GET_POTENTIAL_WIN}`, {
+      const response = await axios.post(`${BASE_URL}${GET_POTENTIAL_WIN}`, {
         data: {
           amount,
           betType,
