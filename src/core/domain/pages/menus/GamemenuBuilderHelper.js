@@ -175,7 +175,7 @@ class MenuBuilderHelper {
         const code = menu.val;
         // fetch the games for the day of the week
         MainServer.getDailyGames(
-          { page: code, limit: 10, currentWeekDay: code }
+          { page: 1, limit: 10, currentWeekDay: 6 }
         ).then((res) => {
           console.log('res', res);
           if (res.message === 'success') {
