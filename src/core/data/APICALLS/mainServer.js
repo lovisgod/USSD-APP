@@ -243,8 +243,8 @@ class MainServer {
         data: {
           amount,
           betType,
-          booster,
-          resultType,
+          booster: 'default',
+          resultType: 'winning',
           selections
         },
         headers: {
