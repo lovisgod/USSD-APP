@@ -209,13 +209,19 @@ class MainServer {
       }
       return {
         data: {},
-        message: 'END Could not Create Ticket, Please try again!!!'
+        message: 'Could not Create Ticket, Please try again!!!'
       };
     } catch (error) {
       console.log('error', error);
+      if (error.response) {
+        return {
+          data: {},
+          message: `Could not create Ticket, Please try again!!! \n ${error.response.data.responsemessage}`
+        };
+      }
       return {
         data: {},
-        message: 'END An error Just occurred'
+        message: 'An error Just occurred'
       };
     }
   }
