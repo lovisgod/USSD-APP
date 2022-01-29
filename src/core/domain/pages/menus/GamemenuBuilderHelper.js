@@ -396,7 +396,7 @@ class MenuBuilderHelper {
             99. Exit.`;
             menu.con(instruction);
           } else {
-            instruction = `Ticket creation not successful!
+            instruction = `Ticket creation not successful! ${response.data.message}
             1. Play Another Game.
             98. Main Menu.
             99. Exit.`;
