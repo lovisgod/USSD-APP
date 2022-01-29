@@ -238,11 +238,11 @@ class MainServer {
       console.log(`${amount} ${betType} ${selections}!!!`);
       console.log(`${BASE_URL}${GET_POTENTIAL_WIN}`);
       const data = JSON.stringify({
-        amount: 500,
-        betType: 'perm-1',
-        booster: 'default',
-        resultType: 'winning',
-        selections: '78-32-21-35'
+        amount,
+        betType,
+        booster: booster.toLowerCase(),
+        resultType: resultType.toLowerCase(),
+        selections
       });
 
       const config = {
