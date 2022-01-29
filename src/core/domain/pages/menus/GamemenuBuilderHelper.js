@@ -213,8 +213,8 @@ class MenuBuilderHelper {
         // fetch bet types
         const response = await MainServer.getGameTypes({ page: betTypePageCount, limit: 10 });
         if (response.message === 'success') {
-          menu.session.set('betTypes', response.data);
           if (response.games.length > 0) {
+            menu.session.set('betTypes', response.games);
             let games = '';
             response.games.forEach((element) => {
               games += `${response.games.indexOf(element) + 1}.${element.value}\n`;
