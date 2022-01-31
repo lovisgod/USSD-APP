@@ -52,13 +52,13 @@ class GamePages {
    * @returns String
    */
   static gameschedules() {
-    return `1. Sunday Games.
-    2. Monday Games.
-    3. Tuesday Games.
-    4. Wednesday Games.
-    5. Thursday Games.
-    6. Friday Games.
-    7. Saturday  Games.
+    return `1. Monday Games.
+    2. Tuesday Games.
+    3. Wednesday Games.
+    4. Thursday Games.
+    5. Friday Games.
+    6. Saturday  Games.
+    7. Sunday Games.
     8. Back.
     98.Main Menu.
     99.Exit.`;

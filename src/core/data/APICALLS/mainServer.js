@@ -13,23 +13,27 @@ const CREATE_TICKET = '/game/create-ticket';
 
 class MainServer {
   static async register(args) {
-    const { phoneNumber, email } = args;
-    console.log(`${phoneNumber} ${email}`);
-    const response = await axios.post(`${BASE_URL}${REGISTER_ENDPOINT}`, {
-      phone: phoneNumber,
-      email
-    });
-    console.log(response.data);
-    if (response != null) {
-      if (response.status === 201) {
-        return 'END Registration completed!\n'
-                     + `Your ID is ${phoneNumber};\n`
-                     + 'Kindly note that this ID can be used to fund your Account directly from all Nigerian Banks'
-                     + `Your Temporary Password is: ${response.data.data.tempPassword}`;
+    try {
+      const { phoneNumber, email } = args;
+      console.log(`${phoneNumber} ${email}`);
+      const response = await axios.post(`${BASE_URL}${REGISTER_ENDPOINT}`, {
+        phone: phoneNumber,
+        email
+      });
+      console.log(response.data);
+      if (response != null) {
+        if (response.status === 201) {
+          return 'Registration completed!\n'
+                       + `Your ID is ${phoneNumber};\n`
+                       + 'Kindly note that this ID can be used to fund your Account directly from all Nigerian Banks'
+                       + `Your Temporary Password is: ${response.data.data.tempPassword}`;
+        }
+        return 'Registration failed. Please try again';
       }
-      return 'END Registration failed. Please try again';
+      return 'Registration failed. Please try again';
+    } catch (error) {
+      this.handleError(error);
     }
-    return 'END Registration failed. Please try again';
   }
 
   static async getDailyGames(args) {
@@ -58,16 +62,15 @@ class MainServer {
         }
         return {
           games: [],
-          message: 'END Could not fecch games, Please try again!!!'
+          message: 'Could not fecch games, Please try again!!!'
         };
       }
       return {
         games: [],
-        message: 'END Could not fecch games, Please try again!!!'
+        message: 'Could not fecch games, Please try again!!!'
       };
     } catch (error) {
-      console.log('error', error);
-      return 'END An error Just occurred';
+      this.handleError(error);
     }
   }
 
@@ -103,8 +106,7 @@ class MainServer {
         message: 'END Could not fecth games, Please try again!!!'
       };
     } catch (error) {
-      console.log('error', error);
-      return 'END An error Just occurred';
+      this.handleError(error);
     }
   }
 
@@ -152,11 +154,7 @@ class MainServer {
         message: 'Could not fecth games, Please try again!!!'
       };
     } catch (error) {
-      console.log('error', error);
-      return {
-        data: {},
-        message: 'Could not fecth games, Please try again!!!'
-      };
+      this.handleError(error);
     }
   }
 
@@ -224,6 +222,20 @@ class MainServer {
         message: 'An error Just occurred'
       };
     }
+  }
+
+  static handleError(error) {
+    console.log('error', error);
+    if (error.response) {
+      return {
+        data: {},
+        message: `Could not create Ticket, Please try again!!! \n ${error.response.data.responsemessage}`
+      };
+    }
+    return {
+      data: {},
+      message: 'An error Just occurred'
+    };
   }
 }
 

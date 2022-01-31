@@ -7,7 +7,7 @@ import GamePages from '../games';
 import MainServer from '../../../data/APICALLS/mainServer';
 
 const sessions = {};
-const betTypePageCount = 1;
+let betTypePageCount = 1;
 
 class MenuBuilderHelper {
 // static sessions = {};
@@ -236,21 +236,44 @@ class MenuBuilderHelper {
       next: {
         '*\\d+': 'instructionForLotto',
         96: 'LotteryGames',
-        97: 'lottoGameType'
+        97: 'lottoGameType2'
       }
     });
 
     // lottoGameTypes state
     menu.state('lottoGameType2', {
-      run: () => {
-        menu.con(GamePages.lottoGameTypes2());
+      run: async () => {
+        betTypePageCount += 1;
+        // fetch bet types
+        const response = await MainServer.getGameTypes({ page: betTypePageCount, limit: 10 });
+        if (response.message === 'success') {
+          if (response.games.length > 0) {
+            let betypesAlreadySaved = await menu.session.get('betTypes');
+            betypesAlreadySaved = betypesAlreadySaved.concat(response.games);
+            menu.session.set('betTypes', betypesAlreadySaved);
+            let games = '';
+            response.games.forEach((element) => {
+              games += `${response.games.indexOf(element) + 1}.${element.value}\n`;
+            });
+            console.log('games', games);
+            menu.con(`${games}
+             96. Back
+             97.Next Page
+             98. Main Menu
+             99. Exit`);
+          } else {
+            menu.con(`No bet type available
+             96. Back
+             98. Main Menu
+             99. Exit`);
+          }
+        }
+        // menu.con(GamePages.lottoGameTypes2());
       },
       next: {
-        12: 'instructionForLotto',
-        13: 'instructionForLotto',
-        14: 'instructionForLotto',
-        15: 'instructionForLotto',
-        16: 'lottoGameType',
+        '*\\d+': 'instructionForLotto',
+        96: 'LotteryGames',
+        97: 'lottoGameType2'
       }
     });
 
