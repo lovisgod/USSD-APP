@@ -19,11 +19,6 @@
     "coverage": "cross-env NODE_ENV=test nyc npm run test && nyc report --reporter=lcov --reporter=text-lcov --exit"
   },
   "dependencies": {
-    "@babel/cli": "^7.12.1",
-    "@babel/core": "^7.5.5",
-    "@babel/node": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
-    "@babel/register": "^7.5.5",
     "@sentry/node": "^6.7.1",
     "@sentry/tracing": "^6.7.1",
     "app-root-path": "^3.0.0",
