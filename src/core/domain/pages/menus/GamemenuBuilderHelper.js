@@ -217,7 +217,7 @@ class MenuBuilderHelper {
             menu.session.set('betTypes', response.games);
             let games = '';
             response.games.forEach((element) => {
-              games += `${response.games.indexOf(element) + 1}.${element.value}\n`;
+              games += `${response.games.number + 1}.${element.value}\n`;
             });
             console.log('games', games);
             menu.con(`${games}
@@ -253,7 +253,7 @@ class MenuBuilderHelper {
             menu.session.set('betTypes', betypesAlreadySaved);
             let games = '';
             response.games.forEach((element) => {
-              games += `${response.games.indexOf(element) + 1}.${element.value}\n`;
+              games += `${response.games.number + 1}.${element.value}\n`;
             });
             console.log('games', games);
             menu.con(`${games}
