@@ -286,7 +286,7 @@ class MenuBuilderHelper {
         const betType = betTypes[input - 1];
         menu.session.set('lottoGameName', betType.value);
         // const instruction = GamePages.getGameInstructionForInput(input);
-        const instruction = `${betType.description}instruction will be here`;
+        const instruction = `${betType.description}instruction will be here!!!`;
         menu.con(instruction);
       },
       next: {
