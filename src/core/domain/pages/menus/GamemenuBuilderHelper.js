@@ -93,8 +93,20 @@ class MenuBuilderHelper {
     });
 
     menu.state('checkGame.result', {
-      run: () => {
+      run: async () => {
+        const input = menu.val;
         // check game from the server and display the result to user
+        const data = { ticketId: input };
+        const response = await MainServer.getTicketResult(data);
+        if (response.message !== 'success') {
+          menu.con(`${response.message}
+          98. Main Menu
+          99. Exit`);
+        } else {
+          menu.con(`${response.message}
+          98. Main Menu
+          99. Exit`);
+        }
         menu.end('This will be your result');
       }
     });

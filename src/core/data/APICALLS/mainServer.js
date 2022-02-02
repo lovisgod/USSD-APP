@@ -10,6 +10,7 @@ const GET_DAILY_GAMES = '/game/fetch-games';
 const GET_BET_TYPE = '/game-config/fetch-bettypes';
 const GET_POTENTIAL_WIN = '/game/ticket/get-potential-winning';
 const CREATE_TICKET = '/game/create-ticket';
+const CHECK_RESULT = '/game/fetch-ticket-result';
 
 class MainServer {
   static async register(args) {
@@ -221,6 +222,38 @@ class MainServer {
         data: {},
         message: 'An error Just occurred'
       };
+    }
+  }
+
+  static async getTicketResult(args) {
+    try {
+      const { ticketId } = args;
+      console.log(`${ticketId}`);
+      console.log(`${BASE_URL}${CHECK_RESULT}`);
+      const response = await axios.get(`${BASE_URL}${CHECK_RESULT}/${ticketId}`, {
+        headers: {
+          'X-mobile-Authorization': '09059620514'
+        }
+      });
+      console.log(response.status);
+      if (response != null) {
+        if (response.status === 200 && response.data.status === 'success') {
+          return {
+            games: response.data.data.data,
+            message: 'success'
+          };
+        }
+        return {
+          games: [],
+          message: 'Could not fetch result, Please try again!!!'
+        };
+      }
+      return {
+        games: [],
+        message: 'Could not fecth result, Please try again!!!'
+      };
+    } catch (error) {
+      this.handleError(error);
     }
   }
 
