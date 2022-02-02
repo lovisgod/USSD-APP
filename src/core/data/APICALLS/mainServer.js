@@ -258,8 +258,9 @@ class MainServer {
   }
 
   static handleError(error) {
-    console.log('error', error);
+    // console.log('error', error);
     if (error.response) {
+      console.log('it is axios response');
       return {
         data: {},
         message: `Could not create Ticket, Please try again!!! \n ${error.response.data.responsemessage}`
