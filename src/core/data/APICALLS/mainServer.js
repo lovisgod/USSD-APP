@@ -253,7 +253,7 @@ class MainServer {
         message: 'Could not fecth result, Please try again!!!'
       };
     } catch (error) {
-      this.handleError(error);
+      return this.handleError(error);
     }
   }
 
