@@ -239,17 +239,17 @@ class MainServer {
       if (response != null) {
         if (response.status === 200 && response.data.status === 'success') {
           return {
-            games: response.data.data.data,
+            data: response.data.data.data,
             message: 'success'
           };
         }
         return {
-          games: [],
+          data: {},
           message: 'Could not fetch result, Please try again!!!'
         };
       }
       return {
-        games: [],
+        data: {},
         message: 'Could not fecth result, Please try again!!!'
       };
     } catch (error) {
