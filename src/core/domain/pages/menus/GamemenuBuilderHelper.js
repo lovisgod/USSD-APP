@@ -98,7 +98,7 @@ class MenuBuilderHelper {
         // check game from the server and display the result to user
         const data = { ticketId: input };
         const response = await MainServer.getTicketResult(data);
-        console.log('this is it', response.message);
+        console.log('this is it', response);
         if (response.message === 'success') {
           menu.con(`${response.message}
           haswon: ${response.data.haswon}
