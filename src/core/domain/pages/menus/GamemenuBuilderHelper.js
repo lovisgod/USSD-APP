@@ -100,6 +100,8 @@ class MenuBuilderHelper {
         const response = await MainServer.getTicketResult(data);
         if (response.message !== 'success') {
           menu.con(`${response.message}
+          haswon: ${response.games.haswon}
+          total Win Amount: ${response.games.totalWinAmount} 
           98. Main Menu
           99. Exit`);
         } else {
