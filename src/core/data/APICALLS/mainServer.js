@@ -178,20 +178,22 @@ class MainServer {
       } = args;
       console.log(`${amount} ${betType} ${selections}`);
       console.log(`${BASE_URL}${CREATE_TICKET}`);
-      let data = JSON.stringify({
-        gameId,
-        linesCount,
-        amount,
-        totalStakedAmount,
-        betType,
-        booster: booster.toLowerCase(),
-        resultType: resultType.toLowerCase(),
-        selections
-      });
+      let data;
       if (isBooking) {
         data = JSON.stringify({
           amount,
           bookingCode
+        });
+      } else {
+        data = JSON.stringify({
+          gameId,
+          linesCount,
+          amount,
+          totalStakedAmount,
+          betType,
+          booster: booster.toLowerCase(),
+          resultType: resultType.toLowerCase(),
+          selections
         });
       }
       const config = {
