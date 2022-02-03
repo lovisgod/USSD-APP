@@ -33,7 +33,7 @@ class MainServer {
       }
       return 'Registration failed. Please try again';
     } catch (error) {
-      this.handleError(error);
+      return this.handleError(error);
     }
   }
 
@@ -71,7 +71,7 @@ class MainServer {
         message: 'Could not fecch games, Please try again!!!'
       };
     } catch (error) {
-      this.handleError(error);
+      return this.handleError(error);
     }
   }
 
@@ -99,15 +99,18 @@ class MainServer {
         }
         return {
           games: [],
-          message: 'END Could not fecth games, Please try again!!!'
+          message: 'Could not fecth games, Please try again!!!'
         };
       }
       return {
         games: [],
-        message: 'END Could not fecth games, Please try again!!!'
+        message: 'Could not fecth games, Please try again!!!'
       };
     } catch (error) {
-      this.handleError(error);
+      return {
+        games: [],
+        message: 'Could not fecth games, Please try again!!!'
+      };
     }
   }
 
@@ -155,7 +158,7 @@ class MainServer {
         message: 'Could not fecth games, Please try again!!!'
       };
     } catch (error) {
-      this.handleError(error);
+      return this.handleError(error);
     }
   }
 
@@ -170,10 +173,12 @@ class MainServer {
         booster,
         resultType,
         selections,
+        bookingCode,
+        isBooking
       } = args;
       console.log(`${amount} ${betType} ${selections}`);
       console.log(`${BASE_URL}${CREATE_TICKET}`);
-      const data = JSON.stringify({
+      let data = JSON.stringify({
         gameId,
         linesCount,
         amount,
@@ -183,6 +188,12 @@ class MainServer {
         resultType: resultType.toLowerCase(),
         selections
       });
+      if (isBooking) {
+        data = JSON.stringify({
+          amount,
+          bookingCode
+        });
+      }
       const config = {
         method: 'post',
         url: `${BASE_URL}${CREATE_TICKET}`,
@@ -258,13 +269,12 @@ class MainServer {
   }
 
   static handleError(error) {
-    // console.log('error', error);
     if (error.response) {
       console.log('it is axios response');
       console.log('datatatata', error.response.data);
       return {
         data: {},
-        message: `Could not create Ticket, Please try again!!! \n ${error.response.data.responsemessage}`
+        message: `error, Please try again!!! \n REASON => ${error.response.data.responsemessage}`
       };
     }
     return {

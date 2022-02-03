@@ -113,25 +113,6 @@ class MenuBuilderHelper {
       }
     });
 
-    menu.state('PlayBookingCode', {
-      run: () => {
-        menu.con('Enter Booking code:');
-      },
-      next: {
-        // using regex to match user input to next state
-        '*\\d+': 'PlayBookingCode.code'
-      }
-    });
-
-    // nesting states
-    menu.state('PlayBookingCode.code', {
-      run: () => {
-        // use menu.val to access user input value
-        const code = menu.val;
-        menu.end('Booking completed.');
-      }
-    });
-
     // lottery games state
     menu.state('LotteryGames', {
       run: () => {
@@ -541,6 +522,78 @@ class MenuBuilderHelper {
       },
       next: {
         1: 'feedbackMenu',
+      }
+    });
+
+    // BOOKING CODE SESSIONS
+
+    menu.state('PlayBookingCode', {
+      run: () => {
+        menu.con('Enter Booking code:');
+      },
+      next: {
+        // using regex to match user input to next state
+        '*\\d+': 'bookingCodeamountmenu'
+      }
+    });
+
+    // nesting states
+    // menu.state('PlayBookingCode.code', {
+    //   run: () => {
+    //     // use menu.val to access user input value
+    //     const code = menu.val;
+    //     menu.end('Booking completed.');
+    //   }
+    // });
+
+    menu.state('bookingCodeamountmenu', {
+      run: () => {
+        const input = menu.val;
+        menu.session.set('bookingCode', input);
+        menu.session.set('isBooking', true);
+        const instruction = 'Kindly insert Bet Amount and Submit Your Bet.';
+        menu.con(instruction);
+      },
+      next: {
+        '*\\d+': 'bookingCodefeedbackMenu'
+      }
+    });
+
+    menu.state('bookingCodefeedbackMenu', {
+      run: async () => {
+        const input = menu.val;
+        let instruction = '';
+        // send request to server to play game and get response
+        // display response to user and display menu
+        const amount = input;
+        const bookingCode = await menu.session.get('bookingCode');
+        const gameType = await menu.session.get('gameType');
+        const bodyData = {
+          amount,
+          bookingCode,
+          isBooking: true
+        };
+        const response = await MainServer.createTicket(bodyData);
+        console.log('response', response);
+        if (response.message === 'success') {
+          instruction = `${response.data.message}!
+            Ticket Details are: 
+            Ticket-ID => ${response.data.data.ticketId}
+            
+            1. Play Another Game.
+            98. Main Menu.
+            99. Exit.`;
+          menu.con(instruction);
+        } else {
+          instruction = `${response.message}
+            1. Play Another Game.
+            98. Main Menu.
+            99. Exit.`;
+          menu.con(instruction);
+        }
+      },
+      next: {
+        1: 'PlayGames'
       }
     });
 
