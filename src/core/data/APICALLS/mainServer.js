@@ -119,7 +119,7 @@ class MainServer {
   static async getPotWining(args) {
     try {
       const {
-        amount, betType, booster, resultType, selections
+        amount, betType, booster, resultType, selections, lotteryName
       } = args;
       console.log(`${amount} ${betType} ${selections}!!!`);
       console.log(`${BASE_URL}${GET_POTENTIAL_WIN}`);

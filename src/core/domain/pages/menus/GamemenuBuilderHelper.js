@@ -497,7 +497,12 @@ class MenuBuilderHelper {
         const selections = selectionsValue.replace(/,/g, '-');
         // get potential winning
         const bodyData = {
-          amount, betType, booster, resultType, selections
+          amount,
+          betType,
+          booster,
+          resultType,
+          selections,
+          lotteryName: '5/90',
         };
         MainServer.getPotWining(bodyData).then((response) => {
           console.log('response', response);
