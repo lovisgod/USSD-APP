@@ -177,7 +177,8 @@ class MainServer {
         resultType,
         selections,
         bookingCode,
-        isBooking
+        isBooking,
+        isSalary,
       } = args;
       console.log(`${amount} ${betType} ${selections}`);
       console.log(`${BASE_URL}${CREATE_TICKET}`);
@@ -186,6 +187,12 @@ class MainServer {
         data = JSON.stringify({
           amount,
           bookingCode
+        });
+      } else if (isSalary) {
+        data = JSON.stringify({
+          amount,
+          betType,
+          selections,
         });
       } else {
         data = JSON.stringify({

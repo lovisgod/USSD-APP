@@ -303,30 +303,122 @@ class MenuBuilderHelper {
       }
     });
 
+    // SALARY FOR LIFE SESSION //
+
     // lottery games state
     menu.state('salary4Life', {
-      run: () => {
+      run: async () => {
         menu.session.set('LotteryGamesType', 'salary4Life');
-        menu.con(GamePages.raffleDrawMenu());
+        const response = await MainServer.getGameTypes({
+          page: betTypePageCount,
+          limit: 10,
+          name: 'salary4life'
+        });
+        if (response.message === 'success') {
+          if (response.games.length > 0) {
+            menu.session.set('betTypes', response.games);
+            let games = '';
+            response.games.forEach((element) => {
+              games += `${element.number}.${element.value}\n`;
+            });
+            console.log('games', games);
+            menu.con(`${games}
+            96. Back
+            98. Main Menu
+            99. Exit`);
+          } else {
+            menu.con(`No bet type available
+            98. Main Menu
+            99. Exit`);
+          }
+        } else {
+          menu.con(`cannot fetch bet type available
+          98. Main Menu
+          99. Exit`);
+        }
+        // menu.con(GamePages.raffleDrawMenu());
       },
       next: {
         '*\\d+': 'salary4Life.code',
-        6: 'LotteryGames'
+        96: 'LotteryGames'
       }
     });
 
     // nesting states
     menu.state('salary4Life.code', {
-      run: () => {
-        // use menu.val to access user input value
-        const code = menu.val;
-        // call the server to get the raffle draw
-        menu.session.set('salaryOptionselected', code);
-        const instruction = 'Please your selections between 1 and 39';
+      run: async () => {
+        const input = menu.val;
+        // const name = GamePages.getGameNameForInput(input);
+        const betTypes = await menu.session.get('betTypes');
+        const betType = betTypes[input - 1];
+        menu.session.set('lottoGameName', betType.value);
+        // const instruction = GamePages.getGameInstructionForInput(input);
+        const instruction = betType.description.toString().length > 0
+          ? `${betType.description}` : 'instruction will be here!!!';
         menu.con(instruction);
       },
       next: {
-        '*\\d+,': 'validateInput',
+        '*\\d+,': 'salaryenterAmount',
+      }
+    });
+
+    // enter amount for salary4life
+
+    menu.state('salaryenterAmount', {
+      run: async () => {
+        const inputSelected = menu.val;
+        // set the input selected to the session
+        menu.session.set('numbersSelected', inputSelected);
+        // enter amount and submit
+        menu.con(`Enter Bet Amount.
+        98. Main Menu.
+        99. Exit.`);
+      },
+      next: {
+        '*\\d+': 'salary4lifefeedbackMenu',
+      }
+    });
+
+    // make request to book ticket for salary4life
+    menu.state('salary4lifefeedbackMenu', {
+      run: async () => {
+        const input = menu.val;
+        let instruction = '';
+        // send request to server to play game and get response
+        // display response to user and display menu
+        const amount = input;
+        const selectionsValues = await menu.session.get('numbersSelected');
+        const selections = selectionsValues.replace(/,/g, '-');
+        const gameType = await menu.session.get('gameType');
+        const betType = await menu.session.get('lottoGameName');
+        const bodyData = {
+          amount,
+          bookingCode,
+          betType,
+          selections,
+          isBooking: true
+        };
+        const response = await MainServer.createTicket(bodyData);
+        console.log('response', response);
+        if (response.message === 'success') {
+          instruction = `${response.data.message}!
+            Ticket Details are: 
+            Ticket-ID => ${response.data.data.ticketId}
+            
+            1. Play Another Game.
+            98. Main Menu.
+            99. Exit.`;
+          menu.con(instruction);
+        } else {
+          instruction = `${response.message}
+            1. Play Another Game.
+            98. Main Menu.
+            99. Exit.`;
+          menu.con(instruction);
+        }
+      },
+      next: {
+        1: 'PlayGames'
       }
     });
 
