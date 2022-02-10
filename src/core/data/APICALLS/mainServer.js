@@ -7,7 +7,9 @@ const API_VERSION = 'v1';
 const BASE_URL = `https://lottery-api.zendost.co/api/${API_VERSION}`;
 const REGISTER_ENDPOINT = '/auth/signup-with-ussd';
 const GET_DAILY_GAMES = '/game/fetch-games';
-const GET_BET_TYPE = '/game-config/5-of-90/fetch-bettypes';
+function GET_BET_TYPE(name) {
+  return `/game-config/${name}/fetch-bettypes`;
+}
 const GET_POTENTIAL_WIN = '/game/ticket/get-potential-winning';
 const CREATE_TICKET = '/game/create-ticket';
 const CHECK_RESULT = '/game/fetch-ticket-result';
@@ -77,10 +79,10 @@ class MainServer {
 
   static async getGameTypes(args) {
     try {
-      const { page, limit } = args;
+      const { page, limit, name } = args;
       console.log(`${page} ${limit}`);
-      console.log(`${BASE_URL}${GET_BET_TYPE}`);
-      const response = await axios.get(`${BASE_URL}${GET_BET_TYPE}`, {
+      console.log(`${BASE_URL}${GET_BET_TYPE(name)}`);
+      const response = await axios.get(`${BASE_URL}${GET_BET_TYPE(name)}`, {
         params: {
           page,
           limit,

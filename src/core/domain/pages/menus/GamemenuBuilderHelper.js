@@ -206,7 +206,7 @@ class MenuBuilderHelper {
         const input = menu.val;
         menu.session.set('gameType', input);
         // fetch bet types
-        const response = await MainServer.getGameTypes({ page: betTypePageCount, limit: 10 });
+        const response = await MainServer.getGameTypes({ page: betTypePageCount, limit: 10, name: '5-of-90' });
         if (response.message === 'success') {
           if (response.games.length > 0) {
             menu.session.set('betTypes', response.games);
@@ -240,7 +240,7 @@ class MenuBuilderHelper {
       run: async () => {
         betTypePageCount += 1;
         // fetch bet types
-        const response = await MainServer.getGameTypes({ page: betTypePageCount, limit: 10 });
+        const response = await MainServer.getGameTypes({ page: betTypePageCount, limit: 10, name: '5-of-90' });
         if (response.message === 'success') {
           if (response.games.length > 0) {
             let betypesAlreadySaved = await menu.session.get('betTypes');
