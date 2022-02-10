@@ -128,7 +128,8 @@ class MainServer {
         betType,
         booster: booster.toLowerCase(),
         resultType: resultType.toLowerCase(),
-        selections
+        selections,
+        lotteryName
       });
 
       const config = {
