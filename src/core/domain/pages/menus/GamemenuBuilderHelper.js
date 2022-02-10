@@ -393,10 +393,9 @@ class MenuBuilderHelper {
         const betType = await menu.session.get('lottoGameName');
         const bodyData = {
           amount,
-          bookingCode,
           betType,
           selections,
-          isBooking: true
+          isSalary: true
         };
         const response = await MainServer.createTicket(bodyData);
         console.log('response', response);
