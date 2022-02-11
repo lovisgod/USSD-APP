@@ -13,6 +13,7 @@ function GET_BET_TYPE(name) {
 const GET_POTENTIAL_WIN = '/game/ticket/get-potential-winning';
 const CREATE_TICKET = '/game/create-ticket';
 const CHECK_RESULT = '/game/fetch-ticket-result';
+const FETCH_BANK_LIST = '/fetch-banks';
 
 class MainServer {
   static async register(args) {
@@ -274,6 +275,107 @@ class MainServer {
       return {
         data: {},
         message: 'Could not fecth result, Please try again!!!'
+      };
+    } catch (error) {
+      return this.handleError(error);
+    }
+  }
+
+  static async getBankLists() {
+    try {
+      // const { ticketId } = args;
+      // console.log(`${ticketId}`);
+      console.log(`${BASE_URL}${CHECK_RESULT}`);
+      // const response = await axios.get(`${BASE_URL}${FETCH_BANK_LIST}`, {
+      //   headers: {
+      //     'X-mobile-Authorization': '08123456789'
+      //   }
+      // });
+      // console.log(response.status);
+      // if (response != null) {
+      //   if (response.status === 200 && response.data.status === 'success') {
+      //     return {
+      //       data: response.data.data.data,
+      //       message: 'success'
+      //     };
+      //   }
+      //   return {
+      //     data: {},
+      //     message: 'Could not fetch banks, Please try again!!!'
+      //   };
+      // }
+      // return {
+      //   data: {},
+      //   message: 'Could not fecth banks, Please try again!!!'
+      // };
+      return {
+        data: [
+          {
+            name: 'Abbey Mortgage Bank',
+            slug: 'abbey-mortgage-bank',
+            code: '801',
+            longcode: '',
+            gateway: null,
+            pay_with_bank: false,
+            active: true,
+            is_deleted: false,
+            country: 'Nigeria',
+            currency: 'NGN',
+            type: 'nuban',
+            id: 174,
+            createdAt: '2020-12-07T16:19:09.000Z',
+            updatedAt: '2020-12-07T16:19:19.000Z'
+          },
+          {
+            name: 'Above Only MFB',
+            slug: 'above-only-mfb',
+            code: '51204',
+            longcode: '',
+            gateway: null,
+            pay_with_bank: false,
+            active: true,
+            is_deleted: null,
+            country: 'Nigeria',
+            currency: 'NGN',
+            type: 'nuban',
+            id: 188,
+            createdAt: '2021-10-13T20:35:17.000Z',
+            updatedAt: '2021-10-13T20:35:17.000Z'
+          },
+          {
+            name: 'Access Bank',
+            slug: 'access-bank',
+            code: '044',
+            longcode: '044150149',
+            gateway: 'emandate',
+            pay_with_bank: false,
+            active: true,
+            is_deleted: null,
+            country: 'Nigeria',
+            currency: 'NGN',
+            type: 'nuban',
+            id: 1,
+            createdAt: '2016-07-14T10:04:29.000Z',
+            updatedAt: '2020-02-18T08:06:44.000Z'
+          },
+          {
+            name: 'Access Bank (Diamond)',
+            slug: 'access-bank-diamond',
+            code: '063',
+            longcode: '063150162',
+            gateway: 'emandate',
+            pay_with_bank: false,
+            active: true,
+            is_deleted: null,
+            country: 'Nigeria',
+            currency: 'NGN',
+            type: 'nuban',
+            id: 3,
+            createdAt: '2016-07-14T10:04:29.000Z',
+            updatedAt: '2020-02-18T08:06:48.000Z'
+          }
+        ],
+        message: 'success'
       };
     } catch (error) {
       return this.handleError(error);

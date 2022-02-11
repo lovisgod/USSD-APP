@@ -4,6 +4,7 @@ import UssdMenu from 'ussd-menu-builder';
 import HelperUtils from '../../../../utils/HelperUtils';
 import GamePages from '../games';
 import WalletPages from '../walletpages';
+import MainServer from '../../../data/APICALLS/mainServer';
 
 const sessions = {};
 
@@ -74,13 +75,33 @@ class WalletMenuBuilderHelper {
     });
 
     menu.state('wallet.bank', {
-      run: () => {
+      run: async () => {
         // use menu.val to access user input value
         const accountNumber = menu.val;
         menu.session.set('accountNumber', accountNumber);
         // TODO: get bank list from db and display by pages
+        const response = await MainServer.getBankLists();
+        if (response.message === 'success') {
+          if (response.games.length > 0) {
+            menu.session.set('bankList', response.data);
+            let banks = '';
+            response.data.forEach((element) => {
+              banks += `${response.data.indexOf(element)}.${element.name}\n`;
+            });
+            console.log('banks', banks);
+            menu.con(`please select a bank
+            ${banks}
+             98. Main Menu
+             99. Exit`);
+          } else {
+            menu.con(`No bank available for now.
+             98. Main Menu
+             99. Exit`);
+          }
+        }
         // there will be a state that will check if there is more values to display
         // if there is, it will display the next page using this same state
+
         menu.con(WalletPages.bankPage());
       },
       next: {
@@ -101,45 +122,50 @@ class WalletMenuBuilderHelper {
 
     // // nesting states
     menu.state('wallet.details', {
-      run: () => {
+      run: async () => {
+        const input = menu.val;
+        const accountNumber = await menu.session.get('accountNumber');
+        const amount = await menu.session.get('amount');
+        const bankSelected = await menu.session.get('bankList');
+        const bank = bankSelected[input - 1];
         // check the details of the user's account
-        menu.session.get('accountNumber').then((accountNumber) => {
-          menu.session.get('amount').then((amount) => {
-            menu.con(`Your account number is
-            ${accountNumber} and the amount is ${amount}\n
-            Do you want to proceed?
-            1. Yes
-            2. No`);
-          });
-        });
+        const bankCode = bank.code;
+        menu.con(`Kindly confirm your details before proceeding.
+        Account Number: ${accountNumber}
+        Amount: ${amount}
+        Bank: ${bank.name}
+        
+        1. Confirm
+        2. Edit
+        98. Main Menu
+        99. Exit`);
       },
       next: {
         1: 'wallet.feedback',
-        2: 'wallet.feedback'
+        2: 'wallet.amount'
       }
     });
 
     // nesting states
     menu.state('wallet.feedback', {
-      run: () => {
+      run: async () => {
         // use menu.val to access user input value
         const decision = menu.val;
         // check the details of the user's account
-        const accountNo = menu.session.get('accountNumber').then((accountNumber) => accountNumber);
-        const amount = menu.session.get('amount').then((amountX) => amountX);
+        const accountNumber = await menu.session.get('accountNumber');
+        const amount = await menu.session.get('amount');
+        const bankSelected = await menu.session.get('bankList');
+        const bank = bankSelected[input - 1];
+        // check the details of the user's account
+        const bankCode = bank.code;
         // send withdrawal request to the server
         const body = {
           accountNo, amount
         };
-        if (decision === '1') {
-          menu.con(`Thank you for using our services\n
+        menu.con(`Withdrawal successful
+          Thank you for using our service
           98. Main Menu
           99. Exit`);
-        }
-
-        if (decision === '2') {
-          menu.end('Thank you for using our services');
-        }
       },
     });
 
