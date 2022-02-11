@@ -86,7 +86,7 @@ class WalletMenuBuilderHelper {
             menu.session.set('bankList', response.data);
             let banks = '';
             response.data.forEach((element) => {
-              banks += `${response.data.indexOf(element)}.${element.name}\n`;
+              banks += `${response.data.indexOf(element) + 1}.${element.name}\n`;
             });
             console.log('banks', banks);
             menu.con(`please select a bank
