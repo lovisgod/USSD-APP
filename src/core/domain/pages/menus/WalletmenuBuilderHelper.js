@@ -82,7 +82,7 @@ class WalletMenuBuilderHelper {
         // TODO: get bank list from db and display by pages
         const response = await MainServer.getBankLists();
         if (response.message === 'success') {
-          if (response.games.length > 0) {
+          if (response.data.length > 0) {
             menu.session.set('bankList', response.data);
             let banks = '';
             response.data.forEach((element) => {
