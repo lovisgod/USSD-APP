@@ -13,5 +13,13 @@ class Ussd1 {
     5. Check Result
     99.Exit`;
   }
+
+  /**
+   * @method
+   * @returns String
+   */
+  static async comingSoonPage() {
+    return 'END Sorry, this feature is not available yet.';
+  }
 }
 export default Ussd1;
