@@ -284,8 +284,6 @@ class MainServer {
 
   static async getBankLists() {
     try {
-      const { ticketId } = args;
-      console.log(`${ticketId}`);
       const response = await axios.get(`${BASE_URL}${FETCH_BANK_LIST}`, {
         headers: {
           'X-mobile-Authorization': '08123456789'
