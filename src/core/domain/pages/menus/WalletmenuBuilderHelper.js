@@ -150,7 +150,7 @@ class WalletMenuBuilderHelper {
     menu.state('wallet.feedback', {
       run: async () => {
         // use menu.val to access user input value
-        const decision = menu.val;
+        const input = menu.val;
         // check the details of the user's account
         const accountNumber = await menu.session.get('accountNumber');
         const amount = await menu.session.get('amount');
