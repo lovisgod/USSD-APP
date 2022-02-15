@@ -309,6 +309,7 @@ class MainServer {
         message: 'Could not fecth banks, Please try again!!!'
       };
     } catch (error) {
+      console.log(error);
       return this.handleError(error);
     }
     // return {
