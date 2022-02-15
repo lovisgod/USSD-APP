@@ -102,7 +102,7 @@ class WalletMenuBuilderHelper {
         // there will be a state that will check if there is more values to display
         // if there is, it will display the next page using this same state
 
-        menu.con(WalletPages.bankPage());
+        // menu.con(WalletPages.bankPage());
       },
       next: {
         '*\\d+': 'wallet.details',
@@ -160,12 +160,21 @@ class WalletMenuBuilderHelper {
         const bankCode = bank.code;
         // send withdrawal request to the server
         const body = {
-          accountNo, amount
+          accountNumber, amount, bankCode
         };
-        menu.con(`Withdrawal successful
+        const response = await MainServer.createWithdrawal(body);
+        if (response.message === 'success') {
+          menu.con(`Your withdrawal request has been sent to the bank.
+          Thank you for using our services.
+          98. Main Menu
+          99. Exit`);
+        } else {
+          menu.con(`Withdrawal Not successful
+          ${response.message}
           Thank you for using our service
           98. Main Menu
           99. Exit`);
+        }
       },
     });
 

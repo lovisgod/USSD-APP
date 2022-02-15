@@ -14,6 +14,7 @@ const GET_POTENTIAL_WIN = '/game/ticket/get-potential-winning';
 const CREATE_TICKET = '/game/create-ticket';
 const CHECK_RESULT = '/game/fetch-ticket-result';
 const FETCH_BANK_LIST = '/fetch-banks';
+const WITHDRAWAL = '/wallet/bank-withdrawal/initialize';
 
 class MainServer {
   static async register(args) {
@@ -379,6 +380,49 @@ class MainServer {
       ],
       message: 'success'
     };
+  }
+
+  static async createWithdrawal(args) {
+    try {
+      const { accountNumber, bankCode, amount } = args;
+      let data = null;
+      console.log(`${BASE_URL}${WITHDRAWAL}`);
+      data = {
+        bankCode,
+        accountNumber,
+        accountName: 'customer name',
+        amount
+      };
+      const config = {
+        method: 'post',
+        url: `${BASE_URL}${WITHDRAWAL}`,
+        headers: {
+          'X-mobile-Authorization': '08123456789',
+          'Content-Type': 'application/json'
+        },
+        data
+      };
+      const response = await axios(config);
+      console.log(response.status);
+      if (response != null) {
+        if (response.status === 200 && response.data.status === 'success') {
+          return {
+            data: response.data.data.data,
+            message: 'success'
+          };
+        }
+        return {
+          data: {},
+          message: 'Could not make withdrawal, Please try again!!!'
+        };
+      }
+      return {
+        data: {},
+        message: 'Could not make withdrawal, Please try again!!!'
+      };
+    } catch (error) {
+      return this.handleError(error);
+    }
   }
 
   static handleError(error) {
