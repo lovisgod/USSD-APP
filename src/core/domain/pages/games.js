@@ -17,7 +17,7 @@ class GamePages {
    * @returns String
    */
   static checkGame() {
-    return `1.Enter your booking code.
+    return `1.CHECK GAME STATUS.
     98.Main Menu.
     99.Exit.`;
   }
