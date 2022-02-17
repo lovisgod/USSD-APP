@@ -427,7 +427,7 @@ class MainServer {
   static handleError(error) {
     if (error.response) {
       console.log('it is axios response');
-      console.log('datatatata', error.response.data);
+      console.log('datatatata', error);
       return {
         data: {},
         message: `error, Please try again!!! \n REASON => ${error.response.data.responsemessage}`
