@@ -53,7 +53,7 @@ class MainServer {
           currentWeekDay
         },
         headers: {
-          'X-mobile-Authorization': '08123456789'
+          'X-mobile-Authorization': '09012345678'
         }
       });
       console.log(response.status);
@@ -90,7 +90,7 @@ class MainServer {
           limit,
         },
         headers: {
-          'X-mobile-Authorization': '08123456789'
+          'X-mobile-Authorization': '09012345678'
         }
       });
       console.log(response.status);
@@ -138,7 +138,7 @@ class MainServer {
         method: 'post',
         url: 'https://lottery-api.zendost.co/api/v1/game/ticket/get-potential-winning',
         headers: {
-          'X-mobile-Authorization': '08123456789',
+          'X-mobile-Authorization': '09012345678',
           'Content-Type': 'application/json'
         },
         data
@@ -212,7 +212,7 @@ class MainServer {
         method: 'post',
         url: `${BASE_URL}${CREATE_TICKET}`,
         headers: {
-          'X-mobile-Authorization': '08123456789',
+          'X-mobile-Authorization': '09012345678',
           'Content-Type': 'application/json'
         },
         data
@@ -257,7 +257,7 @@ class MainServer {
       console.log(`${BASE_URL}${CHECK_RESULT}`);
       const response = await axios.get(`${BASE_URL}${CHECK_RESULT}/${ticketId}`, {
         headers: {
-          'X-mobile-Authorization': '08123456789'
+          'X-mobile-Authorization': '09012345678'
         }
       });
       console.log(response.status);
@@ -286,7 +286,7 @@ class MainServer {
     try {
       const response = await axios.get(`${BASE_URL}${FETCH_BANK_LIST}`, {
         headers: {
-          'X-mobile-Authorization': '08123456789'
+          'X-mobile-Authorization': '09012345678'
         }
       });
       console.log(response.status);
@@ -396,7 +396,7 @@ class MainServer {
         method: 'post',
         url: `${BASE_URL}${WITHDRAWAL}`,
         headers: {
-          'X-mobile-Authorization': '08123456789',
+          'X-mobile-Authorization': '09012345678',
           'Content-Type': 'application/json'
         },
         data
