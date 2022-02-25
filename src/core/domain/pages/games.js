@@ -28,7 +28,6 @@ class GamePages {
    */
   static playGameMenu() {
     return `1.Lottery Game.
-    2.Jackpot Game.
     98.Main Menu.
     99.Exit.`;
   }

@@ -77,8 +77,7 @@ class MenuBuilderHelper {
         menu.con(GamePages.playGameMenu());
       },
       next: {
-        1: 'LotteryGames',
-        2: 'JackpotGames'
+        1: 'LotteryGames'
       }
     });
 
