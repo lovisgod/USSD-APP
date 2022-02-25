@@ -42,7 +42,8 @@ class GamePages {
     2. Lotto Ghana Game.
     3. Salary 4Life.
     4. Legendary Lotto.
-    5. Back.
+    5. Mega -7.
+    6. Back.
     98.Main Menu.
     99.Exit.`;
   }

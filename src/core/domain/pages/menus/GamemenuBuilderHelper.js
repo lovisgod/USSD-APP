@@ -124,7 +124,8 @@ class MenuBuilderHelper {
         2: 'lottoGhana',
         3: 'salary4Life',
         4: 'legendaryLotto',
-        5: 'PlayGames'
+        5: 'mega-7',
+        6: 'PlayGames'
       }
     });
 
@@ -304,6 +305,45 @@ class MenuBuilderHelper {
     });
 
     // SALARY FOR LIFE SESSION //
+
+    // mega 7 games menu
+    menu.state('mega-7', {
+      run: async () => {
+        menu.session.set('LotteryGamesType', 'mega-7');
+        const response = await MainServer.getGameTypes({
+          page: betTypePageCount,
+          limit: 10,
+          name: 'mega-7'
+        });
+        if (response.message === 'success') {
+          if (response.games.length > 0) {
+            menu.session.set('betTypes', response.games);
+            let games = '';
+            response.games.forEach((element) => {
+              games += `${element.number}.${element.value}\n`;
+            });
+            console.log('games', games);
+            menu.con(`${games}
+            96. Back
+            98. Main Menu
+            99. Exit`);
+          } else {
+            menu.con(`No bet type available
+            98. Main Menu
+            99. Exit`);
+          }
+        } else {
+          menu.con(`cannot fetch bet type available
+          98. Main Menu
+          99. Exit`);
+        }
+        // menu.con(GamePages.raffleDrawMenu());
+      },
+      next: {
+        '*\\d+': 'salary4Life.code',
+        96: 'LotteryGames'
+      }
+    });
 
     // lottery games state
     menu.state('salary4Life', {
