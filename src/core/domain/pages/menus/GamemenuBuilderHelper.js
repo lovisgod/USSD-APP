@@ -346,7 +346,7 @@ class MenuBuilderHelper {
     // lottery games state
     menu.state('salary4Life', {
       run: async () => {
-        menu.session.set('LotteryGamesType', 'salary4Life');
+        menu.session.set('LotteryGamesType', 'salary4life');
         const response = await MainServer.getGameTypes({
           page: betTypePageCount,
           limit: 10,
@@ -634,7 +634,7 @@ class MenuBuilderHelper {
           resultType,
           category: gameType,
           selections: [{
-            booster, resultType, amount, selections, betType
+            booster: booster || null, resultType: resultType || null, amount, selections, betType
           }],
           lotteryName: '5/90',
         };
