@@ -350,7 +350,7 @@ class MenuBuilderHelper {
         const response = await MainServer.getGameTypes({
           page: betTypePageCount,
           limit: 10,
-          name: 'salary4life'
+          name: 'salary-for-life-bet-options'
         });
         if (response.message === 'success') {
           if (response.games.length > 0) {
