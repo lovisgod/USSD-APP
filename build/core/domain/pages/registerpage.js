@@ -8,30 +8,19 @@ exports.default = void 0;
 /* eslint-disable class-methods-use-this */
 
 /* eslint-disable require-jsdoc */
-class Ussd1 {
+class RegisterPage {
   /**
    * @method
    * @returns String
    */
   static async page() {
-    return `CON 1.Register
-    2.Deposit
-    3.Withdraw
-    4.Play Games
-    5. Check Result
+    return `CON 11.Accept Registration
+    12.Decline Registration
+    98.Main Menu
     99.Exit`;
-  }
-  /**
-   * @method
-   * @returns String
-   */
-
-
-  static async comingSoonPage() {
-    return 'END Sorry, this feature is not available yet.';
   }
 
 }
 
-var _default = Ussd1;
+var _default = RegisterPage;
 exports.default = _default;

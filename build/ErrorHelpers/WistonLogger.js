@@ -39,7 +39,7 @@ const options = {
 };
 const logger = createLogger({
   format: combine(label({
-    label: 'Jara'
+    label: 'ussdapp'
   }), timestamp(), prettyPrint()),
   transports: [new transports.File(options.file), new transports.Console(options.console)]
 }); // get lets from morgan and output to a wiston file

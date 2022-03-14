@@ -1,15 +1,28 @@
-/* eslint-disable require-jsdoc */
-/* eslint-disable no-unused-vars */
-/* eslint-disable max-len */
-import axios from 'axios';
+"use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _axios = _interopRequireDefault(require("axios"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/* eslint-disable require-jsdoc */
+
+/* eslint-disable no-unused-vars */
+
+/* eslint-disable max-len */
 const API_VERSION = 'v1';
 const BASE_URL = `https://lottery-api.zendost.co/api/${API_VERSION}`;
 const REGISTER_ENDPOINT = '/auth/signup-with-ussd';
 const GET_DAILY_GAMES = '/game/fetch-games';
+
 function GET_BET_TYPE(name) {
   return `/site-settings/fetch-setting-by-slug/${name}`;
 }
+
 const GET_POTENTIAL_WIN = '/game/ticket/get-potential-winning';
 const CREATE_TICKET = '/game/create-ticket';
 const CHECK_RESULT = '/game/fetch-ticket-result';
@@ -19,22 +32,25 @@ const WITHDRAWAL = '/wallet/bank-withdrawal/initialize';
 class MainServer {
   static async register(args) {
     try {
-      const { phoneNumber, email } = args;
+      const {
+        phoneNumber,
+        email
+      } = args;
       console.log(`${phoneNumber} ${email}`);
-      const response = await axios.post(`${BASE_URL}${REGISTER_ENDPOINT}`, {
+      const response = await _axios.default.post(`${BASE_URL}${REGISTER_ENDPOINT}`, {
         phone: phoneNumber,
         email
       });
       console.log(response.data);
+
       if (response != null) {
         if (response.status === 201) {
-          return 'Registration completed!\n'
-                       + `Your ID is ${phoneNumber};\n`
-                       + 'Kindly note that this ID can be used to fund your Account directly from all Nigerian Banks'
-                       + `Your Temporary Password is: ${response.data.data.tempPassword}`;
+          return 'Registration completed!\n' + `Your ID is ${phoneNumber};\n` + 'Kindly note that this ID can be used to fund your Account directly from all Nigerian Banks' + `Your Temporary Password is: ${response.data.data.tempPassword}`;
         }
+
         return 'Registration failed. Please try again';
       }
+
       return 'Registration failed. Please try again';
     } catch (error) {
       return this.handleError(error);
@@ -43,10 +59,14 @@ class MainServer {
 
   static async getDailyGames(args) {
     try {
-      const { page, limit, currentWeekDay } = args;
+      const {
+        page,
+        limit,
+        currentWeekDay
+      } = args;
       console.log(`${page} ${limit} ${currentWeekDay}`);
       console.log(`${BASE_URL}${GET_DAILY_GAMES}`);
-      const response = await axios.get(`${BASE_URL}${GET_DAILY_GAMES}`, {
+      const response = await _axios.default.get(`${BASE_URL}${GET_DAILY_GAMES}`, {
         params: {
           page,
           limit,
@@ -57,6 +77,7 @@ class MainServer {
         }
       });
       console.log(response.status);
+
       if (response != null) {
         if (response.status === 200 && response.data.status === 'success') {
           console.log(response.data.data.data);
@@ -65,11 +86,13 @@ class MainServer {
             message: 'success'
           };
         }
+
         return {
           games: [],
           message: 'Could not fecch games, Please try again!!!'
         };
       }
+
       return {
         games: [],
         message: 'Could not fecch games, Please try again!!!'
@@ -81,19 +104,24 @@ class MainServer {
 
   static async getGameTypes(args) {
     try {
-      const { page, limit, name } = args;
+      const {
+        page,
+        limit,
+        name
+      } = args;
       console.log(`${page} ${limit}`);
       console.log(`${BASE_URL}${GET_BET_TYPE(name)}`);
-      const response = await axios.get(`${BASE_URL}${GET_BET_TYPE(name)}`, {
+      const response = await _axios.default.get(`${BASE_URL}${GET_BET_TYPE(name)}`, {
         params: {
           page,
-          limit,
+          limit
         },
         headers: {
           'X-mobile-Authorization': '08123456789'
         }
       });
       console.log(response.status);
+
       if (response != null) {
         if (response.status === 200 && response.data.status === 'success') {
           return {
@@ -101,11 +129,13 @@ class MainServer {
             message: 'success'
           };
         }
+
         return {
           games: [],
           message: 'Could not fecth games, Please try again!!!'
         };
       }
+
       return {
         games: [],
         message: 'Could not fecth games, Please try again!!!'
@@ -122,7 +152,13 @@ class MainServer {
   static async getPotWining(args) {
     try {
       const {
-        amount, betType, booster, resultType, selections, lotteryName, category
+        amount,
+        betType,
+        booster,
+        resultType,
+        selections,
+        lotteryName,
+        category
       } = args;
       console.log(`${amount} ${betType} ${selections}!!!`);
       console.log(`${BASE_URL}${GET_POTENTIAL_WIN}`);
@@ -130,7 +166,6 @@ class MainServer {
         betSlips: JSON.stringify(selections),
         category
       });
-
       const config = {
         method: 'post',
         url: 'https://lottery-api.zendost.co/api/v1/game/ticket/get-potential-winning',
@@ -140,8 +175,9 @@ class MainServer {
         },
         data
       };
-      const response = await axios(config);
+      const response = await (0, _axios.default)(config);
       console.log(response.status);
+
       if (response != null) {
         if (response.status === 200 && response.data.status === 'success') {
           console.log(response.data.data);
@@ -150,11 +186,13 @@ class MainServer {
             message: 'success'
           };
         }
+
         return {
           data: {},
           message: `Could not fecth games, Please try again\n${response.data.responsemessage}`
         };
       }
+
       return {
         data: {},
         message: 'Could not fecth games, Please try again!!!'
@@ -177,11 +215,12 @@ class MainServer {
         selections,
         bookingCode,
         isBooking,
-        isSalary,
+        isSalary
       } = args;
       console.log(`${amount} ${betType} ${selections}`);
       console.log(`${BASE_URL}${CREATE_TICKET}`);
       let data;
+
       if (isBooking) {
         data = JSON.stringify({
           amount,
@@ -191,7 +230,7 @@ class MainServer {
         data = JSON.stringify({
           amount,
           betType,
-          selections,
+          selections
         });
       } else {
         data = JSON.stringify({
@@ -205,6 +244,7 @@ class MainServer {
           selections
         });
       }
+
       const config = {
         method: 'post',
         url: `${BASE_URL}${CREATE_TICKET}`,
@@ -214,8 +254,9 @@ class MainServer {
         },
         data
       };
-      const response = await axios(config);
+      const response = await (0, _axios.default)(config);
       console.log(response.status);
+
       if (response != null) {
         if (response.status === 200 && response.data.status === 'success') {
           return {
@@ -223,23 +264,27 @@ class MainServer {
             message: 'success'
           };
         }
+
         return {
           data: {},
           message: `Error Please try again!!! \n ${response.data.responsemessage}`
         };
       }
+
       return {
         data: {},
         message: 'Error, Please try again!!!'
       };
     } catch (error) {
       console.log('error', error);
+
       if (error.response) {
         return {
           data: {},
           message: `Error, Please try again!!! \n ${error.response.data.responsemessage}`
         };
       }
+
       return {
         data: {},
         message: 'An error Just occurred'
@@ -249,15 +294,18 @@ class MainServer {
 
   static async getTicketResult(args) {
     try {
-      const { ticketId } = args;
+      const {
+        ticketId
+      } = args;
       console.log(`${ticketId}`);
       console.log(`${BASE_URL}${CHECK_RESULT}`);
-      const response = await axios.get(`${BASE_URL}${CHECK_RESULT}/${ticketId}`, {
+      const response = await _axios.default.get(`${BASE_URL}${CHECK_RESULT}/${ticketId}`, {
         headers: {
           'X-mobile-Authorization': '08123456789'
         }
       });
       console.log(response.status);
+
       if (response != null) {
         if (response.status === 200 && response.data.status === 'success') {
           return {
@@ -265,11 +313,13 @@ class MainServer {
             message: 'success'
           };
         }
+
         return {
           data: {},
           message: 'Could not fetch result, Please try again!!!'
         };
       }
+
       return {
         data: {},
         message: 'Could not fecth result, Please try again!!!'
@@ -281,12 +331,13 @@ class MainServer {
 
   static async getBankLists() {
     try {
-      const response = await axios.get(`${BASE_URL}${FETCH_BANK_LIST}`, {
+      const response = await _axios.default.get(`${BASE_URL}${FETCH_BANK_LIST}`, {
         headers: {
           'X-mobile-Authorization': '08123456789'
         }
       });
       console.log(response.status);
+
       if (response != null) {
         if (response.status === 200 && response.data.status === 'success') {
           return {
@@ -294,11 +345,13 @@ class MainServer {
             message: 'success'
           };
         }
+
         return {
           data: {},
           message: 'Could not fetch banks, Please try again!!!'
         };
       }
+
       return {
         data: {},
         message: 'Could not fecth banks, Please try again!!!'
@@ -306,8 +359,7 @@ class MainServer {
     } catch (error) {
       console.log(error);
       return this.handleError(error);
-    }
-    // return {
+    } // return {
     //   data: [
     //     {
     //       name: 'Abbey Mortgage Bank',
@@ -376,11 +428,16 @@ class MainServer {
     //   ],
     //   message: 'success'
     // };
+
   }
 
   static async createWithdrawal(args) {
     try {
-      const { accountNumber, bankCode, amount } = args;
+      const {
+        accountNumber,
+        bankCode,
+        amount
+      } = args;
       let data = null;
       console.log(`${BASE_URL}${WITHDRAWAL}`);
       data = {
@@ -398,8 +455,9 @@ class MainServer {
         },
         data
       };
-      const response = await axios(config);
+      const response = await (0, _axios.default)(config);
       console.log(response.status);
+
       if (response != null) {
         if (response.status === 200 && response.data.status === 'success') {
           return {
@@ -407,11 +465,13 @@ class MainServer {
             message: 'success'
           };
         }
+
         return {
           data: {},
           message: 'Could not make withdrawal, Please try again!!!'
         };
       }
+
       return {
         data: {},
         message: 'Could not make withdrawal, Please try again!!!'
@@ -430,12 +490,15 @@ class MainServer {
         message: `error, Please try again!!! \n REASON => ${error.response.data.responsemessage}`
       };
     }
+
     console.log(error);
     return {
       data: {},
       message: 'An error Just occurred'
     };
   }
+
 }
 
-export default MainServer;
+var _default = MainServer;
+exports.default = _default;

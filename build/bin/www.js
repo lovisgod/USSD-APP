@@ -11,8 +11,6 @@
 
 var _http = require("http");
 
-var _ngrok = _interopRequireDefault(require("ngrok"));
-
 var _app = _interopRequireDefault(require("../app.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -84,12 +82,6 @@ function onListening() {
   const addr = server.address();
   const bind = typeof addr === 'string' ? `pipe ${addr}` : `port ${addr.port}`;
   console.info(`Listening on ${bind}`);
-
-  _ngrok.default.connect(port, (err, url) => {
-    console.log("got here");
-    if (err) console.log(err);
-    console.log('ngrok url:', url);
-  });
 }
 /**
  * Listen on provided port, on all network interfaces.
@@ -98,4 +90,8 @@ function onListening() {
 
 server.listen(port);
 server.on('error', onError);
-server.on('listening', onListening);
+server.on('listening', onListening); // ngrok.connect(port, {
+//   authtoken: '23XjxggIrwwI2X3ohrGG3oQeEjj_69JHqsTj5Rcptt2Fwup3V'
+// }).then((url) => {
+//   console.log(`ngrok url: ${url}`);
+// });

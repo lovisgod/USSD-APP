@@ -36,8 +36,8 @@ class DataSource {
    */
 
 
-  async page(text, phoneNumber) {
-    return this.datarepo.page(text, phoneNumber);
+  async page(text, phoneNumber, args) {
+    return this.datarepo.page(text, phoneNumber, args);
   }
 
 }
