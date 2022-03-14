@@ -111,6 +111,7 @@ class MainServer {
         message: 'Could not fecth games, Please try again!!!'
       };
     } catch (error) {
+      console.log(error);
       return {
         games: [],
         message: 'Could not fecth games, Please try again!!!'
