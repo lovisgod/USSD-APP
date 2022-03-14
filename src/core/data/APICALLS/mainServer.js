@@ -126,10 +126,6 @@ class MainServer {
       console.log(`${amount} ${betType} ${selections}!!!`);
       console.log(`${BASE_URL}${GET_POTENTIAL_WIN}`);
       const data = JSON.stringify({
-        amount,
-        betType,
-        booster: booster.toLowerCase(),
-        resultType: resultType.toLowerCase(),
         betSlips: JSON.stringify(selections),
         category
       });
