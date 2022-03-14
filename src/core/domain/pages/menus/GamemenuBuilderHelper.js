@@ -206,7 +206,7 @@ class MenuBuilderHelper {
         const input = menu.val;
         menu.session.set('gameType', input);
         // fetch bet types
-        const response = await MainServer.getGameTypes({ page: betTypePageCount, limit: 10, name: '5-of-90' });
+        const response = await MainServer.getGameTypes({ page: betTypePageCount, limit: 10, name: 'five-ninety-bet-options' });
         if (response.message === 'success') {
           if (response.games.length > 0) {
             menu.session.set('betTypes', response.games);
@@ -216,7 +216,7 @@ class MenuBuilderHelper {
             });
             console.log('games', games);
             menu.con(`${games}
-            96. Back
+            96. Back 
             97.Next Page
             98. Main Menu
             99. Exit`);
@@ -276,7 +276,6 @@ class MenuBuilderHelper {
     menu.state('instructionForLotto', {
       run: async () => {
         const input = menu.val;
-        const name = GamePages.getGameNameForInput(input);
         const betTypes = await menu.session.get('betTypes');
         const betType = betTypes[input - 1];
         menu.session.set('lottoGameName', betType.value);
@@ -567,6 +566,7 @@ class MenuBuilderHelper {
     });
 
     // get boosters
+    // TODO: Write codes for getting boosters;
     menu.state('gameBoosters', {
       run: () => {
         const input = menu.val;

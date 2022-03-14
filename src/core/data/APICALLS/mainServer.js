@@ -8,7 +8,7 @@ const BASE_URL = `https://lottery-api.zendost.co/api/${API_VERSION}`;
 const REGISTER_ENDPOINT = '/auth/signup-with-ussd';
 const GET_DAILY_GAMES = '/game/fetch-games';
 function GET_BET_TYPE(name) {
-  return `/game-config/${name}/fetch-bettypes`;
+  return `/site-settings/fetch-setting-by-slug/${name}`;
 }
 const GET_POTENTIAL_WIN = '/game/ticket/get-potential-winning';
 const CREATE_TICKET = '/game/create-ticket';
@@ -90,14 +90,14 @@ class MainServer {
           limit,
         },
         headers: {
-          'X-mobile-Authorization': '09012345678'
+          'X-mobile-Authorization': '08123456789'
         }
       });
       console.log(response.status);
       if (response != null) {
         if (response.status === 200 && response.data.status === 'success') {
           return {
-            games: response.data.data.data,
+            games: JSON.parse(response.data.data.data.content),
             message: 'success'
           };
         }
