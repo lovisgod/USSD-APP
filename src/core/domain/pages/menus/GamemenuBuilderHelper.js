@@ -413,7 +413,7 @@ class MenuBuilderHelper {
         99. Exit.`);
       },
       next: {
-        '*\\d+': 'salary4lifefeedbackMenu',
+        '*\\d+': 'winingPot',
       }
     });
 
@@ -624,6 +624,7 @@ class MenuBuilderHelper {
         const selectionsValue = await menu.session.get('numbersSelected');
         const booster = await menu.session.get('gameBooster');
         const betType = await menu.session.get('lottoGameName');
+        const gameType = await menu.session.get('LotteryGamesType');
         const selections = selectionsValue.replace(/,/g, '-');
         // get potential winning
         const bodyData = {
@@ -631,7 +632,10 @@ class MenuBuilderHelper {
           betType,
           booster,
           resultType,
-          selections,
+          category: gameType,
+          selections: [{
+            booster, resultType, amount, selections, betType
+          }],
           lotteryName: '5/90',
         };
         MainServer.getPotWining(bodyData).then((response) => {
