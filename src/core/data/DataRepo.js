@@ -11,6 +11,7 @@ import HelperUtils from '../../utils/HelperUtils';
 import PageCode from '../domain/pagecode';
 import GamePages from '../domain/pages/games';
 import MenuBuilderHelper from '../domain/pages/menus/GamemenuBuilderHelper';
+import AppMenuBuilderHelper from '../domain/pages/menus/newMenu/AppmenuBuilderHelper';
 import PlayGameMenu from '../domain/pages/menus/playgamefirstmenu';
 import WalletMenuBuilderHelper from '../domain/pages/menus/WalletmenuBuilderHelper';
 import RegisterPage from '../domain/pages/registerpage';
@@ -29,63 +30,7 @@ class DataRepo {
   async page(text, phoneNumber, args) {
     try {
       let page = '';
-      if (text === '') {
-        page = await Ussd1.page();
-        return page;
-      }
-      const pagemenuToShow = text.split('*');
-      const lastValueInTheBox = pagemenuToShow[pagemenuToShow.length - 1];
-      const valuebeforeLastValueInTheBox = pagemenuToShow[pagemenuToShow.length - 2];
-      if (lastValueInTheBox === '98') {
-        page = await Ussd1.page();
-      } else if (lastValueInTheBox === '99') {
-        page = 'END Thank you for using our service';
-      } else if (pagemenuToShow.length === 1) {
-        switch (lastValueInTheBox) {
-          case '1':
-            page = await RegisterPage.page();
-            break;
-          case '2':
-            page = await Ussd1.comingSoonPage();
-            break;
-          case '3':
-            page = await WalletMenuBuilderHelper.walletMenus(args);
-            break;
-          case '4':
-            page = await MenuBuilderHelper.gameMenus(args, false);
-            break;
-          case '5':
-            page = await MenuBuilderHelper.gameMenus(args, true);
-            break;
-          case '6':
-            page = 'END';
-            break;
-          default:
-            page = 'END Invalid Input';
-            break;
-        }
-      } else {
-        switch (pagemenuToShow[0]) {
-          case '1':
-            page = await this.registerMenu(pagemenuToShow, phoneNumber);
-            break;
-          case '3':
-            page = await WalletMenuBuilderHelper.walletMenus(args);
-            break;
-          case '4':
-            page = await MenuBuilderHelper.gameMenus(args, false);
-            break;
-          case '5':
-            page = await MenuBuilderHelper.gameMenus(args, true);
-            break;
-          case '6':
-            page = 'END';
-            break;
-          default:
-            page = 'END Invalid Input';
-            break;
-        }
-      }
+      page = await AppMenuBuilderHelper.appMenus(args);
       return page;
     } catch (error) {
       return 'END An error Just occurred';

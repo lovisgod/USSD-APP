@@ -13,65 +13,65 @@ let feedbackMenuToShow = '';
 class MenuBuilderHelper {
 // static sessions = {};
 
-  static async gameMenus(args, checkGame = false) {
+  static async gameMenus(args, checkGame = false, menu) {
     const gameType = '';
     const lotteryGameSelected = '';
-    const menu = new UssdMenu();
+    // const menu = menu; // ussd menu
 
-    menu.sessionConfig({
-      start(sessionId, callback) {
-        // initialize current session if it doesn't exist
-        // this is called by menu.run()
-        if (!(sessionId in sessions)) sessions[sessionId] = {};
-        callback();
-      },
-      end(sessionId, callback) {
-        // clear current session
-        // this is called by menu.end()
-        delete sessions[sessionId];
-        callback();
-      },
-      set: (sessionId, key, value, callback) => {
-        console.log(`set ${key} to ${value}`);
-        // store key-value pair in current session
-        sessions[sessionId][key] = value;
-        callback();
-      },
+    // menu.sessionConfig({
+    //   start(sessionId, callback) {
+    //     // initialize current session if it doesn't exist
+    //     // this is called by menu.run()
+    //     if (!(sessionId in sessions)) sessions[sessionId] = {};
+    //     callback();
+    //   },
+    //   end(sessionId, callback) {
+    //     // clear current session
+    //     // this is called by menu.end()
+    //     delete sessions[sessionId];
+    //     callback();
+    //   },
+    //   set: (sessionId, key, value, callback) => {
+    //     console.log(`set ${key} to ${value}`);
+    //     // store key-value pair in current session
+    //     sessions[sessionId][key] = value;
+    //     callback();
+    //   },
 
-      get(sessionId, key) {
-        return new Promise((resolve, reject) => {
-          const value = sessions[sessionId][key];
-          resolve(value);
-        });
+    //   get(sessionId, key) {
+    //     return new Promise((resolve, reject) => {
+    //       const value = sessions[sessionId][key];
+    //       resolve(value);
+    //     });
+    //   }
+
+    // });
+
+    // if (checkGame) {
+    //   console.log('got here here');
+    //   menu.startState({
+    //     run: () => {
+    //       // use menu.con() to send response without terminating session
+    //       menu.con(GamePages.checkGame());
+    //     },
+    //     next: {
+    //       1: 'checkGame.code'
+    //     }
+    //   });
+    // } else {
+    // Define menu states
+    menu.state({
+      run: () => {
+        // use menu.con() to send response without terminating session
+        menu.con(GamePages.firstPage());
+      },
+      // next object links to next state based on user input
+      next: {
+        1: 'PlayGames',
+        2: 'PlayBookingCode'
       }
-
     });
-
-    if (checkGame) {
-      console.log('got here here');
-      menu.startState({
-        run: () => {
-          // use menu.con() to send response without terminating session
-          menu.con(GamePages.checkGame());
-        },
-        next: {
-          1: 'checkGame.code'
-        }
-      });
-    } else {
-      // Define menu states
-      menu.startState({
-        run: () => {
-          // use menu.con() to send response without terminating session
-          menu.con(GamePages.firstPage());
-        },
-        // next object links to next state based on user input
-        next: {
-          1: 'PlayGames',
-          2: 'PlayBookingCode'
-        }
-      });
-    }
+    // }
 
     menu.state('PlayGames', {
       run: () => {
