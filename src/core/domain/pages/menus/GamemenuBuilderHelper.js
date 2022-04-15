@@ -60,7 +60,7 @@ class MenuBuilderHelper {
     //   });
     // } else {
     // Define menu states
-    menu.state({
+    menu.state('Play Games', {
       run: () => {
         // use menu.con() to send response without terminating session
         menu.con(GamePages.firstPage());
