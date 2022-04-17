@@ -74,7 +74,30 @@ class MenuBuilderHelper {
     // }
 
     menu.state('PlayGames', {
-      run: () => {
+      run: async () => {
+        // check game from the server and display the result to user
+        const data = { name: 'game-categories' };
+        const response = await MainServer.getGamesCategories(data);
+        console.log('this is it', response);
+        if (response.message === 'success') {
+          if (res.games.length > 0) {
+            menu.session.set('gamescategorys', JSON.stringify(res.games));
+            let games = '';
+            res.games.forEach((element) => {
+              games += `${res.games.indexOf(element) + 1}. ${element}\n`;
+            });
+            console.log('games', games);
+            menu.con(`${games}`);
+          } else {
+            menu.con(`No games category fetch
+              98. Main Menu
+              99. Exit`);
+          }
+        } else {
+          menu.con(`${response.message}
+      98. Main Menu
+      99. Exit`);
+        }
         menu.con(GamePages.lotteryGameMenu());
       },
       next: {
@@ -86,8 +109,11 @@ class MenuBuilderHelper {
       run: async () => {
         console.log('input', menu.val);
         const input = menu.val;
+        const gamescategorys = await JSON.parse(menu.session.get('gamescategorys'));
+        const gameCategory = gamescategorys[input - 1];
+        console.log('gameCategory', gameCategory);
         // check game from the server and display the result to user
-        const data = { name: input, page: 1, limit: 10 };
+        const data = { name: gameCategory, page: 1, limit: 10 };
         const response = await MainServer.getGamesForcategory(data);
         console.log('this is it', response);
         if (response.message === 'success') {
