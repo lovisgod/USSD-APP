@@ -500,7 +500,7 @@ class MainServer {
       if (response != null) {
         if (response.status === 200 && response.data.status === 'success') {
           return {
-            games: JSON.parse(response.data.data.data),
+            games: response.data.data.data,
             message: 'success'
           };
         }

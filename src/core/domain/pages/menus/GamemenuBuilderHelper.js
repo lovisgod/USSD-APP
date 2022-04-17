@@ -84,6 +84,7 @@ class MenuBuilderHelper {
 
     menu.state('fetchCategoryGames', {
       run: async () => {
+        console.log('input', menu.val);
         const input = menu.val;
         // check game from the server and display the result to user
         const data = { name: input, page: 1, limit: 10 };
@@ -91,7 +92,7 @@ class MenuBuilderHelper {
         console.log('this is it', response);
         if (response.message === 'success') {
           if (res.games.length > 0) {
-            menu.session.set('games', res.games);
+            menu.session.set('games', JSON.stringify(res.games));
             let games = '';
             res.games.forEach((element) => {
               games += `${res.games.indexOf(element) + 1}.${element.name} - ${element.lotteryName}\n`;
