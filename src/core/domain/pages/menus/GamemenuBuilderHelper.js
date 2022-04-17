@@ -77,9 +77,9 @@ class MenuBuilderHelper {
       run: async () => {
         // check game from the server and display the result to user
         const data = { name: 'game-categories' };
-        const response = await MainServer.getGamesCategories(data);
-        console.log('this is it', response);
-        if (response.message === 'success') {
+        const res = await MainServer.getGamesCategories(data);
+        console.log('this is it', res);
+        if (res.message === 'success') {
           if (res.games.length > 0) {
             menu.session.set('gamescategorys', JSON.stringify(res.games));
             let games = '';
@@ -94,7 +94,7 @@ class MenuBuilderHelper {
               99. Exit`);
           }
         } else {
-          menu.con(`${response.message}
+          menu.con(`${res.message}
       98. Main Menu
       99. Exit`);
         }
