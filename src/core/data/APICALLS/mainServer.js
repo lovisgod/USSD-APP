@@ -1,15 +1,22 @@
+/* eslint-disable no-console */
 /* eslint-disable require-jsdoc */
 /* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 import axios from 'axios';
 
 const API_VERSION = 'v1';
-const BASE_URL = `https://lottery-api.zendost.co/api/${API_VERSION}`;
+const BASE_URL = `https://lottery-api.gamepro.tech/api/${API_VERSION}`;
 const REGISTER_ENDPOINT = '/auth/signup-with-ussd';
 const GET_DAILY_GAMES = '/game/fetch-games';
+const GET_GAME_BY_CATEGORY = '/game/fetch-current-game';
 function GET_BET_TYPE(name) {
   return `/site-settings/fetch-setting-by-slug/${name}`;
 }
+
+function FETCH_SETTINGS_BY_SLUG(name) {
+  return `/site-settings/fetch-setting-by-slug/${name}`;
+}
+
 const GET_POTENTIAL_WIN = '/game/ticket/get-potential-winning';
 const CREATE_TICKET = '/game/create-ticket';
 const CHECK_RESULT = '/game/fetch-ticket-result';
@@ -435,6 +442,84 @@ class MainServer {
       data: {},
       message: 'An error Just occurred'
     };
+  }
+
+  // this is the new rebuild
+  static async getGamesCategories(args) {
+    try {
+      const { name } = args;
+      const response = await axios.get(`${BASE_URL}${FETCH_SETTINGS_BY_SLUG(name)}`, {
+        headers: {
+          'X-mobile-Authorization': '08101234567'
+        }
+      });
+      console.log(response.status);
+      if (response != null) {
+        if (response.status === 200 && response.data.status === 'success') {
+          return {
+            games: JSON.parse(response.data.data.data.content),
+            message: 'success'
+          };
+        }
+        return {
+          games: [],
+          message: 'Could not fecth games, Please try again!!!'
+        };
+      }
+      return {
+        games: [],
+        message: 'Could not fecth games, Please try again!!!'
+      };
+    } catch (error) {
+      console.log(error);
+      return {
+        games: [],
+        message: 'Could not fecth games, Please try again!!!'
+      };
+    }
+  }
+
+  // this get instances of games selected
+  static async getGamesForcategory(args) {
+    try {
+      const { name, page, limit } = args;
+      const response = await axios.get(`${BASE_URL}${GET_GAME_BY_CATEGORY}`, {
+        params: {
+          page,
+          limit,
+          startTime: '08:00',
+          endTime: '10:00',
+          currentWeekDay: '1',
+          category: name
+        },
+        headers: {
+          'X-mobile-Authorization': '08101234567'
+        }
+      });
+      console.log(response.status);
+      if (response != null) {
+        if (response.status === 200 && response.data.status === 'success') {
+          return {
+            games: JSON.parse(response.data.data.data),
+            message: 'success'
+          };
+        }
+        return {
+          games: [],
+          message: 'Could not fecth games, Please try again!!!'
+        };
+      }
+      return {
+        games: [],
+        message: 'Could not fecth games, Please try again!!!'
+      };
+    } catch (error) {
+      console.log(error);
+      return {
+        games: [],
+        message: 'Could not fecth games, Please try again!!!'
+      };
+    }
   }
 }
 

@@ -37,11 +37,10 @@ class GamePages {
    * @returns String
    */
   static lotteryGameMenu() {
-    return `1. Lotto Indoor Game.
-    2. Lotto Ghana Game.
-    3. Salary 4Life.
+    return `1. Salary4Life.
+    2. mega-7.
+    3. 5/90.
     4. Legendary Lotto.
-    5. Mega -7.
     6. Back.
     98.Main Menu.
     99.Exit.`;
