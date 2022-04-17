@@ -109,7 +109,7 @@ class MenuBuilderHelper {
       run: async () => {
         console.log('input', menu.val);
         const input = menu.val;
-        const gamescategorys = await JSON.parse(menu.session.get('gamescategorys'));
+        const gamescategorys = await menu.session.get('gamescategorys');
         const gameCategory = gamescategorys[input - 1];
         console.log('gameCategory', gameCategory);
         // check game from the server and display the result to user
