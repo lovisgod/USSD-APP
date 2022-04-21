@@ -4,6 +4,7 @@
 import UssdMenu from 'ussd-menu-builder';
 import AppPages from './newPages/AppPages';
 import GameMenuBuilder from '../GamemenuBuilderHelper';
+import UserMenuBuilderHelper from './newPages/UsermenuBuilderHelper';
 
 const sessions = {};
 
@@ -60,6 +61,7 @@ class AppMenuBuilderHelper {
     });
 
     GameMenuBuilder.gameMenus(args, false, menu);
+    UserMenuBuilderHelper.menus(args, menu);
 
     const page = await menu.run(args);
     console.log('this is page ', page);

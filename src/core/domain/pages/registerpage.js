@@ -6,8 +6,8 @@ class RegisterPage {
    * @returns String
    */
   static async page() {
-    return `CON 11.Accept Registration
-    12.Decline Registration
+    return `1.Accept Registration
+    2.Decline Registration
     98.Main Menu
     99.Exit`;
   }

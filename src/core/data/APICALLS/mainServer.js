@@ -483,13 +483,14 @@ class MainServer {
   static async getGamesForcategory(args) {
     try {
       const { name, page, limit } = args;
+      const day = new Date().getDay();
       const response = await axios.get(`${BASE_URL}${GET_GAME_BY_CATEGORY}`, {
         params: {
           page,
           limit,
           startTime: '08:00',
           endTime: '10:00',
-          currentWeekDay: '1',
+          currentWeekDay: day.toString(),
           category: name
         },
         headers: {

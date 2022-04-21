@@ -55,7 +55,7 @@ class DataRepo {
         // Your ID is ${phoneNumber};
         // Kindly note that this ID can be used to fund your Account directly from all Nigerian Banks`;
         page = `${response}`;
-      } else if (text.length === 1) {
+      } else if (text.length === 1) { // first time user enters the registration menu
         page = await RegisterPage.page();
       } else {
         switch (lastValueInTheBox) {
