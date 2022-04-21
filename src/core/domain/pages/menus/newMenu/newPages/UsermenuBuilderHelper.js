@@ -27,8 +27,8 @@ class UserMenuBuilderHelper {
     // }
 
     menu.state('Accept_Registration', {
-      run: async () => {
-        await menu.con('Enter your email address');
+      run: () => {
+        menu.con('Enter your email address');
       },
       next: {
         '*\\d+': 'accept_registration',
