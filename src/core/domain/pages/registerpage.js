@@ -5,7 +5,7 @@ class RegisterPage {
    * @method
    * @returns String
    */
-  static async page() {
+  static page() {
     return `1.Accept Registration
     2.Decline Registration
     98.Main Menu
