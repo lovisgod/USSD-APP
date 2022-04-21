@@ -28,7 +28,7 @@ class UserMenuBuilderHelper {
 
     menu.state('Accept_Registration', {
       run: async () => {
-        menu.con('Enter your email address');
+        await menu.con('Enter your email address');
       },
       next: {
         '*\\d+': 'accept_registration',
@@ -39,7 +39,7 @@ class UserMenuBuilderHelper {
       run: async () => {
         const email = await menu.val;
         const response = await MainServer.register({ phoneNumber: args.phoneNumber, email });
-        menu.end(`${response}`);
+        await menu.end(`${response}`);
       },
     });
 
