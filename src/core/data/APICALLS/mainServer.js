@@ -133,11 +133,11 @@ class MainServer {
       } = args;
       console.log(`${amount} ${betType} ${selections}!!!`);
       console.log(`${BASE_URL}${GET_POTENTIAL_WIN}`);
-      const data = JSON.stringify({
+      const data = {
         betSlips: JSON.stringify(selections),
         category,
         lotterId
-      });
+      };
 
       const config = {
         method: 'post',
@@ -150,6 +150,7 @@ class MainServer {
       };
       const response = await axios(config);
       console.log(response.status);
+      console.log(response.data);
       if (response != null) {
         if (response.status === 200 && response.data.status === 'success') {
           console.log(response.data.data);
