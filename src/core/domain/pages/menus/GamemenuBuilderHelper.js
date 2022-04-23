@@ -16,49 +16,7 @@ class MenuBuilderHelper {
   static async gameMenus(args, checkGame = false, menu) {
     const gameType = '';
     const lotteryGameSelected = '';
-    // const menu = menu; // ussd menu
 
-    // menu.sessionConfig({
-    //   start(sessionId, callback) {
-    //     // initialize current session if it doesn't exist
-    //     // this is called by menu.run()
-    //     if (!(sessionId in sessions)) sessions[sessionId] = {};
-    //     callback();
-    //   },
-    //   end(sessionId, callback) {
-    //     // clear current session
-    //     // this is called by menu.end()
-    //     delete sessions[sessionId];
-    //     callback();
-    //   },
-    //   set: (sessionId, key, value, callback) => {
-    //     console.log(`set ${key} to ${value}`);
-    //     // store key-value pair in current session
-    //     sessions[sessionId][key] = value;
-    //     callback();
-    //   },
-
-    //   get(sessionId, key) {
-    //     return new Promise((resolve, reject) => {
-    //       const value = sessions[sessionId][key];
-    //       resolve(value);
-    //     });
-    //   }
-
-    // });
-
-    // if (checkGame) {
-    //   console.log('got here here');
-    //   menu.startState({
-    //     run: () => {
-    //       // use menu.con() to send response without terminating session
-    //       menu.con(GamePages.checkGame());
-    //     },
-    //     next: {
-    //       1: 'checkGame.code'
-    //     }
-    //   });
-    // } else {
     // Define menu states
     menu.state('Play Games', {
       run: () => {
@@ -135,6 +93,47 @@ class MenuBuilderHelper {
           98. Main Menu
           99. Exit`);
         }
+      },
+      next: {
+        '*\\d+': 'getBetTypeMenu',
+      }
+    });
+
+    menu.state('getBetTypeMenu', {
+      run: async () => {
+        const input = menu.val;
+        const games = await menu.session.get('games');
+        const game = games[input - 1];
+        console.log('game', game);
+        menu.session.set('game', game);
+        let show = '';
+        game.lottery.betOptions.forEach((element) => {
+          show += `${game.lottery.indexOf(element) + 1}. ${element.name}\n`;
+        });
+        menu.con(show);
+      },
+      next: {
+        '*\\d+': 'getResultTypeMenu',
+      }
+    });
+
+    menu.state('getResultTypeMenu', {
+      run: async () => {
+        const input = menu.val;
+        const betTypeChosen = await menu.session.get('game').lottery.betOptions[input - 1];
+        console.log('betTypeChosen', betTypeChosen);
+        menu.session.set('betTypeChosen', betTypeChosen);
+        const game = await menu.session.get('game');
+        const { resultOptions } = game;
+        console.log('resultOptions', resultOptions);
+        let show = '';
+        resultOptions.forEach((element) => {
+          show += `${resultOptions.indexOf(element) + 1}. ${element}\n`;
+        });
+        menu.con(show);
+      },
+      next: {
+        '*\\d+': '',
       }
     });
 
