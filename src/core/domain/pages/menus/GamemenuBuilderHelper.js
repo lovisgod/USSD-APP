@@ -104,7 +104,7 @@ class MenuBuilderHelper {
       run: async () => {
         const input = menu.val;
         const games = await menu.session.get('games');
-        const game = games[input - 1];
+        const game = JSON.parse(games)[input - 1];
         console.log('game', game);
         menu.session.set('game', game);
         let show = '';
