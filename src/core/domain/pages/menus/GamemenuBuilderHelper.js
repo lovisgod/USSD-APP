@@ -253,7 +253,7 @@ class MenuBuilderHelper {
         console.log('potWining', potWining);
         const game = await menu.session.get('game');
         const gameIdx = await menu.session.get('gameid');
-        const { linesCount, totalStakedAmount, betSlips } = potWining;
+        const { linesCount, totalStakedAmount, betSlips } = JSON.parse(potWining);
 
         const response = await MainServer.createTicket({
           gameId: gameIdx,
