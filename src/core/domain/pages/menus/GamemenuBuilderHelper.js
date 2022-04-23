@@ -249,7 +249,8 @@ class MenuBuilderHelper {
     menu.state('feedbackMenu', {
       run: async () => {
         const input = menu.val;
-        const potWining = await JSON.parse(menu.session.get('potentialWinning'));
+        const potWining = await menu.session.get('potentialWinning');
+        console.log('potWining', potWining);
         const game = await menu.session.get('game');
         const gameIdx = await menu.session.get('gameid');
         const { linesCount, totalStakedAmount, betSlips } = potWining;
