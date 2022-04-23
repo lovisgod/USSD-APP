@@ -111,6 +111,8 @@ class MenuBuilderHelper {
         let show = '';
         const betOptions = JSON.parse(game.Lottery.betOptions);
         const resultOptions = JSON.parse(game.Lottery.resultOptions);
+        menu.session.set('gameid', game.gameId);
+        menu.session.set('lotteryid', game.lotteryId);
         // game.Lottery.betOptions = betOptions;
         menu.session.set('game', JSON.stringify(game));
         menu.session.set('betOptions', JSON.stringify(betOptions));
@@ -191,6 +193,9 @@ class MenuBuilderHelper {
         const betType = betTypeChosen.name;
         const gameTypex = await menu.session.get('gameCategory');
         const selections = selectionsValue.replace(/,/g, '-');
+        const lotterId = await menu.session.get('lotteryid');
+
+        console.log('lotteryIID', lotterId);
 
         // set summary menu to show based on game type selected
 
@@ -201,6 +206,7 @@ class MenuBuilderHelper {
         }
         // get potential winning
         const bodyData = {
+          lotterId,
           amount,
           betType,
           booster,
@@ -244,7 +250,7 @@ class MenuBuilderHelper {
         const input = menu.val;
         const potWining = await JSON.parse(menu.session.get('potentialWinning'));
         const game = await menu.session.get('game');
-        const gameIdx = game.gameId;
+        const gameIdx = await menu.session.get('gameid');
         const { linesCount, totalStakedAmount, betSlips } = potWining;
 
         const response = await MainServer.createTicket({
