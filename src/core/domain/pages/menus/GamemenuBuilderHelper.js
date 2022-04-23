@@ -209,7 +209,7 @@ class MenuBuilderHelper {
 
         // set summary menu to show based on game type selected
 
-        if (gameTypex !== 'legendarylotto' || gameTypex !== '5/90') {
+        if (gameTypex === 'salary4life') {
           booster = 'null';
           feedbackMenuToShow = 'feedbackMenu';
         } else {
