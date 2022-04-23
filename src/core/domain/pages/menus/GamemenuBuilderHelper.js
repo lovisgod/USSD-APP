@@ -223,16 +223,16 @@ class MenuBuilderHelper {
           console.log('xxxx', response.data.data);
           if (response.message === 'success') {
             const instruction = `GAME SUMMARY
-            Line Count - ${response.data.linesCount}
-            Amount - ${response.data.amount}
-            Total Staked Amount - ${response.data.totalStakedAmount}
-            Potential Winning - ${response.data.potentialWinning}
+            Line Count - ${response.data.data.linesCount}
+            Amount - ${response.data.data.amount}
+            Total Staked Amount - ${response.data.data.totalStakedAmount}
+            Potential Winning - ${response.data.data.potentialWinning}
 
             Kindly choose 1 to continue or 99 to Exit.
 
             1. Continue.
             99. Exit.`;
-            menu.session.set('potentialWinning', JSON.stringify(response.data));
+            menu.session.set('potentialWinning', JSON.stringify(response.data.data));
             menu.con(instruction);
           } else {
             console.log('response', response);
