@@ -106,14 +106,14 @@ class MenuBuilderHelper {
         const games = await menu.session.get('games');
         const game = JSON.parse(games)[input - 1];
         console.log('game', game);
-        menu.session.set('game', game.lottery);
+        menu.session.set('game', game);
         let show = '';
-        const betOptions = JSON.parse(game.lottery.betOptions);
-        game.lottery.betOptions = betOptions;
+        const betOptions = JSON.parse(game.Lottery.betOptions);
+        game.Lottery.betOptions = betOptions;
         console.log('gameX', game);
         menu.session.set('game', game);
         betOptions.forEach((element) => {
-          show += `${game.lottery.indexOf(element) + 1}. ${element.name}\n`;
+          show += `${game.Lottery.indexOf(element) + 1}. ${element.name}\n`;
         });
         menu.con(show);
       },
@@ -125,11 +125,11 @@ class MenuBuilderHelper {
     menu.state('getResultTypeMenu', {
       run: async () => {
         const input = menu.val;
-        const betTypeChosen = await menu.session.get('game').lottery.betOptions[input - 1];
+        const betTypeChosen = await menu.session.get('game').Lottery.betOptions[input - 1];
         console.log('betTypeChosen', betTypeChosen);
         menu.session.set('betTypeChosen', betTypeChosen);
         const game = await menu.session.get('game');
-        const resultOptions = JSON.parse(game.lottery.resultOptions);
+        const resultOptions = JSON.parse(game.Lottery.resultOptions);
         console.log('resultOptions', resultOptions);
         let show = '';
         resultOptions.forEach((element) => {
