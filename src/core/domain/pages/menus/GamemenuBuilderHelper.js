@@ -106,7 +106,7 @@ class MenuBuilderHelper {
         const games = await menu.session.get('games');
         const game = JSON.parse(games)[input - 1];
         console.log('game', game);
-        menu.session.set('game', game);
+        menu.session.set('game', game.lottery);
         let show = '';
         const betOptions = JSON.parse(game.lottery.betOptions);
         game.lottery.betOptions = betOptions;
