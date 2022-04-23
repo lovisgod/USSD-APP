@@ -489,8 +489,6 @@ class MainServer {
         params: {
           page,
           limit,
-          startTime: '08:00',
-          endTime: '10:00',
           currentWeekDay: 1,
           category: name
         },
@@ -498,7 +496,7 @@ class MainServer {
           'X-mobile-Authorization': '08101234567'
         }
       });
-      console.log(response);
+      console.log(response.status);
       if (response != null) {
         if (response.status === 200 && response.data.status === 'success') {
           return {
