@@ -224,9 +224,8 @@ class MenuBuilderHelper {
           if (response.message === 'success') {
             const instruction = `GAME SUMMARY
             Line Count - ${response.data.data.linesCount}
-            Amount - ${response.data.data.amount}
             Total Staked Amount - ${response.data.data.totalStakedAmount}
-            Potential Winning - ${response.data.data.potentialWinning}
+            Potential Winning - ${response.data.data.totalPotentialWinning}
 
             Kindly choose 1 to continue or 99 to Exit.
 
