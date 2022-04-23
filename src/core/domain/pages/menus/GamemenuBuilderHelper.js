@@ -107,7 +107,11 @@ class MenuBuilderHelper {
         console.log('game', game);
         menu.session.set('game', game);
         let show = '';
-        game.lottery.betOptions.forEach((element) => {
+        const betOptions = JSON.parse(game.lottery.betOptions);
+        game.lottery.betOptions = betOptions;
+        console.log('gameX', game);
+        menu.session.set('game', game);
+        betOptions.forEach((element) => {
           show += `${game.lottery.indexOf(element) + 1}. ${element.name}\n`;
         });
         menu.con(show);
@@ -124,7 +128,7 @@ class MenuBuilderHelper {
         console.log('betTypeChosen', betTypeChosen);
         menu.session.set('betTypeChosen', betTypeChosen);
         const game = await menu.session.get('game');
-        const { resultOptions } = game;
+        const resultOptions = JSON.parse(game.lottery.resultOptions);
         console.log('resultOptions', resultOptions);
         let show = '';
         resultOptions.forEach((element) => {
