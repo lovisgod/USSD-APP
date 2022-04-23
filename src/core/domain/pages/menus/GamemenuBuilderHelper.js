@@ -157,7 +157,7 @@ class MenuBuilderHelper {
         const resultOptions = await menu.session.get('resultOptions');
         const resultOption = JSON.parse(resultOptions)[input - 1];
         console.log('resultOptions', resultOption);
-        menu.session.set('resultOptions', resultOption);
+        menu.session.set('resultOptionChoosen', resultOption);
         const instruction = 'Enter your selectiions here';
         menu.con(instruction);
       },
@@ -186,14 +186,14 @@ class MenuBuilderHelper {
       run: async () => {
         const amount = menu.val;
         // get value for the booster selected
-        const resultType = await menu.session.get('resultOptions');
+        const resultType = await menu.session.get('resultOptionChoosen');
         const selectionsValue = await menu.session.get('numbersSelected');
         const booster = 'default';
-        const betTypeChosen = await menu.session.get('resultOptions');
+        const betTypeChosen = await menu.session.get('betTypeChosen');
         const betType = betTypeChosen.name;
         const gameTypex = await menu.session.get('gameCategory');
         const selections = selectionsValue.replace(/,/g, '-');
-        const lotterId = await menu.session.get('lotteryid');
+        const lotteryId = await menu.session.get('lotteryid');
 
         console.log('lotteryIID', lotterId);
 
@@ -206,7 +206,7 @@ class MenuBuilderHelper {
         }
         // get potential winning
         const bodyData = {
-          lotterId,
+          lotteryId,
           amount,
           betType,
           booster,
