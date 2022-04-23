@@ -189,7 +189,7 @@ class MainServer {
         isSalary,
         betSlips,
       } = args;
-      console.log(`${amount} ${betType} ${selections}`);
+      console.log(`${totalStakedAmount} ${betSlips} ${gameId}, ${linesCount}`);
       console.log(`${BASE_URL}${CREATE_TICKET}`);
       let data;
       if (isBooking) {
