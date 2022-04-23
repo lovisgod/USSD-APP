@@ -109,11 +109,11 @@ class MenuBuilderHelper {
         menu.session.set('game', game);
         let show = '';
         const betOptions = JSON.parse(game.Lottery.betOptions);
-        game.Lottery.betOptions = betOptions;
+        // game.Lottery.betOptions = betOptions;
         console.log('gameX', game);
-        menu.session.set('game', game);
+        menu.session.set('game', JSON.stringify(game));
         betOptions.forEach((element) => {
-          show += `${game.Lottery.indexOf(element) + 1}. ${element.name}\n`;
+          show += `${betOptions.indexOf(element) + 1}. ${element.name}\n`;
         });
         menu.con(show);
       },
