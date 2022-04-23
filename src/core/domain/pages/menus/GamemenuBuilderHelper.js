@@ -128,7 +128,7 @@ class MenuBuilderHelper {
         const input = menu.val;
         console.log('just got here');
         const game = await menu.session.get('game');
-        console.log('Just got here here');
+        console.log('gmae', game);
         const betTypeChosen = game.Lottery.betOptions[input - 1];
         console.log('betTypeChosen', betTypeChosen);
         menu.session.set('betTypeChosen', betTypeChosen);
