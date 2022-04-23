@@ -195,7 +195,8 @@ class MenuBuilderHelper {
         const selections = selectionsValue.replace(/,/g, '-');
         const lotteryId = await menu.session.get('lotteryid');
 
-        console.log('lotteryIID', lotterId);
+        console.log('lotteryIID', lotteryId);
+        console.log('betType', betType);
 
         // set summary menu to show based on game type selected
 
