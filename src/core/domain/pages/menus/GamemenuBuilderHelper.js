@@ -262,6 +262,7 @@ class MenuBuilderHelper {
           betSlips
         });
         console.log('response', response);
+        let instruction = '';
         if (response.message === 'success') {
           instruction = `${response.data.message}!
             Ticket Details are:
