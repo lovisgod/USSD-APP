@@ -489,7 +489,9 @@ class MainServer {
         params: {
           page,
           limit,
-          currentWeekDay: 1,
+          startTime: '08:00',
+          endTime: '10:00',
+          currentWeekDay: 6,
           category: name
         },
         headers: {
