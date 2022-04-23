@@ -126,7 +126,9 @@ class MenuBuilderHelper {
     menu.state('getResultTypeMenu', {
       run: async () => {
         const input = menu.val;
-        const game = await JSON.parse(menu.session.get('game'));
+        console.log('just got here');
+        const game = await menu.session.get('game');
+        console.log('Just got here here');
         const betTypeChosen = game.Lottery.betOptions[input - 1];
         console.log('betTypeChosen', betTypeChosen);
         menu.session.set('betTypeChosen', betTypeChosen);
@@ -167,7 +169,7 @@ class MenuBuilderHelper {
         menu.con(instruction);
       },
       next: {
-        '*\\d+': 'feedbackMenu'
+        '*\\d+': 'winingPot'
       }
     });
 
