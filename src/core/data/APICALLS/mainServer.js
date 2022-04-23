@@ -140,7 +140,7 @@ class MainServer {
 
       const config = {
         method: 'post',
-        url: 'https://lottery-api.zendost.co/api/v1/game/ticket/get-potential-winning',
+        url: `${BASE_URL}/game/ticket/get-potential-winning`,
         headers: {
           'X-mobile-Authorization': '08101234567',
           'Content-Type': 'application/json'
