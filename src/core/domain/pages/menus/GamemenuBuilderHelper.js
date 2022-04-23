@@ -133,8 +133,6 @@ class MenuBuilderHelper {
         let betOptions = await menu.session.get('betOptions');
         let resultOptions = await menu.session.get('resultOptions');
         betOptions = JSON.parse(betOptions);
-        console.log('betOptions', betOptions);
-        console.log('resultoption', resultOptions);
         const betTypeChosen = betOptions[input - 1];
         console.log('betTypeChosen', betTypeChosen);
         menu.session.set('betTypeChosen', betTypeChosen);
@@ -154,8 +152,8 @@ class MenuBuilderHelper {
     menu.state('selectionInputMenu', {
       run: async () => {
         const input = menu.val;
-        const game = await JSON.parse(menu.session.get('game'));
-        const resultOption = game.Lottery.resultOptions[input - 1];
+        const resultOptions = await menu.session.get('resultOptions');
+        const resultOption = JSON.parse(resultOptions)[input - 1];
         console.log('resultOptions', resultOption);
         menu.session.set('resultOptions', resultOption);
         const instruction = 'Enter your selectiions here';
