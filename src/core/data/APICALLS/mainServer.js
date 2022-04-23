@@ -224,7 +224,7 @@ class MainServer {
       const response = await axios(config);
       console.log(response.status);
       if (response != null) {
-        if (response.status === 200 && response.data.status === 'success') {
+        if (response.status === 201 && response.data.status === 'success') {
           return {
             data: response.data.data,
             message: 'success'
