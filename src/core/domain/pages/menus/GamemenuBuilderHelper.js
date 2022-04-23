@@ -69,7 +69,7 @@ class MenuBuilderHelper {
         const input = menu.val;
         const gamescategorys = await menu.session.get('gamescategorys');
         console.log('gamescategorys', gamescategorys);
-        const gameCategory = gamescategorys[input - 1];
+        const gameCategory = JSON.parse(gamescategorys)[input - 1];
         console.log('gameCategory', gameCategory);
         // check game from the server and display the result to user
         const data = { name: gameCategory, page: 1, limit: 10 };
