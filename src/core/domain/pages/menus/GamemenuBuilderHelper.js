@@ -134,6 +134,7 @@ class MenuBuilderHelper {
         const game = await menu.session.get('game');
         let betOptions = await menu.session.get('betOptions');
         let resultOptions = await menu.session.get('resultOptions');
+        const gameCategory = await menu.session.get('gameCategory');
         betOptions = JSON.parse(betOptions);
         const betTypeChosen = betOptions[input - 1];
         console.log('betTypeChosen', betTypeChosen);
@@ -141,9 +142,13 @@ class MenuBuilderHelper {
         resultOptions = JSON.parse(resultOptions);
         console.log('resultOptions', resultOptions);
         let show = '';
-        resultOptions.forEach((element) => {
-          show += `${resultOptions.indexOf(element) + 1}. ${element}\n`;
-        });
+        if (resultOptions.length > 0) {
+          resultOptions.forEach((element) => {
+            show += `${resultOptions.indexOf(element) + 1}. ${element}\n`;
+          });
+        } else {
+          show = '94. Continue';
+        }
         menu.con(show);
       },
       next: {
@@ -154,10 +159,14 @@ class MenuBuilderHelper {
     menu.state('selectionInputMenu', {
       run: async () => {
         const input = menu.val;
-        const resultOptions = await menu.session.get('resultOptions');
-        const resultOption = JSON.parse(resultOptions)[input - 1];
-        console.log('resultOptions', resultOption);
-        menu.session.set('resultOptionChoosen', resultOption);
+        if (input !== '94') {
+          const resultOptions = await menu.session.get('resultOptions');
+          const resultOption = JSON.parse(resultOptions)[input - 1];
+          console.log('resultOptions', resultOption);
+          menu.session.set('resultOptionChoosen', resultOption);
+        } else {
+          menu.session.set('resultOptionChoosen', 'null');
+        }
         const instruction = 'Enter your selectiions here';
         menu.con(instruction);
       },
@@ -188,7 +197,7 @@ class MenuBuilderHelper {
         // get value for the booster selected
         const resultType = await menu.session.get('resultOptionChoosen');
         const selectionsValue = await menu.session.get('numbersSelected');
-        const booster = 'default';
+        let booster = 'default';
         const betTypeChosen = await menu.session.get('betTypeChosen');
         const betType = betTypeChosen.name;
         const gameTypex = await menu.session.get('gameCategory');
@@ -200,8 +209,9 @@ class MenuBuilderHelper {
 
         // set summary menu to show based on game type selected
 
-        if (gameTypex === 'salary4life') {
-          feedbackMenuToShow = 'salary4lifefeedbackMenu';
+        if (gameTypex !== 'legendarylotto' || gameTypex !== '5/90') {
+          booster = 'null';
+          feedbackMenuToShow = 'feedbackMenu';
         } else {
           feedbackMenuToShow = 'feedbackMenu';
         }
