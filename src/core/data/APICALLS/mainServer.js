@@ -484,6 +484,7 @@ class MainServer {
     try {
       const { name, page, limit } = args;
       const day = new Date().getDay();
+      console.log(name, page, limit);
       const response = await axios.get(`${BASE_URL}${GET_GAME_BY_CATEGORY}`, {
         params: {
           page,
@@ -497,7 +498,7 @@ class MainServer {
           'X-mobile-Authorization': '08101234567'
         }
       });
-      console.log(response.status);
+      console.log(response);
       if (response != null) {
         if (response.status === 200 && response.data.status === 'success') {
           return {
