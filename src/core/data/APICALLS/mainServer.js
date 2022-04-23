@@ -155,7 +155,7 @@ class MainServer {
         if (response.status === 200 && response.data.status === 'success') {
           console.log(response.data.data);
           return {
-            data: JSON.parse(response.data.data),
+            data: response.data.data,
             message: 'success'
           };
         }
