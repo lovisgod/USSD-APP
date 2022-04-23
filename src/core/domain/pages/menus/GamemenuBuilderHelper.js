@@ -8,7 +8,7 @@ import MainServer from '../../../data/APICALLS/mainServer';
 
 const sessions = {};
 const betTypePageCount = 1;
-const feedbackMenuToShow = '';
+let feedbackMenuToShow = '';
 
 class MenuBuilderHelper {
 // static sessions = {};
@@ -71,6 +71,7 @@ class MenuBuilderHelper {
         console.log('gamescategorys', gamescategorys);
         const gameCategory = JSON.parse(gamescategorys)[input - 1];
         console.log('gameCategory', gameCategory);
+        menu.session.set('gameCategory', gameCategory);
         // check game from the server and display the result to user
         const data = { name: gameCategory, page: 1, limit: 10 };
         const res = await MainServer.getGamesForcategory(data);
@@ -138,7 +139,134 @@ class MenuBuilderHelper {
         menu.con(show);
       },
       next: {
-        '*\\d+': '',
+        '*\\d+': 'selectionInputMenu',
+      }
+    });
+
+    menu.state('selectionInputMenu', {
+      run: async () => {
+        const input = menu.val;
+        const game = await JSON.parse(menu.session.get('game'));
+        const resultOption = game.Lottery.resultOptions[input - 1];
+        console.log('resultOptions', resultOption);
+        menu.session.set('resultOptions', resultOption);
+        const instruction = 'Enter your selectiions here';
+        menu.con(instruction);
+      },
+      next: {
+        '*\\d+': 'amountmenu'
+      }
+    });
+
+    menu.state('amountmenu', {
+      run: () => {
+        const input = menu.val;
+        menu.session.set('numbersSelected', input);
+        const instruction = `Your Selections are ${input}
+          Kindly insert Bet Amount and Submit Your Bet.`;
+        menu.con(instruction);
+      },
+      next: {
+        '*\\d+': 'feedbackMenu'
+      }
+    });
+
+    // POTENTIAL WINNING
+
+    // result types
+    menu.state('winingPot', {
+      run: async () => {
+        const amount = menu.val;
+        // get value for the booster selected
+        const resultType = await menu.session.get('resultOptions');
+        const selectionsValue = await menu.session.get('numbersSelected');
+        const booster = 'default';
+        const betTypeChosen = await menu.session.get('resultOptions');
+        const betType = betTypeChosen.name;
+        const gameTypex = await menu.session.get('gameCategory');
+        const selections = selectionsValue.replace(/,/g, '-');
+
+        // set summary menu to show based on game type selected
+
+        if (gameTypex === 'salary4life') {
+          feedbackMenuToShow = 'salary4lifefeedbackMenu';
+        } else {
+          feedbackMenuToShow = 'feedbackMenu';
+        }
+        // get potential winning
+        const bodyData = {
+          amount,
+          betType,
+          booster,
+          resultType,
+          category: gameTypex,
+          selections: [{
+            booster: booster || null, resultType: resultType || null, amount, selections, betType
+          }],
+          lotteryName: gameTypex,
+        };
+        MainServer.getPotWining(bodyData).then((response) => {
+          console.log('response', response);
+          if (response.message === 'success') {
+            const instruction = `GAME SUMMARY
+            Line Count - ${response.data.linesCount}
+            Amount - ${response.data.amount}
+            Total Staked Amount - ${response.data.totalStakedAmount}
+            Potential Winning - ${response.data.potentialWinning}
+
+            Kindly choose 1 to continue or 99 to Exit.
+
+            1. Continue.
+            99. Exit.`;
+            menu.session.set('potentialWinning', JSON.stringify(response.data));
+            menu.con(instruction);
+          } else {
+            console.log('response', response);
+            menu.end(`Error Occured \n ${response.message}`);
+          }
+        });
+      },
+      next: {
+        1: feedbackMenuToShow,
+      }
+    });
+
+    // CREATE TICKET
+
+    menu.state('feedbackMenu', {
+      run: async () => {
+        const input = menu.val;
+        const potWining = await JSON.parse(menu.session.get('potentialWinning'));
+        const game = await menu.session.get('game');
+        const gameIdx = game.gameId;
+        const { linesCount, totalStakedAmount, betSlips } = potWining;
+
+        const response = await MainServer.createTicket({
+          gameId: gameIdx,
+          linesCount,
+          totalStakedAmount,
+          betSlips
+        });
+        console.log('response', response);
+        if (response.message === 'success') {
+          instruction = `${response.data.message}!
+            Ticket Details are:
+            Ticket-ID => ${response.data.data.ticketId}
+
+            1. Play Another Game.
+            98. Main Menu.
+            99. Exit.`;
+          menu.con(instruction);
+        } else {
+          instruction = `${response.message}
+            1. Play Another Game.
+            98. Main Menu.
+            99. Exit.`;
+          menu.con(instruction);
+        }
+      },
+      next: {
+        1: 'PlayGames'
       }
     });
 

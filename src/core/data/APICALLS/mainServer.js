@@ -142,7 +142,7 @@ class MainServer {
         method: 'post',
         url: 'https://lottery-api.zendost.co/api/v1/game/ticket/get-potential-winning',
         headers: {
-          'X-mobile-Authorization': '08123456789',
+          'X-mobile-Authorization': '08101234567',
           'Content-Type': 'application/json'
         },
         data
@@ -153,7 +153,7 @@ class MainServer {
         if (response.status === 200 && response.data.status === 'success') {
           console.log(response.data.data);
           return {
-            data: response.data.data.data,
+            data: JSON.parse(response.data.data),
             message: 'success'
           };
         }
@@ -185,6 +185,7 @@ class MainServer {
         bookingCode,
         isBooking,
         isSalary,
+        betSlips,
       } = args;
       console.log(`${amount} ${betType} ${selections}`);
       console.log(`${BASE_URL}${CREATE_TICKET}`);
@@ -204,19 +205,16 @@ class MainServer {
         data = JSON.stringify({
           gameId,
           linesCount,
-          amount,
           totalStakedAmount,
-          betType,
-          booster: booster.toLowerCase(),
-          resultType: resultType.toLowerCase(),
-          selections
+          betSlips,
+          winningRedemptionMethod: 'wallet',
         });
       }
       const config = {
         method: 'post',
         url: `${BASE_URL}${CREATE_TICKET}`,
         headers: {
-          'X-mobile-Authorization': '08123456789',
+          'X-mobile-Authorization': '08101234567',
           'Content-Type': 'application/json'
         },
         data
