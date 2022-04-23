@@ -110,9 +110,11 @@ class MenuBuilderHelper {
         menu.session.set('game', game);
         let show = '';
         const betOptions = JSON.parse(game.Lottery.betOptions);
+        const resultOptions = JSON.parse(game.Lottery.resultOptions);
         // game.Lottery.betOptions = betOptions;
-        console.log('gameX', game);
         menu.session.set('game', JSON.stringify(game));
+        menu.session.set('betOptions', JSON.stringify(betOptions));
+        menu.session.set('resultOptions', JSON.stringify(resultOptions));
         betOptions.forEach((element) => {
           show += `${betOptions.indexOf(element) + 1}. ${element.name}\n`;
         });
@@ -128,11 +130,15 @@ class MenuBuilderHelper {
         const input = menu.val;
         console.log('just got here');
         const game = await menu.session.get('game');
-        console.log('gmae', game);
-        const betTypeChosen = game.Lottery.betOptions[input - 1];
+        let betOptions = await menu.session.get('betOptions');
+        let resultOptions = await menu.session.get('resultOptions');
+        betOptions = JSON.parse(betOptions);
+        console.log('betOptions', betOptions);
+        console.log('resultoption', resultOptions);
+        const betTypeChosen = betOptions[input - 1];
         console.log('betTypeChosen', betTypeChosen);
         menu.session.set('betTypeChosen', betTypeChosen);
-        const resultOptions = JSON.parse(game.Lottery.resultOptions);
+        resultOptions = JSON.parse(resultOptions);
         console.log('resultOptions', resultOptions);
         let show = '';
         resultOptions.forEach((element) => {
