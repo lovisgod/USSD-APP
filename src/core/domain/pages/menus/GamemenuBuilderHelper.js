@@ -303,7 +303,7 @@ class MenuBuilderHelper {
       },
       next: {
         // using regex to match user input to next state
-        '*\\d+': 'bookingCodefeedbackMenu'
+        '*\\d+': 'bookingCodeamountmenu'
       }
     });
 
