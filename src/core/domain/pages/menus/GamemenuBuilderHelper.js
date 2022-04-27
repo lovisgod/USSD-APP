@@ -326,9 +326,13 @@ class MenuBuilderHelper {
         const res = await MainServer.fetchTicketDetails({ ticketId: input });
         console.log('res', res.data);
         if (res.message === 'success') {
-          const instruction = `${res.data.message}!
+          const instruction = `
           Ticket Details are:
-          Ticket-ID => ${res.data.ticketId}`;
+          Ticket-ID => ${res.data.ticketId}
+          Amount Staked => ${res.data.totalStakedAmount}
+          1. Continue
+          98.Main Menu
+          99. Exit`;
           menu.session.set('booking_slip', res.data.betSlips);
           menu.con(instruction);
         } else {
@@ -336,7 +340,9 @@ class MenuBuilderHelper {
         }
       },
       next: {
-        '*\\d+': 'bookingCodefeedbackMenu'
+        1: 'bookingCodefeedbackMenu',
+        98: '__start__',
+        99: 'Exit'
       }
     });
 
