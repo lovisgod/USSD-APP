@@ -19,10 +19,10 @@ class WalletMenuBuilderHelper {
     });
     // // nesting states
     menu.state('wallet.check', {
-      run: () => {
+      run: async () => {
         // use menu.val to access user input value
         const amountEntered = menu.val;
-        menu.session.set('amount', amountEntered);
+        await menu.session.set('amount', amountEntered);
         menu.con(`You are about to withdraw ${amountEntered} \n
         Kindly enter 1 to continue or 99 to exit.....`);
       },
@@ -117,7 +117,8 @@ class WalletMenuBuilderHelper {
         // // check the details of the user's account
         // const bankCode = bank.code;
         // send withdrawal request to the server
-        const amount = menu.session.get('amount');
+        const amount = await menu.session.get('amount');
+        console.log('amount', amount);
         const body = {
           amount,
           paymentMethod: 'source'
