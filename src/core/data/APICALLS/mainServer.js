@@ -234,7 +234,7 @@ class MainServer {
         }
         return {
           data: {},
-          message: `Error Please try again!!! \n ${response.data.responsemessage}`
+          message: `${response.data.responsemessage}`
         };
       }
       return {
