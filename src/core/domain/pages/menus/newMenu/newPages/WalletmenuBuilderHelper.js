@@ -117,6 +117,7 @@ class WalletMenuBuilderHelper {
         // // check the details of the user's account
         // const bankCode = bank.code;
         // send withdrawal request to the server
+        const amount = menu.session.get('amount');
         const body = {
           amount,
           paymentMethod: 'source'
