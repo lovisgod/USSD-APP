@@ -13,7 +13,7 @@ import GamePages from '../domain/pages/games';
 import MenuBuilderHelper from '../domain/pages/menus/GamemenuBuilderHelper';
 import AppMenuBuilderHelper from '../domain/pages/menus/newMenu/AppmenuBuilderHelper';
 import PlayGameMenu from '../domain/pages/menus/playgamefirstmenu';
-import WalletMenuBuilderHelper from '../domain/pages/menus/WalletmenuBuilderHelper';
+import WalletMenuBuilderHelper from '../domain/pages/menus/newMenu/newPages/WalletmenuBuilderHelper';
 import RegisterPage from '../domain/pages/registerpage';
 import Ussd1 from '../domain/pages/ussd1';
 import MainServer from './APICALLS/mainServer';

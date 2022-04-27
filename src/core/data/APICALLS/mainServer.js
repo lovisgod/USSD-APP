@@ -20,6 +20,7 @@ function FETCH_SETTINGS_BY_SLUG(name) {
 const GET_POTENTIAL_WIN = '/game/ticket/get-potential-winning';
 const CREATE_TICKET = '/game/create-ticket';
 const CHECK_RESULT = '/game/fetch-ticket-result';
+const FETCH_TICKET = '/game/fetch-ticket-by-code';
 const FETCH_BANK_LIST = '/fetch-banks';
 const WITHDRAWAL = '/wallet/bank-withdrawal/initialize';
 
@@ -194,8 +195,9 @@ class MainServer {
       let data;
       if (isBooking) {
         data = JSON.stringify({
-          amount,
-          bookingCode
+          bookingCode,
+          sourcewallet: 'mainWallet',
+          betSlips
         });
       } else if (isSalary) {
         data = JSON.stringify({
@@ -265,6 +267,38 @@ class MainServer {
         }
       });
       console.log(response.status);
+      if (response != null) {
+        if (response.status === 200 && response.data.status === 'success') {
+          return {
+            data: response.data.data.data,
+            message: 'success'
+          };
+        }
+        return {
+          data: {},
+          message: 'Could not fetch result, Please try again!!!'
+        };
+      }
+      return {
+        data: {},
+        message: 'Could not fecth result, Please try again!!!'
+      };
+    } catch (error) {
+      return this.handleError(error);
+    }
+  }
+
+  static async fetchTicketDetails(args) {
+    try {
+      const { ticketId } = args;
+      console.log(`${ticketId}`);
+      console.log(`${BASE_URL}${FETCH_TICKET}`);
+      const response = await axios.get(`${BASE_URL}${FETCH_TICKET}/${ticketId}`, {
+        headers: {
+          'X-mobile-Authorization': '08101234567'
+        }
+      });
+      console.log('fetch ticket response', response);
       if (response != null) {
         if (response.status === 200 && response.data.status === 'success') {
           return {
@@ -387,20 +421,18 @@ class MainServer {
 
   static async createWithdrawal(args) {
     try {
-      const { accountNumber, bankCode, amount } = args;
+      const { amount, paymentMethod } = args;
       let data = null;
       console.log(`${BASE_URL}${WITHDRAWAL}`);
       data = {
-        bankCode,
-        accountNumber,
-        accountName: 'customer name',
-        amount
+        amount,
+        paymentMethod
       };
       const config = {
         method: 'post',
         url: `${BASE_URL}${WITHDRAWAL}`,
         headers: {
-          'X-mobile-Authorization': '09012345678',
+          'X-mobile-Authorization': '08101234567',
           'Content-Type': 'application/json'
         },
         data

@@ -5,6 +5,7 @@ import UssdMenu from 'ussd-menu-builder';
 import AppPages from './newPages/AppPages';
 import GameMenuBuilder from '../GamemenuBuilderHelper';
 import UserMenuBuilderHelper from './newPages/UsermenuBuilderHelper';
+import WalletMenuBuilderHelper from './newPages/WalletmenuBuilderHelper';
 
 const sessions = {};
 
@@ -51,10 +52,9 @@ class AppMenuBuilderHelper {
       // next object links to next state based on user input
       next: {
         1: 'Register',
-        2: 'Deposit',
-        3: 'Withdraw',
-        4: 'Play Games',
-        5: 'Check Result',
+        2: 'Withdraw',
+        3: 'Play Games',
+        4: 'Check Result',
         99: 'Exit'
 
       }
@@ -62,6 +62,7 @@ class AppMenuBuilderHelper {
 
     GameMenuBuilder.gameMenus(args, false, menu);
     UserMenuBuilderHelper.menus(args, menu);
+    WalletMenuBuilderHelper.walletMenus(menu, args);
 
     const page = await menu.run(args);
     console.log('this is page ', page);

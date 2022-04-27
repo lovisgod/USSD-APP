@@ -6,8 +6,7 @@ class RegisterPage {
    * @returns String
    */
   static page() {
-    return `1.Accept Registration
-    2.Decline Registration
+    return `1.Register
     98.Main Menu
     99.Exit`;
   }

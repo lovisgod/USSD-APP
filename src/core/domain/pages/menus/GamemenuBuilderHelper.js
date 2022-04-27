@@ -14,9 +14,6 @@ class MenuBuilderHelper {
 // static sessions = {};
 
   static async gameMenus(args, checkGame = false, menu) {
-    const gameType = '';
-    const lotteryGameSelected = '';
-
     // Define menu states
     menu.state('Play Games', {
       run: () => {
@@ -212,6 +209,9 @@ class MenuBuilderHelper {
         if (gameTypex === 'salary4life') {
           booster = 'null';
           feedbackMenuToShow = 'feedbackMenu';
+        } else if (gameTypex === 'mega-7') {
+          booster = 'null';
+          feedbackMenuToShow = 'feedbackMenu';
         } else {
           feedbackMenuToShow = 'feedbackMenu';
         }
@@ -273,6 +273,90 @@ class MenuBuilderHelper {
         });
         console.log('response', response);
         let instruction = '';
+        if (response.message === 'success') {
+          instruction = `${response.data.message}!
+            Ticket Details are:
+            Ticket-ID => ${response.data.data.ticketId}
+
+            1. Play Another Game.
+            98. Main Menu.
+            99. Exit.`;
+          menu.con(instruction);
+        } else {
+          instruction = `${response.message}
+            1. Play Another Game.
+            98. Main Menu.
+            99. Exit.`;
+          menu.con(instruction);
+        }
+      },
+      next: {
+        1: 'PlayGames'
+      }
+    });
+
+    // // BOOKING CODE SESSIONS
+
+    menu.state('PlayBookingCode', {
+      run: () => {
+        menu.con('Enter Booking code:');
+      },
+      next: {
+        // using regex to match user input to next state
+        '*\\d+': 'bookingCodefeedbackMenu'
+      }
+    });
+
+    // nesting states
+    // menu.state('PlayBookingCode.code', {
+    //   run: () => {
+    //     // use menu.val to access user input value
+    //     const code = menu.val;
+    //     menu.end('Booking completed.');
+    //   }
+    // });
+
+    menu.state('bookingCodeamountmenu', {
+      run: async () => {
+        const input = menu.val;
+        menu.session.set('bookingCode', input);
+        menu.session.set('isBooking', true);
+        const res = await MainServer.fetchTicketDetails({ ticketId: input });
+        if (res.message === 'success') {
+          const instruction = `${res.data.message}!
+          Ticket Details are:
+          Ticket-ID => ${res.data.data.ticketId}`;
+          menu.session.set('booking_slip', res.data.betSlips);
+          menu.con(instruction);
+        } else {
+          menu.end(res.message);
+        }
+      },
+      next: {
+        '*\\d+': 'bookingCodefeedbackMenu'
+      }
+    });
+
+    menu.state('bookingCodefeedbackMenu', {
+      run: async () => {
+        const input = menu.val;
+        menu.session.set('bookingCode', input);
+        menu.session.set('isBooking', true);
+        const betslip = await menu.session.get('booking_slip');
+        let instruction = '';
+        // send request to server to play game and get response
+        // display response to user and display menu
+        // const amount = input;
+        // const bookingCode = await menu.session.get('bookingCode');
+        // const gameType = await menu.session.get('gameType');
+        const bodyData = {
+          bookingCode: input,
+          isBooking: true,
+          sourceWallet: 'mainWallet',
+          betSlips: betslip
+        };
+        const response = await MainServer.createTicket(bodyData);
+        console.log('response', response);
         if (response.message === 'success') {
           instruction = `${response.data.message}!
             Ticket Details are:
@@ -888,78 +972,6 @@ class MenuBuilderHelper {
     //   },
     //   next: {
     //     1: feedbackMenuToShow,
-    //   }
-    // });
-
-    // // BOOKING CODE SESSIONS
-
-    // menu.state('PlayBookingCode', {
-    //   run: () => {
-    //     menu.con('Enter Booking code:');
-    //   },
-    //   next: {
-    //     // using regex to match user input to next state
-    //     '*\\d+': 'bookingCodeamountmenu'
-    //   }
-    // });
-
-    // // nesting states
-    // // menu.state('PlayBookingCode.code', {
-    // //   run: () => {
-    // //     // use menu.val to access user input value
-    // //     const code = menu.val;
-    // //     menu.end('Booking completed.');
-    // //   }
-    // // });
-
-    // menu.state('bookingCodeamountmenu', {
-    //   run: () => {
-    //     const input = menu.val;
-    //     menu.session.set('bookingCode', input);
-    //     menu.session.set('isBooking', true);
-    //     const instruction = 'Kindly insert Bet Amount and Submit Your Bet.';
-    //     menu.con(instruction);
-    //   },
-    //   next: {
-    //     '*\\d+': 'bookingCodefeedbackMenu'
-    //   }
-    // });
-
-    // menu.state('bookingCodefeedbackMenu', {
-    //   run: async () => {
-    //     const input = menu.val;
-    //     let instruction = '';
-    //     // send request to server to play game and get response
-    //     // display response to user and display menu
-    //     const amount = input;
-    //     const bookingCode = await menu.session.get('bookingCode');
-    //     const gameType = await menu.session.get('gameType');
-    //     const bodyData = {
-    //       amount,
-    //       bookingCode,
-    //       isBooking: true
-    //     };
-    //     const response = await MainServer.createTicket(bodyData);
-    //     console.log('response', response);
-    //     if (response.message === 'success') {
-    //       instruction = `${response.data.message}!
-    //         Ticket Details are:
-    //         Ticket-ID => ${response.data.data.ticketId}
-
-    //         1. Play Another Game.
-    //         98. Main Menu.
-    //         99. Exit.`;
-    //       menu.con(instruction);
-    //     } else {
-    //       instruction = `${response.message}
-    //         1. Play Another Game.
-    //         98. Main Menu.
-    //         99. Exit.`;
-    //       menu.con(instruction);
-    //     }
-    //   },
-    //   next: {
-    //     1: 'PlayGames'
     //   }
     // });
 

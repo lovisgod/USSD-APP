@@ -7,10 +7,9 @@ class AppPages {
      */
   static firstPage() {
     return `1.Register
-    2.Deposit
-    3.Withdraw
-    4.Play Games
-    5.Check Result
+    2.Withdraw
+    3.Play Games
+    4.Check Result
     99.Exit`;
   }
 }
