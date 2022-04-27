@@ -322,6 +322,7 @@ class MenuBuilderHelper {
         menu.session.set('bookingCode', input);
         menu.session.set('isBooking', true);
         const res = await MainServer.fetchTicketDetails({ ticketId: input });
+        console.log('res', res.data);
         if (res.message === 'success') {
           const instruction = `${res.data.message}!
           Ticket Details are:
