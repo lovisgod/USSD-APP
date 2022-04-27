@@ -424,10 +424,12 @@ class MainServer {
       const { amount, paymentMethod } = args;
       let data = null;
       console.log(`${BASE_URL}${WITHDRAWAL}`);
-      data = {
-        amount,
-        paymentMethod
-      };
+      data = JSON.stringify(
+        {
+          amount,
+          paymentMethod
+        }
+      );
       const config = {
         method: 'post',
         url: `${BASE_URL}${WITHDRAWAL}`,
@@ -463,7 +465,7 @@ class MainServer {
   static handleError(error) {
     if (error.response) {
       console.log('it is axios response');
-      console.log('datatatata', error);
+      console.log('datatatata', error.response.data.responsemessage);
       return {
         data: {},
         message: `error, Please try again!!! \n REASON => ${error.response.data.responsemessage}`
