@@ -326,7 +326,7 @@ class MenuBuilderHelper {
         if (res.message === 'success') {
           const instruction = `${res.data.message}!
           Ticket Details are:
-          Ticket-ID => ${res.data.data.ticketId}`;
+          Ticket-ID => ${res.data.ticketId}`;
           menu.session.set('booking_slip', res.data.betSlips);
           menu.con(instruction);
         } else {
