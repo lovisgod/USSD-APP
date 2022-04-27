@@ -291,7 +291,9 @@ class MenuBuilderHelper {
         }
       },
       next: {
-        1: 'PlayGames'
+        1: 'PlayGames',
+        98: '__start__',
+        99: 'Exit'
       }
     });
 
@@ -376,7 +378,9 @@ class MenuBuilderHelper {
         }
       },
       next: {
-        1: 'PlayGames'
+        1: 'PlayGames',
+        98: '__start__',
+        99: 'Exit'
       }
     });
 

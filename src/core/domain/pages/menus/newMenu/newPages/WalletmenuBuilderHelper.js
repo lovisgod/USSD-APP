@@ -137,6 +137,15 @@ class WalletMenuBuilderHelper {
           99. Exit`);
         }
       },
+      next: {
+        98: '__start__'
+      }
+    });
+
+    menu.state('Exit', {
+      run: () => {
+        menu.end('Thank you for using our service');
+      }
     });
 
     const page = await menu.run(args);

@@ -19,7 +19,7 @@ class UserMenuBuilderHelper {
       // next object links to next state based on user input
       next: {
         1: 'Accept_Registration',
-        98: 'Main Menu',
+        98: '__start__',
         99: 'Exit'
       }
     });
