@@ -30,8 +30,9 @@ class UserMenuBuilderHelper {
         menu.con('Enter your email address');
       },
       next: {
-        '*\\[a-z0-9]+@[a-z]+\.[a-z]{2,3}': 'accept_registration',
-      }
+        '*\\d+': 'accept_registration',
+      },
+      defaultNext: 'accept_registration'
     });
 
     menu.state('accept_registration', {
