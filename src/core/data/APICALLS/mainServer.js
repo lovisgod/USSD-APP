@@ -482,7 +482,7 @@ class MainServer {
   // this is the new rebuild
   static async getGamesCategories(args) {
     try {
-      const { name } = args;
+      const { name, phone } = args;
       const response = await axios.get(`${BASE_URL}${FETCH_SETTINGS_BY_SLUG(name)}`, {
         headers: {
           'X-mobile-Authorization': phone ? `${phone}` : '08101234567'
@@ -517,7 +517,7 @@ class MainServer {
   // this get instances of games selected
   static async getGamesForcategory(args) {
     try {
-      const { name, page, limit } = args;
+      const { name, page, limit, phone } = args;
       const day = new Date().getDay();
       console.log(name, page, limit);
       const response = await axios.get(`${BASE_URL}${GET_GAME_BY_CATEGORY}`, {
@@ -526,11 +526,11 @@ class MainServer {
           limit,
           startTime: '08:00',
           endTime: '10:00',
-          currentWeekDay: 1,
+          currentWeekDay: day,
           category: name
         },
         headers: {
-          'X-mobile-Authorization': '08101234567'
+          'X-mobile-Authorization': phone ? `${phone}` : '08101234567'
         }
       });
       console.log(response.status);
