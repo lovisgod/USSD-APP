@@ -526,7 +526,7 @@ class MainServer {
           limit,
           startTime: '08:00',
           endTime: '10:00',
-          currentWeekDay: day,
+          currentWeekDay: 2,
           category: name
         },
         headers: {
