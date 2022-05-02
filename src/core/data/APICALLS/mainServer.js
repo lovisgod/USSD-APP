@@ -533,7 +533,7 @@ class MainServer {
           'X-mobile-Authorization': phone ? `${phone}` : '08101234567'
         }
       });
-      console.log(response.status);
+      console.log(response);
       if (response != null) {
         if (response.status === 200 && response.data.status === 'success') {
           return {
