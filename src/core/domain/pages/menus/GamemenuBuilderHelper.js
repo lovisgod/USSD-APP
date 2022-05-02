@@ -31,7 +31,7 @@ class MenuBuilderHelper {
     menu.state('PlayGames', {
       run: async () => {
         // check game from the server and display the result to user
-        const data = { name: 'game-categories' };
+        const data = { name: 'game-categories', phone: args.phoneNumber };
         const res = await MainServer.getGamesCategories(data);
         console.log('this is it', res);
         if (res.message === 'success') {
@@ -70,7 +70,7 @@ class MenuBuilderHelper {
         console.log('gameCategory', gameCategory);
         menu.session.set('gameCategory', gameCategory);
         // check game from the server and display the result to user
-        const data = { name: gameCategory, page: 1, limit: 10 };
+        const data = { name: gameCategory, page: 1, limit: 10, phone: args.phoneNumber };
         const res = await MainServer.getGamesForcategory(data);
         console.log('this is it', res);
         if (res.message === 'success') {
@@ -227,6 +227,7 @@ class MenuBuilderHelper {
             booster: booster || null, resultType: resultType || null, amount, selections, betType
           }],
           lotteryName: gameTypex,
+          phone: args.phoneNumber,
         };
         MainServer.getPotWining(bodyData).then((response) => {
           console.log('response', response);
@@ -269,7 +270,8 @@ class MenuBuilderHelper {
           gameId: gameIdx,
           linesCount,
           totalStakedAmount,
-          betSlips
+          betSlips,
+          phone: args.phoneNumber,
         });
         console.log('response', response);
         let instruction = '';
@@ -315,7 +317,7 @@ class MenuBuilderHelper {
         const input = menu.val;
         menu.session.set('bookingCode', input);
         menu.session.set('isBooking', true);
-        const res = await MainServer.fetchTicketDetails({ ticketId: input });
+        const res = await MainServer.fetchTicketDetails({ ticketId: input, phone: args.phoneNumber });
         console.log('res', res.data);
         if (res.message === 'success') {
           const instruction = `
@@ -351,7 +353,8 @@ class MenuBuilderHelper {
           bookingCode: input,
           isBooking: true,
           sourceWallet: 'mainWallet',
-          betSlips: betslip
+          betSlips: betslip,
+          phone: args.phoneNumber
         };
         const response = await MainServer.createTicket(bodyData);
         console.log('response', response);
@@ -393,7 +396,7 @@ class MenuBuilderHelper {
       run: async () => {
         const input = menu.val;
         // check game from the server and display the result to user
-        const data = { ticketId: input };
+        const data = { ticketId: input, phone: args.phoneNumber };
         const response = await MainServer.getTicketResult(data);
         console.log('this is it', response);
         if (response.message === 'success') {
@@ -407,6 +410,10 @@ class MenuBuilderHelper {
           98. Main Menu
           99. Exit`);
         }
+      },
+      next: {
+        98: '__start__',
+        99: 'Exit'
       }
     });
 

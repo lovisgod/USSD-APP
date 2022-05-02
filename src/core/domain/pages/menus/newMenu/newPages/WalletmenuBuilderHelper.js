@@ -1,4 +1,4 @@
-/* eslint-disable require-jsdoc */
+ /* eslint-disable require-jsdoc */
 /* eslint-disable no-undef */
 
 import WalletPages from '../../../walletpages';
@@ -121,7 +121,8 @@ class WalletMenuBuilderHelper {
         console.log('amount', amount);
         const body = {
           amount,
-          paymentMethod: 'source'
+          paymentMethod: 'source',
+          phone: args.phoneNumber
         };
         const response = await MainServer.createWithdrawal(body);
         if (response.message === 'success') {
