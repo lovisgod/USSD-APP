@@ -264,7 +264,7 @@ class MainServer {
       console.log(`${BASE_URL}${CHECK_RESULT}`);
       const response = await axios.get(`${BASE_URL}${CHECK_RESULT}/${ticketId}`, {
         headers: {
-          'X-mobile-Authorization': '08123456789'
+          'X-mobile-Authorization': '08101234567'
         }
       });
       console.log(response.status);

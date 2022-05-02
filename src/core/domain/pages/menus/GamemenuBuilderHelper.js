@@ -379,36 +379,36 @@ class MenuBuilderHelper {
       }
     });
 
-    // menu.state('checkGame.code', {
-    //   run: () => {
-    //     // use menu.con() to send response without terminating session
-    //     menu.con('Please Enter your Game Ticket ID');
-    //   },
-    //   next: {
-    //     '*\\d+': 'checkGame.result',
-    //   }
-    // });
+    menu.state('Check Result', {
+      run: () => {
+        // use menu.con() to send response without terminating session
+        menu.con('Please Enter your Game Ticket ID');
+      },
+      next: {
+        '*\\d+': 'checkGame.result',
+      }
+    });
 
-    // menu.state('checkGame.result', {
-    //   run: async () => {
-    //     const input = menu.val;
-    //     // check game from the server and display the result to user
-    //     const data = { ticketId: input };
-    //     const response = await MainServer.getTicketResult(data);
-    //     console.log('this is it', response);
-    //     if (response.message === 'success') {
-    //       menu.con(`${response.message}
-    //       haswon: ${response.data.haswon}
-    //       total Win Amount: ${response.data.totalWinAmount}
-    //       98. Main Menu
-    //       99. Exit`);
-    //     } else {
-    //       menu.con(`${response.message}
-    //       98. Main Menu
-    //       99. Exit`);
-    //     }
-    //   }
-    // });
+    menu.state('checkGame.result', {
+      run: async () => {
+        const input = menu.val;
+        // check game from the server and display the result to user
+        const data = { ticketId: input };
+        const response = await MainServer.getTicketResult(data);
+        console.log('this is it', response);
+        if (response.message === 'success') {
+          menu.con(`${response.message}
+          haswon: ${response.data.haswon}
+          total Win Amount: ${response.data.totalWinAmount}
+          98. Main Menu
+          99. Exit`);
+        } else {
+          menu.con(`${response.message}
+          98. Main Menu
+          99. Exit`);
+        }
+      }
+    });
 
     // // lottery games state
     // menu.state('LotteryGames', {
