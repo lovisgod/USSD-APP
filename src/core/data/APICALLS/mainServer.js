@@ -469,7 +469,7 @@ class MainServer {
       console.log('datatatata', error.response.data.responsemessage);
       return {
         data: {},
-        message: `error!!!, \n REASON => ${error.response.data.responsemessage}`
+        message: `error!!!,\n${error.response.data.responsemessage}`
       };
     }
     console.log(error);
