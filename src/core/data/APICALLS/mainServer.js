@@ -45,7 +45,8 @@ class MainServer {
       }
       return 'Registration failed. Please try again';
     } catch (error) {
-      return this.handleError(error);
+      const errorResponse = this.handleError(error);
+      return errorResponse.message;
     }
   }
 
@@ -468,7 +469,7 @@ class MainServer {
       console.log('datatatata', error.response.data.responsemessage);
       return {
         data: {},
-        message: `error, Please try again!!! \n REASON => ${error.response.data.responsemessage}`
+        message: `error!!!, \n REASON => ${error.response.data.responsemessage}`
       };
     }
     console.log(error);

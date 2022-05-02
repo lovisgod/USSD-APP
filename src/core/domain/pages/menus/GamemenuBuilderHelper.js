@@ -309,14 +309,6 @@ class MenuBuilderHelper {
       }
     });
 
-    // nesting states
-    // menu.state('PlayBookingCode.code', {
-    //   run: () => {
-    //     // use menu.val to access user input value
-    //     const code = menu.val;
-    //     menu.end('Booking completed.');
-    //   }
-    // });
 
     menu.state('bookingCodeamountmenu', {
       run: async () => {
@@ -355,9 +347,6 @@ class MenuBuilderHelper {
         let instruction = '';
         // send request to server to play game and get response
         // display response to user and display menu
-        // const amount = input;
-        // const bookingCode = await menu.session.get('bookingCode');
-        // const gameType = await menu.session.get('gameType');
         const bodyData = {
           bookingCode: input,
           isBooking: true,
