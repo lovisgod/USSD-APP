@@ -131,7 +131,8 @@ class MainServer {
   static async getPotWining(args) {
     try {
       const {
-        amount, betType, booster, resultType, selections, lotteryName, category, lotteryId
+        amount, betType, booster, resultType, selections, lotteryName, category, lotteryId,
+        phone
       } = args;
       console.log(`${amount} ${betType} ${selections}!!!`);
       console.log(`${BASE_URL}${GET_POTENTIAL_WIN}`);
@@ -145,7 +146,7 @@ class MainServer {
         method: 'post',
         url: `${BASE_URL}/game/ticket/get-potential-winning`,
         headers: {
-          'X-mobile-Authorization': '08101234567',
+          'X-mobile-Authorization': phone ? `${phone}` : '08101234567',
           'Content-Type': 'application/json'
         },
         data
@@ -190,6 +191,7 @@ class MainServer {
         isBooking,
         isSalary,
         betSlips,
+        phone,
       } = args;
       console.log(`${totalStakedAmount} ${betSlips} ${gameId}, ${linesCount}`);
       console.log(`${BASE_URL}${CREATE_TICKET}`);
@@ -219,7 +221,7 @@ class MainServer {
         method: 'post',
         url: `${BASE_URL}${CREATE_TICKET}`,
         headers: {
-          'X-mobile-Authorization': '08101234567',
+          'X-mobile-Authorization': phone ? `${phone}` : '08101234567',
           'Content-Type': 'application/json'
         },
         data
@@ -291,12 +293,12 @@ class MainServer {
 
   static async fetchTicketDetails(args) {
     try {
-      const { ticketId } = args;
+      const { ticketId, phone } = args;
       console.log(`${ticketId}`);
       console.log(`${BASE_URL}${FETCH_TICKET}`);
       const response = await axios.get(`${BASE_URL}${FETCH_TICKET}/${ticketId}`, {
         headers: {
-          'X-mobile-Authorization': '08101234567'
+          'X-mobile-Authorization': phone ? `${phone}` : '08101234567'
         }
       });
       console.log('fetch ticket response', response);
@@ -422,7 +424,7 @@ class MainServer {
 
   static async createWithdrawal(args) {
     try {
-      const { amount, paymentMethod } = args;
+      const { amount, paymentMethod, phone } = args;
       let data = null;
       console.log(`${BASE_URL}${WITHDRAWAL}`);
       data = JSON.stringify(
@@ -435,7 +437,7 @@ class MainServer {
         method: 'post',
         url: `${BASE_URL}${WITHDRAWAL}`,
         headers: {
-          'X-mobile-Authorization': '08101234567',
+          'X-mobile-Authorization': phone ? `${phone}` : '08101234567',
           'Content-Type': 'application/json'
         },
         data
@@ -526,14 +528,14 @@ class MainServer {
           limit,
           startTime: '08:00',
           endTime: '10:00',
-          currentWeekDay: 2,
+          currentWeekDay: day,
           category: name
         },
         headers: {
           'X-mobile-Authorization': phone ? `${phone}` : '08101234567'
         }
       });
-      console.log(response);
+      console.log(response.status);
       if (response != null) {
         if (response.status === 200 && response.data.status === 'success') {
           return {
