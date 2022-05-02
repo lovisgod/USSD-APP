@@ -259,12 +259,12 @@ class MainServer {
 
   static async getTicketResult(args) {
     try {
-      const { ticketId } = args;
+      const { ticketId, phone } = args;
       console.log(`${ticketId}`);
       console.log(`${BASE_URL}${CHECK_RESULT}`);
       const response = await axios.get(`${BASE_URL}${CHECK_RESULT}/${ticketId}`, {
         headers: {
-          'X-mobile-Authorization': '08101234567'
+          'X-mobile-Authorization': phone ? `${phone}` : '08101234567'
         }
       });
       console.log(response.status);
@@ -485,7 +485,7 @@ class MainServer {
       const { name } = args;
       const response = await axios.get(`${BASE_URL}${FETCH_SETTINGS_BY_SLUG(name)}`, {
         headers: {
-          'X-mobile-Authorization': '08101234567'
+          'X-mobile-Authorization': phone ? `${phone}` : '08101234567'
         }
       });
       console.log(response.status);
