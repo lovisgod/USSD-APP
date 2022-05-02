@@ -30,7 +30,7 @@ class UserMenuBuilderHelper {
         menu.con('Enter your email address');
       },
       next: {
-        '*\\d+': 'accept_registration',
+        '\^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$\' : 'accept_registration',
       }
     });
 
