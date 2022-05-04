@@ -148,10 +148,6 @@ class WalletMenuBuilderHelper {
         menu.end('Thank you for using our service');
       }
     });
-
-    const page = await menu.run(args);
-    console.log('this is page ', page);
-    return page;
   }
 }
 
