@@ -39,8 +39,11 @@ class UserMenuBuilderHelper {
       run: () => {
         const email =  menu.val;
         const response = MainServer.register({ phoneNumber: args.phoneNumber, email });
-        await menu.end(`${response}`);
+        await menu.con(`${response}`);
       },
+      next: {
+        1: '__start__',
+      }
     });
 
     const page = await menu.run(args);
