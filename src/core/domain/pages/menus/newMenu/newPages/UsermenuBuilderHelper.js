@@ -36,9 +36,9 @@ class UserMenuBuilderHelper {
     });
 
     menu.state('accept_registration', {
-      run: async () => {
-        const email = await menu.val;
-        const response = await MainServer.register({ phoneNumber: args.phoneNumber, email });
+      run: () => {
+        const email =  menu.val;
+        const response = MainServer.register({ phoneNumber: args.phoneNumber, email });
         await menu.end(`${response}`);
       },
     });
