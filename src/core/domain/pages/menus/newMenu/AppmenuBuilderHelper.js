@@ -65,7 +65,6 @@ class AppMenuBuilderHelper {
     WalletMenuBuilderHelper.walletMenus(menu, args);
 
     const page = await menu.run(args);
-    console.log('this is page ', page);
     return page;
   }
 }

@@ -981,10 +981,6 @@ class MenuBuilderHelper {
     //     1: feedbackMenuToShow,
     //   }
     // });
-
-    const page = await menu.run(args);
-    console.log('this is page ', page);
-    return page;
   }
 }
 
