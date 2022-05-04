@@ -529,7 +529,8 @@ class MainServer {
           startTime: '08:00',
           endTime: '10:00',
           currentWeekDay: day,
-          category: name
+          category: name,
+          isUSSD: true
         },
         headers: {
           'X-mobile-Authorization': phone ? `${phone}` : '08101234567'
