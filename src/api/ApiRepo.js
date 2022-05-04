@@ -58,7 +58,7 @@ class ApiRepo {
   async dumpLogs(req, res, next) {
     try {
       const passkey = req.body.key;
-      if (passkey && passkey === 'jaraadmin123') {
+      if (passkey && passkey === 'admin123') {
         fs.readFile('./logs/app.log', 'utf8', (readErr, logs) => {
           try {
             if (readErr) throw readErr;

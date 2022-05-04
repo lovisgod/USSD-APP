@@ -26,6 +26,7 @@ const WITHDRAWAL = '/wallet/bank-withdrawal/initialize';
 
 class MainServer {
   static async register(args) {
+    console.log("got here for register");
     try {
       const { phoneNumber, email } = args;
       console.log(`${phoneNumber} ${email}`);
