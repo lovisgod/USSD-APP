@@ -320,6 +320,7 @@ class MenuBuilderHelper {
         const res = await MainServer.fetchTicketDetails({ ticketId: input, phone: args.phoneNumber });
         console.log('res', res.data);
         if (res.message === 'success') {
+          menu.session.set('totalStakedAmount', res.data.totalStakedAmount)
           const instruction = `
           Ticket Details are:
           Ticket-ID => ${res.data.ticketId}
@@ -344,9 +345,10 @@ class MenuBuilderHelper {
       run: async () => {
         const input = menu.val;
         // menu.session.set('bookingCode', input);
-        // menu.session.set('isBooking', true);
+        menu.session.set('isBooking', true);
         const betslip = await menu.session.get('booking_slip');
         const bookingCode = await menu.session.get('bookingCode');
+        const totalStakedAmount = await menu.session.get('totalStakedAmount');
         let instruction = '';
         // send request to server to play game and get response
         // display response to user and display menu
