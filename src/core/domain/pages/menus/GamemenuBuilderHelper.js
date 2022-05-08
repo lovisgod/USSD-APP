@@ -343,14 +343,15 @@ class MenuBuilderHelper {
     menu.state('bookingCodefeedbackMenu', {
       run: async () => {
         const input = menu.val;
-        menu.session.set('bookingCode', input);
-        menu.session.set('isBooking', true);
+        // menu.session.set('bookingCode', input);
+        // menu.session.set('isBooking', true);
         const betslip = await menu.session.get('booking_slip');
+        const bookingCode = await menu.session.get('bookingCode');
         let instruction = '';
         // send request to server to play game and get response
         // display response to user and display menu
         const bodyData = {
-          bookingCode: input,
+          bookingCode,
           isBooking: true,
           sourceWallet: 'mainWallet',
           betSlips: betslip,
