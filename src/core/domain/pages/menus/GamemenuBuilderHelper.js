@@ -324,7 +324,10 @@ class MenuBuilderHelper {
           const instruction = `
           Ticket Details are:
           Ticket-ID => ${res.data.ticketId}
-          Amount Staked => ${res.data.totalStakedAmount}
+          Total Staked Amount => ${res.data.totalStakedAmount}
+          Status => ${res.data.status}
+          Name => ${res.data.Game.name}
+          Lottery Name => ${res.data.Game.lotteryName}
           1. Continue
           98.Main Menu
           99. Exit`;
@@ -404,7 +407,7 @@ class MenuBuilderHelper {
         console.log('this is it', response);
         if (response.message === 'success') {
           menu.con(`${response.message}
-          haswon: ${response.data.haswon}
+          Status: ${response.data.haswon}
           total Win Amount: ${response.data.totalWinAmount}
           98. Main Menu
           99. Exit`);
