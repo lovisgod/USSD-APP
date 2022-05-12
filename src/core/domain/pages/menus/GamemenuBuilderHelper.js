@@ -95,6 +95,8 @@ class MenuBuilderHelper {
       },
       next: {
         '*\\d+': 'getBetTypeMenu',
+        98: '__start__',
+        99: 'Exit'
       }
     });
 
@@ -410,7 +412,7 @@ class MenuBuilderHelper {
           Status: ${response.data.status}
           Total Staked Amount: ${response.data.totalStakedAmount}
           Total Win Amount: ${response.data.totalWinAmount}
-          
+
           98. Main Menu
           99. Exit`);
         } else {
