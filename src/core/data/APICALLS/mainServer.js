@@ -201,7 +201,8 @@ class MainServer {
         data = JSON.stringify({
           bookingCode,
           sourcewallet: 'mainWallet',
-          betSlips
+          betSlips,
+          totalStakedAmount,
         });
       } else if (isSalary) {
         data = JSON.stringify({

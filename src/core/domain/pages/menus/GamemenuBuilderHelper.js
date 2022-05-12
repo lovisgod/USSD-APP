@@ -364,7 +364,8 @@ class MenuBuilderHelper {
           isBooking: true,
           sourceWallet: 'mainWallet',
           betSlips: betslip,
-          phone: args.phoneNumber
+          phone: args.phoneNumber,
+          totalStakedAmount,
         };
         const response = await MainServer.createTicket(bodyData);
         console.log('response', response);
