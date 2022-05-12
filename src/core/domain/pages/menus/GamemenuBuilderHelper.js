@@ -236,7 +236,7 @@ class MenuBuilderHelper {
           console.log('xxxx', response.data.data);
           if (response.message === 'success') {
             const instruction = `GAME SUMMARY
-            Line Count - ${response.data.data.linesCount}
+            Total Slips - ${response.data.data.totalSlips}
             Total Staked Amount - ${response.data.data.totalStakedAmount}
             Potential Winning - ${response.data.data.totalPotentialWinning}
 
