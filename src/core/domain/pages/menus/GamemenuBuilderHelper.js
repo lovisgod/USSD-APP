@@ -407,8 +407,10 @@ class MenuBuilderHelper {
         console.log('this is it', response);
         if (response.message === 'success') {
           menu.con(`${response.message}
-          Status: ${response.data.haswon}
-          total Win Amount: ${response.data.totalWinAmount}
+          Status: ${response.data.status}
+          Total Staked Amount: ${response.data.totalStakedAmount}
+          Total Win Amount: ${response.data.totalWinAmount}
+          
           98. Main Menu
           99. Exit`);
         } else {
