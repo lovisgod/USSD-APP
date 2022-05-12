@@ -254,6 +254,8 @@ class MenuBuilderHelper {
       },
       next: {
         1: feedbackMenuToShow,
+        98: '__start__',
+        99: 'Exit'
       }
     });
 
