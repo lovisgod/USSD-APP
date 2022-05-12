@@ -300,6 +300,9 @@ class MainServer {
       const response = await axios.get(`${BASE_URL}${FETCH_TICKET}/${ticketId}`, {
         headers: {
           'X-mobile-Authorization': phone ? `${phone}` : '08101234567'
+        },
+        params: {
+          isUSSD: true
         }
       });
       console.log('fetch ticket response', response);
