@@ -223,7 +223,7 @@ class MainServer {
         method: 'post',
         url: `${BASE_URL}${CREATE_TICKET}`,
         headers: {
-          'X-mobile-Authorization': phone ? `09012431342` : '08101234567',
+          'X-mobile-Authorization': phone ? phone : '08101234567',
           'Content-Type': 'application/json'
         },
         data
